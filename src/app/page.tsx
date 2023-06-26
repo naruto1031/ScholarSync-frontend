@@ -1,10 +1,22 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client"
+import styled from 'styled-components'
+import Header from './components/Header'
 
-export default function Home() {
+const Home = () => {
   return (
-    <main className={styles.main}>
-      <div className="aa">aaa</div>
-    </main>
+    <>
+      <Header />
+      <TooPage>
+          <div className="">
+            aaaaaa
+          </div>
+      </TooPage>
+    </>
   )
 }
+
+export default Home;
+
+const TooPage  = styled.div`
+  width: 100%;
+`
