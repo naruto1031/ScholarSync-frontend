@@ -2,7 +2,7 @@
 
 import React, { ChangeEvent, useState } from 'react'
 import axios from 'axios'
-import styled from 'styled-components'
+import signup from './signup.module.scss'
 
 const Signup = () => {
 	const [userInformation, setUserInformation] = useState({
@@ -32,7 +32,7 @@ const Signup = () => {
 
 	return (
 		<>
-			<SignUpForm>
+			<div className={signup.page}>
 				<form onSubmit={handleSubmit}>
 					<div className='title'>
 						<h2>会員登録画面</h2>
@@ -67,27 +67,9 @@ const Signup = () => {
 						<input type='submit' value='Submit' />
 					</div>
 				</form>
-			</SignUpForm>
+			</div>
 		</>
 	)
 }
 
 export default Signup
-
-const SignUpForm = styled.div`
-	max-width: 500px;
-	margin: 0 auto;
-	height: 60vh;
-	display: flex;
-	align-items: center;
-	form {
-		border: 1px solid #000;
-		border-radius: 10px;
-		width: 70%;
-		text-align: center;
-		margin: 0 auto;
-		.submit {
-			margin: 20px;
-		}
-	}
-`

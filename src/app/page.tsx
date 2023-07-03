@@ -1,20 +1,15 @@
-'use client'
-import styled from 'styled-components'
 import Header from './components/Header'
+import styles from './page.module.scss'
 
 const Home = () => {
 	return (
 		<>
 			<Header />
-			<TooPage>
-				<div className=''>aaaaaa</div>
-			</TooPage>
+			<div className={styles.page}>
+				<h1>aaaaaa</h1>
+			</div>
 		</>
 	)
 }
 
 export default Home
-
-const TooPage = styled.div`
-	width: 100%;
-`
