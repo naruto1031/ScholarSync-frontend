@@ -5,10 +5,11 @@ import axios from 'axios'
 
 const LoginForm = () => {
 	const [userInformation, setUserInformation] = useState({
-		name: '',
 		email: '',
 		password: '',
 	})
+
+	// console.log(localStorage.getItem("auth_token"));
 
 	const handleSubmit = async (e: { preventDefault: () => void }) => {
 		e.preventDefault()
@@ -34,16 +35,16 @@ const LoginForm = () => {
 			<label>
 				Email:
 				<input
+					name='email'
 					type='email'
-					value={userInformation.email}
 					onChange={(e) => changeInformation(e)}
 				/>
 			</label>
 			<label>
 				Password:
 				<input
+					name='password'
 					type='password'
-					value={userInformation.password}
 					onChange={(e) => changeInformation(e)}
 				/>
 			</label>
