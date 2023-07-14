@@ -34,19 +34,11 @@ const LoginForm = () => {
 		<form onSubmit={handleSubmit}>
 			<label>
 				Email:
-				<input
-					name='email'
-					type='email'
-					onChange={(e) => changeInformation(e)}
-				/>
+				<input name='email' type='email' onChange={(e) => changeInformation(e)} />
 			</label>
 			<label>
 				Password:
-				<input
-					name='password'
-					type='password'
-					onChange={(e) => changeInformation(e)}
-				/>
+				<input name='password' type='password' onChange={(e) => changeInformation(e)} />
 			</label>
 			<input type='submit' value='Submit' />
 		</form>

@@ -33,17 +33,17 @@ const Signup = () => {
 	return (
 		<>
 			<div className={signup.page}>
-				<form onSubmit={handleSubmit}>
-					<div className='title'>
+				<form className={signup.form_content} onSubmit={handleSubmit}>
+					<div className={signup.title}>
 						<h2>会員登録画面</h2>
 					</div>
-					<div className='name'>
+					<div className={signup.name}>
 						<label>
 							Name:
 							<input type='text' name='name' onChange={(e) => changeInformation(e)} />
 						</label>
 					</div>
-					<div className='email'>
+					<div className={signup.name}>
 						<label>
 							Email:
 							<input
@@ -53,7 +53,7 @@ const Signup = () => {
 							/>
 						</label>
 					</div>
-					<div className='password'>
+					<div className={signup.password}>
 						<label>
 							Password:
 							<input
@@ -63,8 +63,10 @@ const Signup = () => {
 							/>
 						</label>
 					</div>
-					<div className='submit'>
-						<input type='submit' value='Submit' />
+					<div className={signup.submit}>
+						<label className='submit-label'>
+							<input type='submit' value='Submit' />
+						</label>
 					</div>
 				</form>
 			</div>
