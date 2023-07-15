@@ -14,7 +14,7 @@ const LoginForm = () => {
 	const handleSubmit = async (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 
-		const response = await axios.post('http://localhost:8000/api/register', userInformation)
+		const response = await axios.post('http://127.0.0.1:8000/api/register', userInformation)
 
 		if (response.status) localStorage.setItem('auth_token', response.data.access_token)
 

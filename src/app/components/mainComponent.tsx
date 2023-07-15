@@ -1,8 +1,13 @@
 'use client'
-const main = ({ children }: { children: React.ReactNode }) => {
+
+import { Button } from '@mui/material'
+
+const Main = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<>
-			<div className="div">{children}</div>
+			<Button>main</Button>
+			<div className='div'>{children}</div>
 		</>
-	) 
+	)
 }
+export default Main
