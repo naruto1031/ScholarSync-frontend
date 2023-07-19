@@ -13,13 +13,14 @@
 			gap: 127px;
 			padding-top: 115px;
 			margin-bottom: 100px;
+			
 			.box {
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				width: 279px;
 				height: 244px;
-				background: #FFF;
+				background: #fff;
 				box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 				border-radius: 0px;
 				color: #000;
@@ -29,11 +30,12 @@
 				font-style: normal;
 				font-weight: 400;
 				line-height: normal;
+				cursor: pointer;
 			}
 		}
 
 		.status {
-			background: #FFF;
+			background: #fff;
 			box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 			display: flex;
 			max-width: 1091px;
@@ -41,7 +43,7 @@
 			justify-content: center;
 			align-items: flex-start;
 			margin: 0 auto;
-
+			padding-bottom: 30px;
 			.box {
 				display: flex;
 				flex-direction: column;
@@ -63,6 +65,21 @@
 				}
 			}
 
+			.detail {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				.article {
+					width: 202px;
+					.title {
+						text-align: center;
+					}
+					.value {
+						text-align: center;
+					}
+				}
+			}
 		}
 	}
 }
