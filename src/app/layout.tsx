@@ -1,10 +1,13 @@
+import ReduxProvider from "./components/provider/ReduxProvider";
 import './globals.css'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html>
 			<body>
-				<main>{children}</main>
+				<ReduxProvider>
+					{children}
+				</ReduxProvider>
 			</body>
 		</html>
 	)
