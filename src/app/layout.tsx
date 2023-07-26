@@ -1,13 +1,13 @@
-import ReduxProvider from "./components/provider/ReduxProvider";
+import NextAuthProvider from './components/provider/NextAuthProvider'
 import './globals.css'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html>
 			<body>
-				<ReduxProvider>
+				<NextAuthProvider>
 					{children}
-				</ReduxProvider>
+				</NextAuthProvider>
 			</body>
 		</html>
 	)
