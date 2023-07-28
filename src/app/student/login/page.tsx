@@ -1,47 +1,28 @@
 'use client'
+import { useSession, signIn, signOut } from 'next-auth/react'
+import { useRouter } from 'next/navigation';
 
-import React, { ChangeEvent, useState } from 'react'
-import axios from 'axios'
+export default function Component() {
+	const router = useRouter();
+	const { data: session } = useSession()
 
-const LoginForm = () => {
-	const [userInformation, setUserInformation] = useState({
-		email: '',
-		password: '',
-	})
-
-	// console.log(localStorage.getItem("auth_token"));
-
-	const handleSubmit = async (e: { preventDefault: () => void }) => {
-		e.preventDefault()
-
-		const response = await axios.post('http://127.0.0.1:8000/api/register', userInformation)
-
-		if (response.status) localStorage.setItem('auth_token', response.data.access_token)
-
-		console.log(response)
+	if (session?.user) {
+		router.push('/student/dashboard/top')
 	}
 
-	const changeInformation = (e: ChangeEvent) => {
-		let { target } = e
-		if (!(target instanceof HTMLInputElement)) return
-
-		setUserInformation({ ...userInformation, [target.name]: target.value })
-
-		console.log(userInformation)
+	if (session) {
+		console.log(session)
+		return (
+			<>
+				Signed in as {session.user?.email} <br />
+				<button onClick={() => signOut()}>Sign out</button>
+			</>
+		)
 	}
-
 	return (
-		<form onSubmit={handleSubmit}>
-			<label>
-				Email:
-				<input name='email' type='email' onChange={(e) => changeInformation(e)} />
-			</label>
-			<label>
-				Password:
-				<input name='password' type='password' onChange={(e) => changeInformation(e)} />
-			</label>
-			<input type='submit' value='Submit' />
-		</form>
+		<>
+			Not signed in <br />
+			<button onClick={() => signIn()}>Sign in</button>
+		</>
 	)
 }
-export default LoginForm
