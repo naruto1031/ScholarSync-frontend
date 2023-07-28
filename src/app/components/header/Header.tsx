@@ -3,6 +3,8 @@ import header from './Header.module.scss'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 const Header = () => {
+	// const session = await getServerSession(options)
+	// const user = session?.user // ログインしていなければnullになる。
 	return (
 		<header className={header.header}>
 			<div className={header.title}>学生トップ</div>

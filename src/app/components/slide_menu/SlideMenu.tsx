@@ -38,7 +38,6 @@ const menu: Menu[] = [
 import style from './SlideMenu.module.scss'
 
 const SideMenu = () => {
-
 	return (
 		<Drawer
 			sx={{
