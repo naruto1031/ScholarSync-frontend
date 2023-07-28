@@ -1,28 +1,27 @@
-'use client'
-import { useSession, signIn, signOut } from 'next-auth/react'
-import { useRouter } from 'next/navigation';
+import SingInButton from '@/app/components/button/SignInButton';
+import { options } from '@/app/options';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
+import styles from './login.module.scss';
 
-export default function Component() {
-	const router = useRouter();
-	const { data: session } = useSession()
-
+export default async function Component() {
+	const session = await getServerSession(options);
 	if (session?.user) {
-		router.push('/student/dashboard/top')
-	}
-
-	if (session) {
-		console.log(session)
-		return (
-			<>
-				Signed in as {session.user?.email} <br />
-				<button onClick={() => signOut()}>Sign out</button>
-			</>
-		)
+		redirect("/student/dashboard/top");
 	}
 	return (
 		<>
-			Not signed in <br />
-			<button onClick={() => signIn()}>Sign in</button>
+			<div className={styles.main}>
+				<div className={styles.page}>
+					<div className={styles.wrapper}>
+						<div className="title">
+							<h1>学生サインイン</h1>
+							<p>Microsoftアカウントが必要です</p>
+						</div>
+						<SingInButton />
+					</div>
+				</div>
+			</div>
 		</>
 	)
 }

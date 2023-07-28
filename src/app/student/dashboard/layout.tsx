@@ -6,12 +6,10 @@ import { getServerSession } from "next-auth"
 import { options } from "@/app/options"
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
-
 	const session = await getServerSession(options)
 	if (!session?.user) {
 		redirect('/student/login')
 	}
-	
 	return (
 		<>
 			<Header />
