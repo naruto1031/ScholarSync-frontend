@@ -55,17 +55,16 @@ const SideMenu = () => {
 			<Divider />
 			<List>
 				{menu.map((item, index) => (
-					<NextLink
-						href={`/student/dashboard/${item.url}`}
-						key={index}
-						className={style.link}
-					>
-						<ListItem disablePadding>
-							<ListItemButton>
+					<ListItem key={index} disablePadding>
+						<ListItemButton>
+							<NextLink
+								href={`/student/dashboard/${item.url}`}
+								className={style.link}
+							>
 								<ListItemText primary={item.text} />
-							</ListItemButton>
-						</ListItem>
-					</NextLink>
+							</NextLink>
+						</ListItemButton>
+					</ListItem>
 				))}
 			</List>
 			<Divider />

@@ -1,4 +1,4 @@
-import ServerComponent from "@/app/components/ServerComponent"
+import ServerComponent from '@/app/components/ServerComponent'
 
 const SubmittionStatus = () => {
 	return (
