@@ -12,18 +12,20 @@ const ServerComponent = async () => {
 
 	const res = await fetch('http://127.0.0.1:8000/api/greeting', {
 		headers: {
-			'Authorization': `Bearer ${session?.user.idToken}`
+			'Authorization': `Bearer ${session?.user.accessToken}`
 		}
 	});
-	const data = res;
 
-	data.json().then((data) =>{
-		console.log(data.greeting);
+	// console.log(session?.user)
+	const data = res;
+	console.log(data.status);
+	let greeting = await data.json().then((data: Greeting) =>{
+		return data.greeting;
 	});
 	return (
 		<>
 			<Suspense fallback={<Loading />}>
-				<h1>ServerComponent:</h1>
+				<h1>ServerComponent:{greeting}</h1>
 			</Suspense>
 		</>
 	)

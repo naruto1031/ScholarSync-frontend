@@ -8,7 +8,7 @@ declare module 'next-auth' {
 	interface Session {
 		user: {
 			/** Oauth access token */
-			token?: accessToken
+			accessToken?: accessToken
 			idToken?: string
 		} & DefaultSession['user']
 	}
@@ -19,5 +19,6 @@ declare module "next-auth/jwt" {
 	interface JWT {
 	  /** OpenID ID Token */
 	  idToken?: string
+	  accessToken?: string
 	}
 }
