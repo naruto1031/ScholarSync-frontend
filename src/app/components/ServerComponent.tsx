@@ -10,7 +10,7 @@ interface Greeting {
 const ServerComponent = async () => {
 	const session = await getServerSession(options)
 
-	const res = await fetch('http://127.0.0.1:8000/api/greeting', {
+	const res = await fetch('https://smane-api.azurewebsites.net/api/greeting', {
 		headers: {
 			Authorization: `Bearer ${session?.user.accessToken}`,
 		},
