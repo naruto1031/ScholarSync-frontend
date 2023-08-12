@@ -1,47 +1,27 @@
-'use client'
+import SingInButton from '@/app/components/button/SignInButton'
+import { options } from '@/app/options'
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
+import styles from './login.module.scss'
 
-import React, { ChangeEvent, useState } from 'react'
-import axios from 'axios'
-
-const LoginForm = () => {
-	const [userInformation, setUserInformation] = useState({
-		email: '',
-		password: '',
-	})
-
-	// console.log(localStorage.getItem("auth_token"));
-
-	const handleSubmit = async (e: { preventDefault: () => void }) => {
-		e.preventDefault()
-
-		const response = await axios.post('http://127.0.0.1:8000/api/register', userInformation)
-
-		if (response.status) localStorage.setItem('auth_token', response.data.access_token)
-
-		console.log(response)
+export default async function Component() {
+	const session = await getServerSession(options)
+	if (session?.user) {
+		redirect('/student/dashboard/top')
 	}
-
-	const changeInformation = (e: ChangeEvent) => {
-		let { target } = e
-		if (!(target instanceof HTMLInputElement)) return
-
-		setUserInformation({ ...userInformation, [target.name]: target.value })
-
-		console.log(userInformation)
-	}
-
 	return (
-		<form onSubmit={handleSubmit}>
-			<label>
-				Email:
-				<input name='email' type='email' onChange={(e) => changeInformation(e)} />
-			</label>
-			<label>
-				Password:
-				<input name='password' type='password' onChange={(e) => changeInformation(e)} />
-			</label>
-			<input type='submit' value='Submit' />
-		</form>
+		<>
+			<div className={styles.main}>
+				<div className={styles.page}>
+					<div className={styles.wrapper}>
+						<div className='title'>
+							<h1>学生サインイン</h1>
+							<p>Microsoftアカウントが必要です</p>
+						</div>
+						<SingInButton />
+					</div>
+				</div>
+			</div>
+		</>
 	)
 }
-export default LoginForm

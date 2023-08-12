@@ -1,30 +1,34 @@
 import { Suspense } from 'react'
 import Loading from '../loading'
+import { getServerSession } from 'next-auth'
+import { options } from '../options'
 
 interface Greeting {
 	greeting: string
 }
 
-const getGreeting = async (): Promise<Greeting> => {
-	const response: Response = await fetch('http://127.0.0.1:8000/api/greeting')
-	return response.json()
-}
-
-const stop = async () => {
-	const data: Greeting = await new Promise((resolve) => {
-		setTimeout(() => {
-			resolve(getGreeting())
-		}, 10000)
-	})
-	return data
-}
-
 const ServerComponent = async () => {
-	const stop_data = await stop()
+	const session = await getServerSession(options)
+
+	const res = await fetch('http://127.0.0.1:8000/api/greeting', {
+		headers: {
+			Authorization: `Bearer ${session?.user.accessToken}`,
+		},
+	})
+
+	const data = res
+
+	let greeting = ''
+	if (data.ok) {
+		greeting = await data.json().then((data: Greeting) => {
+			return data.greeting
+		})
+	}
+
 	return (
 		<>
 			<Suspense fallback={<Loading />}>
-				<h1>ServerComponent: {stop_data.greeting}</h1>
+				<h1>ServerComponent:{greeting}</h1>
 			</Suspense>
 		</>
 	)

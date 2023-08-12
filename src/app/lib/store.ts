@@ -4,10 +4,9 @@ import counterReducer from '../feature/counter/counterSlice'
 export const store = configureStore({
 	reducer: {
 		auth: authReducer,
-		counter: counterReducer
-	}
-});
+		counter: counterReducer,
+	},
+})
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
-
