@@ -9,7 +9,10 @@ import {
 	Toolbar,
 } from '@mui/material'
 
+import scholarSyncIcon from '../../../../public/scholar_sync.jpg'
+
 import NextLink from 'next/link'
+import Image from 'next/image'
 
 interface Menu {
 	text: string
@@ -51,7 +54,9 @@ const SideMenu = () => {
 			variant='permanent'
 			anchor='left'
 		>
-			<Toolbar />
+			<Toolbar>
+				<Image src={scholarSyncIcon} alt='scholarSyncIcon' width={200} />
+			</Toolbar>
 			<Divider />
 			<List>
 				{menu.map((item, index) => (
