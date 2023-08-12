@@ -10,7 +10,7 @@ interface Greeting {
 const ServerComponent = async () => {
 	const session = await getServerSession(options)
 
-	const res = await fetch('http://127.0.0.1:8000/api/greeting', {
+	const res = await fetch(`${process.env.API_URL}/api/greeting`, {
 		headers: {
 			Authorization: `Bearer ${session?.user.accessToken}`,
 		},
