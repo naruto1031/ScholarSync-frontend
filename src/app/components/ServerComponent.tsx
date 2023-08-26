@@ -18,7 +18,7 @@ const ServerComponent = async () => {
 	})
 
 	const data = res
-	console.log(data)
+	// console.log(data)
 	let greeting = ''
 	if (data.ok) {
 		greeting = await data.json().then((data: Greeting) => {
@@ -34,7 +34,7 @@ const ServerComponent = async () => {
 	return (
 		<>
 			<Suspense fallback={<Loading />}>
-				<h1>ServerComponent:{greeting}</h1>
+				<h1>ServerComponent:{greeting}{data.status}</h1>
 			</Suspense>
 		</>
 	)
