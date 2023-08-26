@@ -18,7 +18,7 @@ const ServerComponent = async () => {
 	})
 
 	const data = res
-
+	console.log(data)
 	let greeting = ''
 	if (data.ok) {
 		greeting = await data.json().then((data: Greeting) => {
