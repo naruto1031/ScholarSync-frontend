@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import Loading from '../loading'
 import { getServerSession } from 'next-auth'
 import { options } from '../options'
+import { redirect } from 'next/navigation'
 
 interface Greeting {
 	greeting: string
@@ -23,6 +24,11 @@ const ServerComponent = async () => {
 		greeting = await data.json().then((data: Greeting) => {
 			return data.greeting
 		})
+	} else {
+		console.log(data.status)
+		if (data.status === 500) {
+			redirect('/student/login')
+		}
 	}
 
 	return (
