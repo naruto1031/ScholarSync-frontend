@@ -34,7 +34,10 @@ const ServerComponent = async () => {
 	return (
 		<>
 			<Suspense fallback={<Loading />}>
-				<h1>ServerComponent:{greeting}{data.status}</h1>
+				<h1>
+					ServerComponent:{greeting}
+					{data.status}
+				</h1>
 			</Suspense>
 		</>
 	)
