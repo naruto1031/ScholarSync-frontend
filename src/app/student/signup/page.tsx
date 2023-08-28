@@ -46,21 +46,13 @@ const Signup = () => {
 					<div className={signup.name}>
 						<label>
 							Email:
-							<input
-								type='email'
-								name='email'
-								onChange={(e) => changeInformation(e)}
-							/>
+							<input type='email' name='email' onChange={(e) => changeInformation(e)} />
 						</label>
 					</div>
 					<div className={signup.password}>
 						<label>
 							Password:
-							<input
-								type='password'
-								name='password'
-								onChange={(e) => changeInformation(e)}
-							/>
+							<input type='password' name='password' onChange={(e) => changeInformation(e)} />
 						</label>
 					</div>
 					<div className={signup.submit}>

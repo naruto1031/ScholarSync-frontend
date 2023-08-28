@@ -7,7 +7,8 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
 	title: 'Scholar Sync',
-	description: 'Scholar Sync: Azure ADと連携し、Microsoftアカウントを用いた学生情報の安全な管理を実現。信頼性とセキュリティを重視した学生情報管理Webアプリケーション。',
+	description:
+		'Scholar Sync: Azure ADと連携し、Microsoftアカウントを用いた学生情報の安全な管理を実現。信頼性とセキュリティを重視した学生情報管理Webアプリケーション。',
 }
 
 const Page = () => {

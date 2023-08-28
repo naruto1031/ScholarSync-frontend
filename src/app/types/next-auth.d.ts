@@ -10,6 +10,7 @@ declare module 'next-auth' {
 			/** Oauth access token */
 			accessToken?: accessToken
 			idToken?: string
+			refreshToken?: string
 		} & DefaultSession['user']
 	}
 }
@@ -20,5 +21,13 @@ declare module 'next-auth/jwt' {
 		/** OpenID ID Token */
 		idToken?: string
 		accessToken?: string
+		refreshToken?: string
+		accessTokenExpires?: number
 	}
+}
+
+export interface JwtToekn {
+	accessToken?: string
+	idToken?: string
+	refreshToken?: string
 }

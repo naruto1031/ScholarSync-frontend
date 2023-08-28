@@ -62,10 +62,7 @@ const SideMenu = () => {
 				{menu.map((item, index) => (
 					<ListItem key={index} disablePadding>
 						<ListItemButton>
-							<NextLink
-								href={`/student/dashboard/${item.url}`}
-								className={style.link}
-							>
+							<NextLink href={`/student/dashboard/${item.url}`} className={style.link}>
 								<ListItemText primary={item.text} />
 							</NextLink>
 						</ListItemButton>
