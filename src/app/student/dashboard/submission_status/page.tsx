@@ -1,10 +1,14 @@
 import ServerComponent from '@/app/components/ServerComponent'
+import { Suspense } from 'react'
+import  Loading from "../../../loading"
 
 const SubmittionStatus = () => {
 	return (
 		<>
 			<div className='status'>status</div>
-			<ServerComponent />
+			<Suspense fallback={<Loading />}>
+				<ServerComponent />
+			</Suspense>
 		</>
 	)
 }

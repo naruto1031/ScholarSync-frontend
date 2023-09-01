@@ -1,5 +1,3 @@
-import { Suspense } from 'react'
-import Loading from '../loading'
 import { getServerSession } from 'next-auth'
 import { options } from '../options'
 import { redirect } from 'next/navigation'
@@ -33,12 +31,10 @@ const ServerComponent = async () => {
 
 	return (
 		<>
-			<Suspense fallback={<Loading />}>
-				<h1>
-					ServerComponent:{greeting}
-					{data.status}
-				</h1>
-			</Suspense>
+			<h1>
+				ServerComponent:{greeting}
+				{data.status}
+			</h1>
 		</>
 	)
 }
