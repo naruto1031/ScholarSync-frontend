@@ -1,6 +1,6 @@
 import type { NextAuthOptions } from 'next-auth'
 import AzureProvider from 'next-auth/providers/azure-ad'
-import { JwtToekn } from './types/next-auth'
+import { JwtToken } from './types/next-auth'
 
 const clientId = process.env.AZURE_AD_CLIENT_ID
 const clientSecret = process.env.AZURE_AD_CLIENT_SECRET
@@ -11,7 +11,7 @@ if (!clientId || !clientSecret || !tenantId) {
 	throw new Error('Missing required environment variables')
 }
 
-async function refreshAccessToken(token: JwtToekn) {
+async function refreshAccessToken(token: JwtToken) {
 	try {
 		if (!clientId || !clientSecret || !token.refreshToken) {
 			throw new Error('Required values are missing.')
@@ -44,6 +44,7 @@ async function refreshAccessToken(token: JwtToekn) {
 			accessToken: refreshedTokens.access_token,
 			accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
 			refreshToken: refreshedTokens.refresh_token ?? token.refreshToken, // Fall back to old refresh token
+			idToken: refreshedTokens.id_token
 		}
 	} catch (error) {
 		return {
@@ -75,16 +76,24 @@ export const options: NextAuthOptions = {
 				token.accessTokenExpires = account.expires_at
 				token.refreshToken = account.refresh_token
 			}
-
-			if (token.accessTokenExpires && Date.now() < token?.accessTokenExpires) {
-				return token 
-			}
-
 			return refreshAccessToken(token)
 		},
+
 		async session({ session, token }) {
+			const groups = getGroups(token.idToken)
 			session.user = token
+			session.user.groups = groups
 			return session
 		},
 	},
+}
+
+const getGroups = (token: string | undefined): string[] | null => {
+	if (!token) return null
+	const base64Url = token.split('.')[1];
+	const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+	const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+			return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+	}).join(''));
+	return JSON.parse(jsonPayload).groups;
 }
