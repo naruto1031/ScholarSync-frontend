@@ -11,6 +11,7 @@ declare module 'next-auth' {
 			accessToken?: accessToken
 			idToken?: string
 			refreshToken?: string
+			groups?: string[] | null
 		} & DefaultSession['user']
 	}
 }
@@ -26,7 +27,7 @@ declare module 'next-auth/jwt' {
 	}
 }
 
-export interface JwtToekn {
+export interface JwtToken {
 	accessToken?: string
 	idToken?: string
 	refreshToken?: string

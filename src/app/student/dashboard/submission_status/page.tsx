@@ -1,16 +1,12 @@
-import ServerComponent from '@/app/components/ServerComponent'
-import { Suspense } from 'react'
-import  Loading from "../../../loading"
+import { StatusTable } from '@/app/components/submission_status/table'
+import { css } from '../../../../../styled-system/css'
 
-const SubmittionStatus = () => {
+const SubmissionStatus = () => {
 	return (
 		<>
-			<div className='status'>status</div>
-			<Suspense fallback={<Loading />}>
-				<ServerComponent />
-			</Suspense>
+			<StatusTable />
 		</>
 	)
 }
 
-export default SubmittionStatus
+export default SubmissionStatus
