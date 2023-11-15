@@ -1,4 +1,3 @@
-'use client'
 import {
 	Divider,
 	Drawer,
@@ -38,8 +37,6 @@ const menu: Menu[] = [
 	},
 ]
 
-import style from './SlideMenu.module.scss'
-
 const SideMenu = () => {
 	return (
 		<Drawer
@@ -55,14 +52,14 @@ const SideMenu = () => {
 			anchor='left'
 		>
 			<Toolbar>
-				<Image src={scholarSyncIcon} alt='scholarSyncIcon' width={200} />
+				<Image src={scholarSyncIcon} alt='scholarSyncIcon' />
 			</Toolbar>
 			<Divider />
 			<List>
 				{menu.map((item, index) => (
 					<ListItem key={index} disablePadding>
 						<ListItemButton>
-							<NextLink href={`/student/dashboard/${item.url}`} className={style.link}>
+							<NextLink href={`/student/dashboard/${item.url}`}>
 								<ListItemText primary={item.text} />
 							</NextLink>
 						</ListItemButton>

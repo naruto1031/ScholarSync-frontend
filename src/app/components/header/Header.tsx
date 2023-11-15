@@ -1,16 +1,40 @@
 'use client'
 import Link from 'next/link'
-import header from './Header.module.scss'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { signOut } from 'next-auth/react'
+import { css } from '../../../../styled-system/css'
 
 const Header = () => {
 	return (
-		<header className={header.header}>
-			<div className={header.title} onClick={() => signOut()}>
+		<header
+			className={css({
+				width: 'calc(100% - 250px)',
+				height: '64px',
+				backgroundColor: '#1664c0',
+				marginLeft: '250px',
+				display: 'flex',
+				alignItems: 'center',
+			})}
+		>
+			<div
+				className={css({
+					m: '0',
+					color: '#fff',
+					fontSize: '20px',
+					marginLeft: '20px',
+				})}
+				onClick={() => signOut()}
+			>
 				学生トップ
 			</div>
-			<div className={header.user}>
+			<div
+				className={css({
+					justifyContent: 'flex-end',
+					width: '50px',
+					marginLeft: 'auto',
+					marginRight: '20px',
+				})}
+			>
 				<Link href={'/student/dashboard/top'}>
 					<AccountCircleIcon style={{ color: '#fff', fontSize: '2em' }} />
 				</Link>

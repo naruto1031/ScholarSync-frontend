@@ -23,15 +23,18 @@ async function refreshAccessToken(token: JwtToken) {
 			grant_type: 'refresh_token',
 			refresh_token: token.refreshToken,
 			scope: `openid profile email api://${clientId}/auth offline_access`,
-		});
-		
-		const response = await fetch(`https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`, {
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded',
+		})
+
+		const response = await fetch(
+			`https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`,
+			{
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+				},
+				method: 'POST',
+				body: params.toString(),
 			},
-			method: 'POST',
-			body: params.toString(),
-		});
+		)
 
 		const refreshedTokens = await response.json()
 
@@ -44,7 +47,7 @@ async function refreshAccessToken(token: JwtToken) {
 			accessToken: refreshedTokens.access_token,
 			accessTokenExpires: Date.now() + refreshedTokens.expires_in * 1000,
 			refreshToken: refreshedTokens.refresh_token ?? token.refreshToken, // Fall back to old refresh token
-			idToken: refreshedTokens.id_token
+			idToken: refreshedTokens.id_token,
 		}
 	} catch (error) {
 		return {
@@ -90,10 +93,15 @@ export const options: NextAuthOptions = {
 
 const getGroups = (token: string | undefined): string[] | null => {
 	if (!token) return null
-	const base64Url = token.split('.')[1];
-	const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-	const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-			return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-	}).join(''));
-	return JSON.parse(jsonPayload).groups;
+	const base64Url = token.split('.')[1]
+	const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+	const jsonPayload = decodeURIComponent(
+		atob(base64)
+			.split('')
+			.map(function (c) {
+				return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+			})
+			.join(''),
+	)
+	return JSON.parse(jsonPayload).groups
 }
