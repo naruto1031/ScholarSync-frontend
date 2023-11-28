@@ -11,14 +11,23 @@ export type Task = {
 	dueDate: string
 }
 
-export interface Greeting {
-	greeting: string
+export type ResponseTaskData = {
+	data: Task[]
 }
-export default function SubmitAssignment() {
-	async function getGreeting(): Promise<Greeting | undefined> {
+
+export default async function SubmitAssignment() {
+  const session = await getServerSession(options);
+  const res = await fetch(`${process.env.MOCK_API_URL}/api/mock`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${session?.user.accessToken}`,
+    },
+  })
+  const resData: ResponseTaskData = await res.json()
+  
+  const submitAssignment = async (): Promise<ResponseTaskData | undefined> => {
 		'use server'
-		const session = await getServerSession(options)
-		const res = await fetch(`${process.env.API_URL}/api/greeting`, {
+		const res = await fetch(`${process.env.MOCK_API_URL}/api/mock`, {
 			method: 'GET',
 			headers: {
 				Authorization: `Bearer ${session?.user.accessToken}`,
@@ -31,39 +40,6 @@ export default function SubmitAssignment() {
 			throw new Error('Failed to fetch API')
 		}
 	}
-
-	const mockData: Task[] = [
-		{ subjectCode: 'A001', taskNumber: 1, taskTopic: 'Basic Mathematics', dueDate: '2023-10-01' },
-		{
-			subjectCode: 'A002',
-			taskNumber: 2,
-			taskTopic: 'Principles of Physics',
-			dueDate: '2023-10-05',
-		},
-		{ subjectCode: 'A003', taskNumber: 3, taskTopic: 'Chemical Reactions', dueDate: '2023-10-10' },
-		{
-			subjectCode: 'A004',
-			taskNumber: 4,
-			taskTopic: 'Evolution of Biology',
-			dueDate: '2023-10-15',
-		},
-		{ subjectCode: 'A005', taskNumber: 5, taskTopic: 'Advanced Algebra', dueDate: '2023-10-20' },
-		{ subjectCode: 'A006', taskNumber: 6, taskTopic: 'Quantum Mechanics', dueDate: '2023-10-25' },
-		{ subjectCode: 'A007', taskNumber: 7, taskTopic: 'Organic Chemistry', dueDate: '2023-10-30' },
-		{ subjectCode: 'A008', taskNumber: 8, taskTopic: 'Cell Biology', dueDate: '2023-11-01' },
-		{
-			subjectCode: 'A009',
-			taskNumber: 9,
-			taskTopic: 'Calculus Fundamentals',
-			dueDate: '2023-11-05',
-		},
-		{
-			subjectCode: 'A010',
-			taskNumber: 10,
-			taskTopic: 'Space & Time in Physics',
-			dueDate: '2023-11-10',
-		},
-	]
 
 	return (
 		<Box pt={'50px'} maxWidth={'1059px'} margin={'0 auto'}>
@@ -93,7 +69,7 @@ export default function SubmitAssignment() {
 								<TableCell align='right'>納期</TableCell>
 							</TableRow>
 						</TableHead>
-						<AssignmentTableBody data={mockData} handleSubmit={getGreeting} />
+						<AssignmentTableBody data={resData.data} handleSubmit={submitAssignment} />
 					</Table>
 				</TableContainer>
 			</Box>
