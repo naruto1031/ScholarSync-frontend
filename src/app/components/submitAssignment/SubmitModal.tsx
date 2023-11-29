@@ -1,10 +1,10 @@
 'use client'
-import { Task } from '@/app/student/dashboard/submit_assignment/page'
 import { Box, Button, Modal, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
+import { Issue } from '@/app/types/apiResponseTypes'
 
 interface Props {
-	data: Task | null
+	data: Issue | null
 	isOpen: boolean
 	isLoading: boolean
 	handleClose: () => void
@@ -37,8 +37,8 @@ export const SubmitModal = ({ data, isOpen, handleClose, handleSubmit, isLoading
 					}}
 				>
 					<Box sx={{ display: 'flex', gap: '20px', fontSize: '20px' }}>
-						<h3>{data?.subjectCode}</h3>
-						<h3>課題No.{data?.taskNumber}</h3>
+						<h3>{data?.subjectName}</h3>
+						<h3>課題No.{data?.issueID}</h3>
 					</Box>
 					<Box
 						sx={{
@@ -46,7 +46,7 @@ export const SubmitModal = ({ data, isOpen, handleClose, handleSubmit, isLoading
 							fontWeight: 'bold',
 						}}
 					>
-						<h3>{data?.taskTopic}</h3>
+						<h3>{data?.issueName}</h3>
 					</Box>
 					<Box
 						sx={{
