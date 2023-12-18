@@ -16,8 +16,8 @@ export default async function DashboardLayout({ children }: { children: React.Re
 		<>
 			{session?.user.groups?.includes(teacherGroupID) ? (
 				<>
-          <Header />
-          <SideMenu />
+					<Header />
+					<SideMenu />
 					<Box className={style.main}>{children}</Box>
 				</>
 			) : (

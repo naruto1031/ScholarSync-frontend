@@ -1,8 +1,7 @@
-
 const SubmissionStatus = () => {
 	return (
 		<>
-      <h1>Submission Status</h1>
+			<h1>Submission Status</h1>
 		</>
 	)
 }

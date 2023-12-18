@@ -59,19 +59,17 @@ export const AssignmentTableBody = ({ issueData, totalIssueCount, handleSubmit }
 
 	return (
 		<>
-      <Box display={"flex"} width={"100%"} alignItems={"center"}>
-        <Box>
-          課題総数: {totalIssueCount}件
-        </Box>
-        <Box width={'fit-content'} m={'0 0 20px auto'}>
-          <Pagination
-            count={Math.ceil(totalIssueCount / 10)}
-            color='primary'
-            page={page}
-            onChange={(_, page) => setPage(page)}
-          />
-        </Box>
-      </Box>
+			<Box display={'flex'} width={'100%'} alignItems={'center'}>
+				<Box>課題総数: {totalIssueCount}件</Box>
+				<Box width={'fit-content'} m={'0 0 20px auto'}>
+					<Pagination
+						count={Math.ceil(totalIssueCount / 10)}
+						color='primary'
+						page={page}
+						onChange={(_, page) => setPage(page)}
+					/>
+				</Box>
+			</Box>
 			<Box
 				maxHeight={'500px'}
 				overflow={'hidden auto'}
