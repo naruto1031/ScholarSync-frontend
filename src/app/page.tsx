@@ -20,7 +20,7 @@ const Page = () => {
 					Scholar Syncへようこそ
 				</Typography>
 
-				<NextLink className={style.to_link} href={'./student/dashboard/top'}>
+				<NextLink className={style.to_link} href={'./entrance/student/dashboard/top'}>
 					<Button variant='contained' color='primary'>
 						はじめる
 					</Button>

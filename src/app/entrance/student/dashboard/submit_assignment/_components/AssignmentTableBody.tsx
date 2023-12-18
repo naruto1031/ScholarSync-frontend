@@ -9,18 +9,18 @@ import {
 	TableHead,
 	TableRow,
 } from '@mui/material'
-import { css } from '../../../../styled-system/css'
 import { useState, useTransition } from 'react'
 import { SubmitModal } from './SubmitModal'
 import { Issue, PendingIssuesResponse } from '@/app/types/apiResponseTypes'
+import { css } from '../../../../../../../styled-system/css'
 
 interface Props {
 	issueData: Issue[]
-	totalPageCount: number
+	totalIssueCount: number
 	handleSubmit: () => Promise<PendingIssuesResponse | undefined>
 }
 
-export const AssignmentTableBody = ({ issueData, totalPageCount, handleSubmit }: Props) => {
+export const AssignmentTableBody = ({ issueData, totalIssueCount, handleSubmit }: Props) => {
 	const [assignmentIssueData, setAssignmentIssueData] = useState<Issue[]>(issueData)
 	const [isPending, startTransition] = useTransition()
 	const [isOpen, setIsOpen] = useState(false)
@@ -59,14 +59,19 @@ export const AssignmentTableBody = ({ issueData, totalPageCount, handleSubmit }:
 
 	return (
 		<>
-			<Box width={'fit-content'} m={'0 0 20px auto'}>
-				<Pagination
-					count={totalPageCount}
-					color='primary'
-					page={page}
-					onChange={(_, page) => setPage(page)}
-				/>
-			</Box>
+      <Box display={"flex"} width={"100%"} alignItems={"center"}>
+        <Box>
+          課題総数: {totalIssueCount}件
+        </Box>
+        <Box width={'fit-content'} m={'0 0 20px auto'}>
+          <Pagination
+            count={Math.ceil(totalIssueCount / 10)}
+            color='primary'
+            page={page}
+            onChange={(_, page) => setPage(page)}
+          />
+        </Box>
+      </Box>
 			<Box
 				maxHeight={'500px'}
 				overflow={'hidden auto'}

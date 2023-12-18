@@ -1,8 +1,9 @@
 import { Box } from '@mui/material'
-import { AssignmentTableBody } from '@/app/components'
+
 import { getServerSession } from 'next-auth'
 import { options } from '@/app/options'
-import { PendingIssuesResponse, TotalPageCount } from '@/app/types/apiResponseTypes'
+import { PendingIssuesResponse, TotalIssueCount } from '@/app/types/apiResponseTypes'
+import { AssignmentTableBody } from './_components/AssignmentTableBody'
 
 export default async function SubmitAssignment() {
 	const session = await getServerSession(options)
@@ -21,7 +22,7 @@ export default async function SubmitAssignment() {
 		},
 	})
 
-	const totalPageCount: TotalPageCount = await pageCountRes.json()
+	const totalPageCount: TotalIssueCount = await pageCountRes.json()
 
 	const submitAssignment = async (): Promise<PendingIssuesResponse | undefined> => {
 		'use server'
@@ -43,7 +44,7 @@ export default async function SubmitAssignment() {
 			<AssignmentTableBody
 				issueData={resData.issues}
 				handleSubmit={submitAssignment}
-				totalPageCount={totalPageCount.totalPageCount}
+				totalIssueCount={totalPageCount.totalIssueCount}
 			/>
 		</Box>
 	)

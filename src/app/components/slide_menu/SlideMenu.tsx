@@ -37,7 +37,7 @@ const menu: Menu[] = [
 	},
 ]
 
-const SideMenu = () => {
+export const SideMenu = () => {
 	return (
 		<Drawer
 			sx={{
@@ -70,5 +70,3 @@ const SideMenu = () => {
 		</Drawer>
 	)
 }
-
-export default SideMenu
