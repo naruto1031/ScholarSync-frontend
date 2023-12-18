@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 import { SignInButton } from '@/app/components'
 import styles from './login.module.scss'
 
-export default async function Component() {
+export default async function Login() {
 	const session = await getServerSession(options)
 	const studentGroupID = process.env.STUDENT
 	const teacherGroupID = process.env.TEACHER
