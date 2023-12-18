@@ -8,8 +8,8 @@ export interface Issue {
 	challengeProblemFullMark: number
 }
 
-export interface TotalPageCount {
-	totalPageCount: number
+export interface TotalIssueCount {
+	count: number
 }
 
 // APIレスポンスの型

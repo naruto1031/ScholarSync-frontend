@@ -4,7 +4,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import { signOut } from 'next-auth/react'
 import { css } from '../../../../styled-system/css'
 
-const Header = () => {
+export const Header = () => {
 	return (
 		<header
 			className={css({
@@ -35,12 +35,10 @@ const Header = () => {
 					marginRight: '20px',
 				})}
 			>
-				<Link href={'/student/dashboard/top'}>
+				<Link href={'/entrance/student/dashboard/top'}>
 					<AccountCircleIcon style={{ color: '#fff', fontSize: '2em' }} />
 				</Link>
 			</div>
 		</header>
 	)
 }
-
-export default Header
