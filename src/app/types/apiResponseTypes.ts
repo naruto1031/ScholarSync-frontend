@@ -9,7 +9,7 @@ export interface Issue {
 }
 
 export interface TotalIssueCount {
-	totalIssueCount: number
+	count: number
 }
 
 // APIレスポンスの型

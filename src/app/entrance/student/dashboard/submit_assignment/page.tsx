@@ -22,7 +22,7 @@ export default async function SubmitAssignment() {
 		},
 	})
 
-	const totalPageCount: TotalIssueCount = await pageCountRes.json()
+	const totalIssueCount: TotalIssueCount = await pageCountRes.json()
 
 	const submitAssignment = async (): Promise<PendingIssuesResponse | undefined> => {
 		'use server'
@@ -44,7 +44,7 @@ export default async function SubmitAssignment() {
 			<AssignmentTableBody
 				issueData={resData.issues}
 				handleSubmit={submitAssignment}
-				totalIssueCount={totalPageCount.totalIssueCount}
+				totalIssueCount={totalIssueCount.count}
 			/>
 		</Box>
 	)
