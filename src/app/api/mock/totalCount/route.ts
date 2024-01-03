@@ -1,7 +1,7 @@
 import { TotalIssueCount } from '@/app/types/apiResponseTypes'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
 	const testData: TotalIssueCount = {
 		count: 10,
 	}

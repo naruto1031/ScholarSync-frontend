@@ -11,6 +11,9 @@ dependencies:
   '@emotion/styled':
     specifier: ^11.11.0
     version: 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.8)(react@18.2.0)
+  '@hookform/resolvers':
+    specifier: ^3.3.1
+    version: 3.3.3(react-hook-form@7.49.2)
   '@mui/icons-material':
     specifier: ^5.14.0
     version: 5.14.0(@mui/material@5.14.0)(@types/react@18.2.8)(react@18.2.0)
@@ -35,6 +38,9 @@ dependencies:
   eslint-config-next:
     specifier: 13.4.4
     version: 13.4.4(eslint@8.42.0)(typescript@5.1.3)
+  husky:
+    specifier: ^8.0.3
+    version: 8.0.3
   next:
     specifier: 13.4.4
     version: 13.4.4(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)(sass@1.63.6)
@@ -47,9 +53,15 @@ dependencies:
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  react-hook-form:
+    specifier: ^7.49.2
+    version: 7.49.2(react@18.2.0)
   typescript:
     specifier: 5.1.3
     version: 5.1.3
+  zod:
+    specifier: ^3.21.4
+    version: 3.21.4
 
 devDependencies:
   '@pandacss/dev':
@@ -1374,6 +1386,17 @@ packages:
       {
         integrity: sha512-OfX7E2oUDYxtBvsuS4e/jSn4Q9Qb6DzgeYtsAdkPZ47znpoNsMgZw0+tVijiv3uGNR6dgNlty6r9rzIzHjtd/A==,
       }
+
+  /@hookform/resolvers@3.3.3(react-hook-form@7.49.2):
+    resolution:
+      {
+        integrity: sha512-bOMxKkSD3zWcS11TKoUQ8O0ZqKslFohvUsPKSrdCHiuEuMjRo/u3cq9YRJD/+xtNGYup++XD2LkjhegP5XENiw==,
+      }
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.49.2(react@18.2.0)
+    dev: false
 
   /@humanwhocodes/config-array@0.11.13:
     resolution:
@@ -5643,6 +5666,15 @@ packages:
     engines: { node: '>=14.18.0' }
     dev: true
 
+  /husky@8.0.3:
+    resolution:
+      {
+        integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==,
+      }
+    engines: { node: '>=14' }
+    hasBin: true
+    dev: false
+
   /ieee754@1.2.1:
     resolution:
       {
@@ -7928,6 +7960,18 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+
+  /react-hook-form@7.49.2(react@18.2.0):
+    resolution:
+      {
+        integrity: sha512-TZcnSc17+LPPVpMRIDNVITY6w20deMdNi6iehTFLV1x8SqThXGwu93HjlUVU09pzFgZH7qZOvLMM7UYf2ShAHA==,
+      }
+    engines: { node: '>=18', pnpm: '8' }
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /react-is@16.13.1:
     resolution:

@@ -16,3 +16,17 @@ export interface TotalIssueCount {
 export interface PendingIssuesResponse {
 	issues: Issue[]
 }
+
+export interface IssuesData {
+	issues: Issue[]
+	totalCount: number
+}
+
+export interface StudentExists {
+	exists: boolean
+}
+
+export interface Class {
+	class_id: number
+	name: string
+}

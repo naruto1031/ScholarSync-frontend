@@ -9,38 +9,41 @@ import {
 	TableHead,
 	TableRow,
 } from '@mui/material'
-import { useState, useTransition } from 'react'
+import { useState } from 'react'
 import { SubmitModal } from './SubmitModal'
 import { Issue, PendingIssuesResponse } from '@/app/types/apiResponseTypes'
 import { css } from '../../../../../../../styled-system/css'
+import { useRouter } from 'next/router'
 
 interface Props {
 	issueData: Issue[]
 	totalIssueCount: number
-	handleSubmit: () => Promise<PendingIssuesResponse | undefined>
 }
 
-export const AssignmentTableBody = ({ issueData, totalIssueCount, handleSubmit }: Props) => {
+export const AssignmentTableBody = ({ issueData, totalIssueCount }: Props) => {
 	const [assignmentIssueData, setAssignmentIssueData] = useState<Issue[]>(issueData)
-	const [isPending, startTransition] = useTransition()
 	const [isOpen, setIsOpen] = useState(false)
 	const [currentTask, setCurrentTask] = useState<Issue | null>(null)
 	const [page, setPage] = useState(1)
+	const [isLoading, setIsLoading] = useState(false)
+	const [isAbsenceLoading, setIsAbsenceLoading] = useState(false)
+	const [isExemptionLoading, setIsExemptionLoading] = useState(false)
 
-	const handleSubmission = async () => {
+	const handleSubmission = async (id: number | undefined) => {
 		try {
-			let res: PendingIssuesResponse | undefined
-			startTransition(async () => {
-				res = await handleSubmit()
-				if (!res) {
-					alert('提出に失敗しました')
-					return
-				}
-				alert('提出しました')
-				setAssignmentIssueData(res.issues)
-				handleClose()
+			if (!id) return
+			setIsLoading(true)
+			const res = await fetch('/api/submit_assignment/register', {
+				method: 'POST',
+				body: JSON.stringify({
+					issueId: id,
+				}),
 			})
-			return res
+			const data: PendingIssuesResponse = await res.json()
+			alert('提出しました')
+			setAssignmentIssueData(data.issues)
+			handleClose()
+			setIsLoading(false)
 		} catch (error) {
 			alert('エラーが発生しました')
 			return
@@ -55,6 +58,44 @@ export const AssignmentTableBody = ({ issueData, totalIssueCount, handleSubmit }
 	const handleClose = () => {
 		setCurrentTask(null)
 		setIsOpen(false)
+	}
+
+	const handleAbsenceApplication = async (id: number | undefined) => {
+		try {
+			if (!id) return
+			setIsAbsenceLoading(true)
+			const res = await fetch('/api/submit_assignment/absence', {
+				method: 'POST',
+				body: JSON.stringify({
+					issueId: id,
+				}),
+			})
+			alert('公欠申請が完了しました')
+			handleClose()
+			setIsAbsenceLoading(false)
+		} catch (error) {
+			alert('エラーが発生しました')
+			return
+		}
+	}
+
+	const handleExemptionApplication = async (id: number | undefined) => {
+		try {
+			if (!id) return
+			setIsExemptionLoading(true)
+			const res = await fetch('/api/submit_assignment/exemption', {
+				method: 'POST',
+				body: JSON.stringify({
+					issueId: id,
+				}),
+			})
+			alert('免除申請が完了しました')
+			handleClose()
+			setIsExemptionLoading(false)
+		} catch (error) {
+			alert('エラーが発生しました')
+			return
+		}
 	}
 
 	return (
@@ -105,9 +146,13 @@ export const AssignmentTableBody = ({ issueData, totalIssueCount, handleSubmit }
 						<SubmitModal
 							data={currentTask}
 							isOpen={isOpen}
+							isLoading={isLoading}
+							isAbsenceLoading={isAbsenceLoading}
+							isExemptionLoading={isExemptionLoading}
 							handleClose={handleClose}
 							handleSubmit={handleSubmission}
-							isLoading={isPending}
+							handleAbsenceApplication={handleAbsenceApplication}
+							handleExemptionApplication={handleExemptionApplication}
 						/>
 					</Table>
 				</TableContainer>
