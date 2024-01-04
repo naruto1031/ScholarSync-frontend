@@ -1,8 +1,10 @@
 import { Box } from '@mui/material'
-import { IssuesData, PendingIssuesResponse, TotalIssueCount } from '@/app/types/apiResponseTypes'
+import { PendingIssuesResponse, TotalIssueCount } from '@/app/types/apiResponseTypes'
 import { AssignmentTableBody } from './_components/AssignmentTableBody'
 import { options } from '@/app/options'
 import { getServerSession } from 'next-auth'
+import { Suspense } from 'react'
+import Loading from '@/app/loading'
 
 export default async function SubmitAssignment() {
 	const session = await getServerSession(options)
@@ -19,7 +21,9 @@ export default async function SubmitAssignment() {
 
 	return (
 		<Box pt={'50px'} maxWidth={'1059px'} margin={'0 auto'}>
-			<AssignmentTableBody issueData={issues.issues} totalIssueCount={totalCount.count} />
+			<Suspense fallback={<Loading />}>
+				<AssignmentTableBody issueData={issues.issues} totalIssueCount={totalCount.count} />
+			</Suspense>
 		</Box>
 	)
 }

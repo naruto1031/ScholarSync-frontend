@@ -12,8 +12,6 @@ import {
 import { useState } from 'react'
 import { SubmitModal } from './SubmitModal'
 import { Issue, PendingIssuesResponse } from '@/app/types/apiResponseTypes'
-import { css } from '../../../../../../../styled-system/css'
-import { useRouter } from 'next/router'
 
 interface Props {
 	issueData: Issue[]
@@ -64,7 +62,7 @@ export const AssignmentTableBody = ({ issueData, totalIssueCount }: Props) => {
 		try {
 			if (!id) return
 			setIsAbsenceLoading(true)
-			const res = await fetch('/api/submit_assignment/absence', {
+			await fetch('/api/submit_assignment/absence', {
 				method: 'POST',
 				body: JSON.stringify({
 					issueId: id,
@@ -130,9 +128,12 @@ export const AssignmentTableBody = ({ issueData, totalIssueCount }: Props) => {
 							{assignmentIssueData.map((row) => (
 								<TableRow
 									key={row.issueID}
-									sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+									sx={{
+										'&:last-child td, &:last-child th': { border: 0 },
+										cursor: 'pointer',
+										'&:hover': { backgroundColor: '#F5F5F5' },
+									}}
 									onClick={() => handleOpen(row)}
-									className={css({ cursor: 'pointer', _hover: { backgroundColor: '#F5F5F5' } })}
 								>
 									<TableCell component='th' scope='row'>
 										{row.subjectName}

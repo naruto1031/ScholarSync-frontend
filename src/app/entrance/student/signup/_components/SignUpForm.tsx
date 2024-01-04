@@ -8,11 +8,8 @@ import {
 	InputLabel,
 	MenuItem,
 	Select,
-	Input,
 	TextField,
 	FormHelperText,
-	Snackbar,
-	Alert,
 } from '@mui/material'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -33,7 +30,7 @@ export const SignUpForm = ({ classList }: Props) => {
 	const onSubmit = async ({ classId, studentId, studentNumber }: StudentSchemaType) => {
 		try {
 			setIsLoading(true)
-			const res = await fetch('/api/student/register', {
+			await fetch('/api/student/register', {
 				method: 'POST',
 				body: JSON.stringify({
 					classId: classId,

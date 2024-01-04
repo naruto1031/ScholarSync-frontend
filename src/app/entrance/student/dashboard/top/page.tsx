@@ -1,47 +1,72 @@
-import top from './top.module.scss'
+import { Box, Typography, Paper } from '@mui/material'
 
-const TopPage = () => {
+export default function TopPage() {
+	const menuItems = ['教科一覧', '課題表紙提出', '提出状況']
+	const statusDetails = [
+		{ title: '課題承認率', value: '81%' },
+		{ title: '承認数/課題数', value: '9/11' },
+		{ title: '承認待ち', value: '1' },
+		{ title: '再提出数', value: '0' },
+		{ title: '未提出数', value: '1' },
+	]
+
 	return (
-		<>
-			<main className={top.main}>
-				<div className={top.wraper}>
-					<div className={top.menu}>
-						{['教科一覧', '課題表紙提出', '提出状況'].map((item) => (
-							<div className={top.box} key={item}>
-								{item}
-							</div>
-						))}
-					</div>
-					<div className={top.status}>
-						<div className={top.box}>
-							<div className={top.title}>課題提出ステータス</div>
-						</div>
-						<div className={top.detail}>
-							<div className={top.article}>
-								<div className={top.title}>課題承認率</div>
-								<div className={top.value}>81%</div>
-							</div>
-							<div className={top.article}>
-								<div className={top.title}>承認数/課題数</div>
-								<div className={top.value}>9/11</div>
-							</div>
-							<div className={top.article}>
-								<div className={top.title}>承認待ち</div>
-								<div className={top.value}>1</div>
-							</div>
-							<div className={top.article}>
-								<div className={top.title}>再提出数</div>
-								<div className={top.value}>0</div>
-							</div>
-							<div className={top.article}>
-								<div className={top.title}>未提出数</div>
-								<div className={top.value}>1</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</main>
-		</>
+		<Box>
+			<Box
+				sx={{
+					display: 'flex',
+					justifyContent: 'center',
+					flexWrap: 'wrap',
+					mt: '20px',
+					gap: '100px',
+					marginBottom: '50px',
+				}}
+			>
+				{menuItems.map((item) => (
+					<Paper
+						key={item}
+						sx={{
+							width: '279px',
+							height: '244px',
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
+							boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+							cursor: 'pointer',
+						}}
+					>
+						<Typography>{item}</Typography>
+					</Paper>
+				))}
+			</Box>
+			<Paper
+				sx={{
+					background: '#fff',
+					boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+					maxWidth: '1091px',
+					margin: '0 auto',
+					paddingBottom: '30px',
+				}}
+			>
+				<Box sx={{ padding: '6px', borderBottom: 1, borderColor: 'divider' }}>
+					<Typography variant='h6'>課題提出ステータス</Typography>
+				</Box>
+				<Box
+					sx={{
+						display: 'flex',
+						justifyContent: 'space-evenly',
+						flexWrap: 'wrap',
+						padding: '20px',
+					}}
+				>
+					{statusDetails.map(({ title, value }) => (
+						<Box key={title} sx={{ width: '202px', textAlign: 'center', margin: '10px' }}>
+							<Typography variant='subtitle1'>{title}</Typography>
+							<Typography variant='h6'>{value}</Typography>
+						</Box>
+					))}
+				</Box>
+			</Paper>
+		</Box>
 	)
 }
-export default TopPage
