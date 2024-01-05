@@ -1,8 +1,7 @@
 import { redirect } from 'next/navigation'
-import style from './layout.module.scss'
 import { getServerSession } from 'next-auth'
 import { options } from '@/app/options'
-import { Header, SideMenu, SignOutButton } from '@/app/components'
+import { Header, SignOutButton } from '@/app/components'
 import { Box } from '@mui/material'
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -16,9 +15,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 		<>
 			{session?.user.groups?.includes(teacherGroupID) ? (
 				<>
-					<Header />
-					<SideMenu />
-					<Box className={style.main}>{children}</Box>
+					<Box>{children}</Box>
 				</>
 			) : (
 				<>

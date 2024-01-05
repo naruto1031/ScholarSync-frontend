@@ -1,44 +1,37 @@
 'use client'
-import Link from 'next/link'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import MenuIcon from '@mui/icons-material/Menu'
+import { StudentDrawer } from '../drawer/StudentDrawer'
+import { useState } from 'react'
 import { signOut } from 'next-auth/react'
-import { css } from '../../../../styled-system/css'
 
 export const Header = () => {
+	const [isOpen, setIsOpen] = useState(false)
 	return (
-		<header
-			className={css({
-				width: 'calc(100% - 250px)',
-				height: '64px',
-				backgroundColor: '#1664c0',
-				marginLeft: '250px',
-				display: 'flex',
-				alignItems: 'center',
-			})}
-		>
-			<div
-				className={css({
-					m: '0',
-					color: '#fff',
-					fontSize: '20px',
-					marginLeft: '20px',
-				})}
-				onClick={() => signOut()}
-			>
-				学生トップ
-			</div>
-			<div
-				className={css({
-					justifyContent: 'flex-end',
-					width: '50px',
-					marginLeft: 'auto',
-					marginRight: '20px',
-				})}
-			>
-				<Link href={'/entrance/student/dashboard/top'}>
-					<AccountCircleIcon style={{ color: '#fff', fontSize: '2em' }} />
-				</Link>
-			</div>
-		</header>
+		<AppBar position='static'>
+			<Toolbar>
+				<IconButton
+					size='large'
+					edge='start'
+					color='inherit'
+					aria-label='menu'
+					sx={{ mr: 2 }}
+					onClick={() => setIsOpen(true)}
+				>
+					<MenuIcon />
+				</IconButton>
+				<Typography variant='h6' component='div' sx={{ flexGrow: 1, fontWeight: '' }}>
+					ScholarSync
+				</Typography>
+				<Button color='inherit' onClick={() => signOut()}>
+					SignOut
+				</Button>
+			</Toolbar>
+			<StudentDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
+		</AppBar>
 	)
 }

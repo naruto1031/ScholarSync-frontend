@@ -2,6 +2,7 @@
 import {
 	Box,
 	Pagination,
+	Paper,
 	Table,
 	TableBody,
 	TableCell,
@@ -9,38 +10,40 @@ import {
 	TableHead,
 	TableRow,
 } from '@mui/material'
-import { useState, useTransition } from 'react'
+import { useState } from 'react'
 import { SubmitModal } from './SubmitModal'
 import { Issue, PendingIssuesResponse } from '@/app/types/apiResponseTypes'
-import { css } from '../../../../../../../styled-system/css'
+import InfoIcon from '@mui/icons-material/Info'
 
 interface Props {
 	issueData: Issue[]
 	totalIssueCount: number
-	handleSubmit: () => Promise<PendingIssuesResponse | undefined>
 }
 
-export const AssignmentTableBody = ({ issueData, totalIssueCount, handleSubmit }: Props) => {
+export const AssignmentTableBody = ({ issueData, totalIssueCount }: Props) => {
 	const [assignmentIssueData, setAssignmentIssueData] = useState<Issue[]>(issueData)
-	const [isPending, startTransition] = useTransition()
 	const [isOpen, setIsOpen] = useState(false)
 	const [currentTask, setCurrentTask] = useState<Issue | null>(null)
 	const [page, setPage] = useState(1)
+	const [isLoading, setIsLoading] = useState(false)
+	const [isAbsenceLoading, setIsAbsenceLoading] = useState(false)
+	const [isExemptionLoading, setIsExemptionLoading] = useState(false)
 
-	const handleSubmission = async () => {
+	const handleSubmission = async (id: number | undefined) => {
 		try {
-			let res: PendingIssuesResponse | undefined
-			startTransition(async () => {
-				res = await handleSubmit()
-				if (!res) {
-					alert('提出に失敗しました')
-					return
-				}
-				alert('提出しました')
-				setAssignmentIssueData(res.issues)
-				handleClose()
+			if (!id) return
+			setIsLoading(true)
+			const res = await fetch('/api/submit_assignment/register', {
+				method: 'POST',
+				body: JSON.stringify({
+					issueId: id,
+				}),
 			})
-			return res
+			const data: PendingIssuesResponse = await res.json()
+			alert('提出しました')
+			setAssignmentIssueData(data.issues)
+			handleClose()
+			setIsLoading(false)
 		} catch (error) {
 			alert('エラーが発生しました')
 			return
@@ -57,23 +60,63 @@ export const AssignmentTableBody = ({ issueData, totalIssueCount, handleSubmit }
 		setIsOpen(false)
 	}
 
+	const handleAbsenceApplication = async (id: number | undefined) => {
+		try {
+			if (!id) return
+			setIsAbsenceLoading(true)
+			await fetch('/api/submit_assignment/absence', {
+				method: 'POST',
+				body: JSON.stringify({
+					issueId: id,
+				}),
+			})
+			alert('公欠申請が完了しました')
+			handleClose()
+			setIsAbsenceLoading(false)
+		} catch (error) {
+			alert('エラーが発生しました')
+			return
+		}
+	}
+
+	const handleExemptionApplication = async (id: number | undefined) => {
+		try {
+			if (!id) return
+			setIsExemptionLoading(true)
+			const res = await fetch('/api/submit_assignment/exemption', {
+				method: 'POST',
+				body: JSON.stringify({
+					issueId: id,
+				}),
+			})
+			alert('免除申請が完了しました')
+			handleClose()
+			setIsExemptionLoading(false)
+		} catch (error) {
+			alert('エラーが発生しました')
+			return
+		}
+	}
+
 	return (
 		<>
 			<Box display={'flex'} width={'100%'} alignItems={'center'}>
-				<Box>課題総数: {totalIssueCount}件</Box>
+				<Box>課題総数: {assignmentIssueData.length}件</Box>
 				<Box width={'fit-content'} m={'0 0 20px auto'}>
 					<Pagination
-						count={Math.ceil(totalIssueCount / 10)}
+						count={Math.ceil(assignmentIssueData.length / 10)}
 						color='primary'
 						page={page}
 						onChange={(_, page) => setPage(page)}
 					/>
 				</Box>
 			</Box>
-			<Box
-				maxHeight={'500px'}
-				overflow={'hidden auto'}
-				boxShadow={'0px 4px 4px 0px rgba(0, 0, 0, 0.25)'}
+			<Paper
+				sx={{
+					maxHeight: '400px',
+					overflow: 'hidden auto',
+					mt: '20px',
+				}}
 			>
 				<TableContainer>
 					<Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -86,32 +129,66 @@ export const AssignmentTableBody = ({ issueData, totalIssueCount, handleSubmit }
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{assignmentIssueData.map((row) => (
-								<TableRow
-									key={row.issueID}
-									sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-									onClick={() => handleOpen(row)}
-									className={css({ cursor: 'pointer', _hover: { backgroundColor: '#F5F5F5' } })}
-								>
-									<TableCell component='th' scope='row'>
-										{row.subjectName}
+							{assignmentIssueData.length === 0 ? (
+								<TableRow>
+									<TableCell
+										colSpan={4}
+										align='center'
+										sx={{
+											fontSize: '20px',
+											fontWeight: 'bold',
+											color: '#929292',
+											alignItems: 'center',
+										}}
+									>
+										<span>
+											<InfoIcon
+												sx={{
+													verticalAlign: 'middle',
+													color: '#929292',
+													mr: '5px',
+													mb: '5px',
+												}}
+											/>
+										</span>
+										提出可能な課題がありません
 									</TableCell>
-									<TableCell align='right'>{row.issueID}</TableCell>
-									<TableCell align='right'>{row.issueName}</TableCell>
-									<TableCell align='right'>{row.dueDate}</TableCell>
 								</TableRow>
-							))}
+							) : (
+								assignmentIssueData.slice((page - 1) * 10, page * 10).map((row) => (
+									<TableRow
+										key={row.issue_id}
+										sx={{
+											'&:last-child td, &:last-child th': { border: 0 },
+											cursor: 'pointer',
+											'&:hover': { backgroundColor: '#F5F5F5' },
+										}}
+										onClick={() => handleOpen(row)}
+									>
+										<TableCell component='th' scope='row'>
+											{row.subject_name}
+										</TableCell>
+										<TableCell align='right'>{row.task_number}</TableCell>
+										<TableCell align='right'>{row.name}</TableCell>
+										<TableCell align='right'>{row.due_date}</TableCell>
+									</TableRow>
+								))
+							)}
 						</TableBody>
 						<SubmitModal
 							data={currentTask}
 							isOpen={isOpen}
+							isLoading={isLoading}
+							isAbsenceLoading={isAbsenceLoading}
+							isExemptionLoading={isExemptionLoading}
 							handleClose={handleClose}
 							handleSubmit={handleSubmission}
-							isLoading={isPending}
+							handleAbsenceApplication={handleAbsenceApplication}
+							handleExemptionApplication={handleExemptionApplication}
 						/>
 					</Table>
 				</TableContainer>
-			</Box>
+			</Paper>
 		</>
 	)
 }

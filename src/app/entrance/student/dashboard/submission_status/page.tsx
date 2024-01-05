@@ -1,9 +1,7 @@
+import { SubmissionStatusBody } from './_compornents/SubmissionStatusBody'
+
 const SubmissionStatus = () => {
-	return (
-		<>
-			<h1>Submission Status</h1>
-		</>
-	)
+	return <SubmissionStatusBody />
 }
 
 export default SubmissionStatus
