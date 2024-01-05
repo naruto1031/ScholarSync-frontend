@@ -17,6 +17,8 @@ import {
 } from '@mui/material'
 import { SubmissionStatusSchemaType, submissionStatusSchema } from '@/app/types/form/schema'
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
+import { useState } from 'react'
+import { DetailModal } from './DetailModal'
 
 const submissionStatuses = [
 	{ value: 'pending', label: '承認待ち' },
@@ -89,6 +91,7 @@ const mockData = [
 ]
 
 export const SubmissionStatusBody = () => {
+	const [isOpen, setIsOpen] = useState(true)
 	const { control, setValue, getValues } = useForm<SubmissionStatusSchemaType>({
 		resolver: zodResolver(submissionStatusSchema),
 		defaultValues: {
@@ -192,6 +195,7 @@ export const SubmissionStatusBody = () => {
 										cursor: 'pointer',
 										'&:hover': { backgroundColor: '#F5F5F5' },
 									}}
+									onClick={() => setIsOpen(true)}
 								>
 									<TableCell component='th' scope='row'>
 										{row.subjectCode}
@@ -206,6 +210,7 @@ export const SubmissionStatusBody = () => {
 					</Table>
 				</TableContainer>
 			</Paper>
+			<DetailModal isOpen={isOpen} handleClose={() => setIsOpen(false)} />
 		</Container>
 	)
 }

@@ -35,7 +35,6 @@ export const SubmitModal = ({
 					position: 'absolute',
 					top: '50%',
 					left: '50%',
-					boxShadow: '0px 0px 15px -5px #777777',
 					borderRadius: '10px',
 					transform: 'translate(-50%, -50%)',
 					backgroundColor: '#fff',
@@ -50,15 +49,15 @@ export const SubmitModal = ({
 				}}
 			>
 				<Box sx={{ display: 'flex', gap: '20px', fontSize: '20px' }}>
-					<h3>{data?.subjectName}</h3>
-					<h3>課題No.{data?.issueID}</h3>
+					<Box>{data?.name}</Box>
+					<Box>課題No.{data?.task_number}</Box>
 					<Box sx={{ display: 'flex', gap: '6px', ml: 'auto' }}>
 						<LoadingButton
 							variant='outlined'
 							color='secondary'
 							size='small'
 							loading={isExemptionLoading}
-							onClick={() => handleExemptionApplication(data?.issueID)}
+							onClick={() => handleExemptionApplication(data?.issue_id)}
 						>
 							免除申請
 						</LoadingButton>
@@ -67,7 +66,7 @@ export const SubmitModal = ({
 							color='secondary'
 							size='small'
 							loading={isAbsenceLoading}
-							onClick={() => handleAbsenceApplication(data?.issueID)}
+							onClick={() => handleAbsenceApplication(data?.issue_id)}
 						>
 							公欠申請
 						</LoadingButton>
@@ -79,7 +78,7 @@ export const SubmitModal = ({
 						fontWeight: 'bold',
 					}}
 				>
-					<h3>{data?.issueName}</h3>
+					{data?.name}
 				</Box>
 				<Box
 					sx={{
@@ -87,7 +86,7 @@ export const SubmitModal = ({
 						color: '#929292',
 					}}
 				>
-					<h3>提出期限: {data?.dueDate}</h3>
+					提出期限: {data?.due_date}
 				</Box>
 				<Box
 					sx={{
@@ -106,7 +105,7 @@ export const SubmitModal = ({
 							loading={isLoading}
 							variant='contained'
 							size='large'
-							onClick={() => handleSubmit(data?.issueID)}
+							onClick={() => handleSubmit(data?.issue_id)}
 						>
 							課題を提出する
 						</LoadingButton>

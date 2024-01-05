@@ -2,6 +2,7 @@
 import {
 	Box,
 	Pagination,
+	Paper,
 	Table,
 	TableBody,
 	TableCell,
@@ -12,6 +13,7 @@ import {
 import { useState } from 'react'
 import { SubmitModal } from './SubmitModal'
 import { Issue, PendingIssuesResponse } from '@/app/types/apiResponseTypes'
+import InfoIcon from '@mui/icons-material/Info'
 
 interface Props {
 	issueData: Issue[]
@@ -99,20 +101,22 @@ export const AssignmentTableBody = ({ issueData, totalIssueCount }: Props) => {
 	return (
 		<>
 			<Box display={'flex'} width={'100%'} alignItems={'center'}>
-				<Box>課題総数: {totalIssueCount}件</Box>
+				<Box>課題総数: {assignmentIssueData.length}件</Box>
 				<Box width={'fit-content'} m={'0 0 20px auto'}>
 					<Pagination
-						count={Math.ceil(totalIssueCount / 10)}
+						count={Math.ceil(assignmentIssueData.length / 10)}
 						color='primary'
 						page={page}
 						onChange={(_, page) => setPage(page)}
 					/>
 				</Box>
 			</Box>
-			<Box
-				maxHeight={'500px'}
-				overflow={'hidden auto'}
-				boxShadow={'0px 4px 4px 0px rgba(0, 0, 0, 0.25)'}
+			<Paper
+				sx={{
+					maxHeight: '400px',
+					overflow: 'hidden auto',
+					mt: '20px',
+				}}
 			>
 				<TableContainer>
 					<Table sx={{ minWidth: 650 }} aria-label='simple table'>
@@ -125,24 +129,51 @@ export const AssignmentTableBody = ({ issueData, totalIssueCount }: Props) => {
 							</TableRow>
 						</TableHead>
 						<TableBody>
-							{assignmentIssueData.map((row) => (
-								<TableRow
-									key={row.issueID}
-									sx={{
-										'&:last-child td, &:last-child th': { border: 0 },
-										cursor: 'pointer',
-										'&:hover': { backgroundColor: '#F5F5F5' },
-									}}
-									onClick={() => handleOpen(row)}
-								>
-									<TableCell component='th' scope='row'>
-										{row.subjectName}
+							{assignmentIssueData.length === 0 ? (
+								<TableRow>
+									<TableCell
+										colSpan={4}
+										align='center'
+										sx={{
+											fontSize: '20px',
+											fontWeight: 'bold',
+											color: '#929292',
+											alignItems: 'center',
+										}}
+									>
+										<span>
+											<InfoIcon
+												sx={{
+													verticalAlign: 'middle',
+													color: '#929292',
+													mr: '5px',
+													mb: '5px',
+												}}
+											/>
+										</span>
+										提出可能な課題がありません
 									</TableCell>
-									<TableCell align='right'>{row.issueID}</TableCell>
-									<TableCell align='right'>{row.issueName}</TableCell>
-									<TableCell align='right'>{row.dueDate}</TableCell>
 								</TableRow>
-							))}
+							) : (
+								assignmentIssueData.slice((page - 1) * 10, page * 10).map((row) => (
+									<TableRow
+										key={row.issue_id}
+										sx={{
+											'&:last-child td, &:last-child th': { border: 0 },
+											cursor: 'pointer',
+											'&:hover': { backgroundColor: '#F5F5F5' },
+										}}
+										onClick={() => handleOpen(row)}
+									>
+										<TableCell component='th' scope='row'>
+											{row.subject_name}
+										</TableCell>
+										<TableCell align='right'>{row.task_number}</TableCell>
+										<TableCell align='right'>{row.name}</TableCell>
+										<TableCell align='right'>{row.due_date}</TableCell>
+									</TableRow>
+								))
+							)}
 						</TableBody>
 						<SubmitModal
 							data={currentTask}
@@ -157,7 +188,7 @@ export const AssignmentTableBody = ({ issueData, totalIssueCount }: Props) => {
 						/>
 					</Table>
 				</TableContainer>
-			</Box>
+			</Paper>
 		</>
 	)
 }

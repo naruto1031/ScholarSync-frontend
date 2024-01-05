@@ -9,7 +9,7 @@ import Loading from '@/app/loading'
 export default async function SubmitAssignment() {
 	const session = await getServerSession(options)
 
-	const issuesResponse = await fetch(`${process.env.MOCK_API_URL}/api/mock/issue`, {
+	const issuesResponse = await fetch(`${process.env.API_URL}/api/issue/cover/not_submitted`, {
 		headers: { authorization: `Bearer ${session?.user.accessToken}` },
 	})
 	const issues: PendingIssuesResponse = await issuesResponse.json()

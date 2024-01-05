@@ -1,11 +1,15 @@
 // 課題に関する情報
 export interface Issue {
-	issueID: number
-	issueName: string
-	subjectName: string
-	dueDate: string
-	challengeProblemFlag: boolean
-	challengeProblemFullMark: number
+	issue_id: number
+	teacher_subject_id: number
+	name: string
+	due_date: string
+	comment: string
+	task_number: string
+	private_flag: number
+	challenge_flag: number
+	challenge_max_score: null | number
+	subject_name: string
 }
 
 export interface TotalIssueCount {

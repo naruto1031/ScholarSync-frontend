@@ -41,4 +41,4 @@
 - **クラウドサービス**:
   - **認証**: Microsoft Entra ID
   - **サーバ**: Azure App Service
-  - **データベース**: Azure MySQL
+  - **データベース**: Azure Database for MySQL

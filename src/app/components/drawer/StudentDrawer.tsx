@@ -73,6 +73,7 @@ export const StudentDrawer = ({ isOpen, setIsOpen }: Props) => {
 					fontSize='sm'
 					fontWeight='lg'
 					sx={{ cursor: 'pointer' }}
+					onClick={() => setIsOpen(false)}
 				>
 					Close
 				</Typography>
