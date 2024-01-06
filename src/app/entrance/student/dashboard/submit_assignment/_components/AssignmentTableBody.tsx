@@ -14,6 +14,7 @@ import { useState } from 'react'
 import { SubmitModal } from './SubmitModal'
 import { Issue, PendingIssuesResponse } from '@/app/types/apiResponseTypes'
 import InfoIcon from '@mui/icons-material/Info'
+import { Toast } from '@/app/components'
 
 interface Props {
 	issueData: Issue[]
@@ -28,6 +29,16 @@ export const AssignmentTableBody = ({ issueData, totalIssueCount }: Props) => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [isAbsenceLoading, setIsAbsenceLoading] = useState(false)
 	const [isExemptionLoading, setIsExemptionLoading] = useState(false)
+	const [isRegistered, setIsRegistered] = useState<boolean>(false)
+	const [isError, setIsError] = useState<boolean>(false)
+
+	const handleRegisterClose = () => {
+		setIsRegistered(false)
+	}
+
+	const handleErrorClose = () => {
+		setIsError(false)
+	}
 
 	const handleSubmission = async (id: number | undefined) => {
 		try {
@@ -39,13 +50,15 @@ export const AssignmentTableBody = ({ issueData, totalIssueCount }: Props) => {
 					issueId: id,
 				}),
 			})
+			if (res.status === 200) {
+				setIsRegistered(true)
+			}
 			const data: PendingIssuesResponse = await res.json()
-			alert('提出しました')
 			setAssignmentIssueData(data.issues)
 			handleClose()
 			setIsLoading(false)
 		} catch (error) {
-			alert('エラーが発生しました')
+			setIsError(true)
 			return
 		}
 	}
@@ -151,7 +164,7 @@ export const AssignmentTableBody = ({ issueData, totalIssueCount }: Props) => {
 												}}
 											/>
 										</span>
-										提出可能な課題がありません
+										提出可能な課題はありません
 									</TableCell>
 								</TableRow>
 							) : (
@@ -189,6 +202,18 @@ export const AssignmentTableBody = ({ issueData, totalIssueCount }: Props) => {
 					</Table>
 				</TableContainer>
 			</Paper>
+			<Toast
+				message='登録しました'
+				severity='success'
+				open={isRegistered}
+				handleClose={handleRegisterClose}
+			/>
+			<Toast
+				message='登録に失敗しました'
+				severity='error'
+				open={isError}
+				handleClose={handleErrorClose}
+			/>
 		</>
 	)
 }
