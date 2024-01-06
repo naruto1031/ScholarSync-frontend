@@ -58,6 +58,7 @@ export const AssignmentTableBody = ({ issueData, totalIssueCount }: Props) => {
 			handleClose()
 			setIsLoading(false)
 		} catch (error) {
+			console.error('Submission error:', error)
 			setIsError(true)
 			return
 		}

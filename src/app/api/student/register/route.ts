@@ -24,6 +24,6 @@ export async function POST(request: NextRequest) {
 	if (res.status === 200) {
 		return NextResponse.redirect('/entrance/student/dashboard/top')
 	} else {
-		return new NextResponse('Unauthorized', { status: 401 })
+		return new NextResponse(res.statusText, { status: res.status })
 	}
 }
