@@ -90,7 +90,7 @@ const mockData = [
 	},
 ]
 
-export const SubmissionStatusBody = () => {
+export const SubmissionStatusContents = () => {
 	const [isOpen, setIsOpen] = useState(true)
 	const { control, setValue, getValues } = useForm<SubmissionStatusSchemaType>({
 		resolver: zodResolver(submissionStatusSchema),

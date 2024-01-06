@@ -1,7 +1,9 @@
-import { SubmissionStatusBody } from './_compornents/SubmissionStatusBody'
+import dynamic from 'next/dynamic'
+import Loading from '@/app/loading'
+const SubmissionStatus = dynamic(() => import('./_components/SubmissionStatus'), {
+	loading: () => <Loading />,
+})
 
-const SubmissionStatus = () => {
-	return <SubmissionStatusBody />
+export default async function Page() {
+	return <SubmissionStatus />
 }
-
-export default SubmissionStatus
