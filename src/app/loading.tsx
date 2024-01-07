@@ -1,5 +1,5 @@
-import './loader.css'
+import styles from './loader.module.css'
 export default function Loading() {
 	// You can add any UI inside Loading, including a Skeleton.
-	return <div className='loader'>Loading...</div>
+	return <div className={styles.loader}>Loading...</div>
 }
