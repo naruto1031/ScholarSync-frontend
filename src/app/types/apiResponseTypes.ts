@@ -12,6 +12,28 @@ export interface Issue {
 	subject_name: string
 }
 
+export interface IssueCover {
+	issue_cover_id: number
+	issue_id: number
+	subject: string
+	task_number: string
+	name: string
+	due_date: string
+	comment: string
+	status: string
+	evaluation: number | null
+	challenge_flag: boolean
+	challenge_max_score: number | null
+	current_score: number | null
+	teacher_name: string
+	resubmission_deadline: string | null
+	resubmission_comment: string | null
+}
+
+export interface IssueCoverResponse {
+	issue_covers: IssueCover[]
+}
+
 export interface TotalIssueCount {
 	count: number
 }

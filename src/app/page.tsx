@@ -1,5 +1,3 @@
-import Image from 'next/image'
-import ScholarSync from '../../public/Scholar sync.svg'
 import { Box, Button, Container, Typography, Paper, Grid } from '@mui/material'
 import NextLink from 'next/link'
 import { Metadata } from 'next'
