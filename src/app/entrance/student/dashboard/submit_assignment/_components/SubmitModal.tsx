@@ -2,6 +2,7 @@
 import { Box, Button, Modal, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { Issue } from '@/app/types/apiResponseTypes'
+import { useTheme } from '@mui/material/styles'
 
 interface Props {
 	data: Issue | null
@@ -26,6 +27,7 @@ export const SubmitModal = ({
 	isAbsenceLoading,
 	isExemptionLoading,
 }: Props) => {
+	const theme = useTheme()
 	return (
 		<Modal open={isOpen} onClose={() => false} sx={{ border: 'none' }}>
 			<Box
@@ -35,6 +37,7 @@ export const SubmitModal = ({
 					position: 'absolute',
 					top: '50%',
 					left: '50%',
+					boxShadow: '0px 0px 15px -5px #777777',
 					borderRadius: '10px',
 					transform: 'translate(-50%, -50%)',
 					backgroundColor: '#fff',
@@ -45,6 +48,14 @@ export const SubmitModal = ({
 					},
 					'&:active': {
 						outline: 'none',
+					},
+					// レスポンシブスタイル
+					[theme.breakpoints.down('md')]: {
+						maxWidth: '70%',
+						padding: '20px 30px',
+					},
+					[theme.breakpoints.down('sm')]: {
+						padding: '15px 20px',
 					},
 				}}
 			>

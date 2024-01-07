@@ -1,6 +1,7 @@
 'use client'
 import {
 	Box,
+	Container,
 	Pagination,
 	Paper,
 	Table,
@@ -113,7 +114,12 @@ export const SubmitAssignmentContents = ({ issueData, totalIssueCount }: Props) 
 	}
 
 	return (
-		<>
+		<Container
+			maxWidth='lg'
+			sx={{
+				pt: '50px',
+			}}
+		>
 			<Box display={'flex'} width={'100%'} alignItems={'center'}>
 				<Box>課題総数: {assignmentIssueData.length}件</Box>
 				<Box width={'fit-content'} m={'0 0 20px auto'}>
@@ -133,7 +139,7 @@ export const SubmitAssignmentContents = ({ issueData, totalIssueCount }: Props) 
 				}}
 			>
 				<TableContainer>
-					<Table sx={{ minWidth: 650 }} aria-label='simple table'>
+					<Table aria-label='simple table'>
 						<TableHead>
 							<TableRow>
 								<TableCell>科目記号</TableCell>
@@ -215,6 +221,6 @@ export const SubmitAssignmentContents = ({ issueData, totalIssueCount }: Props) 
 				open={isError}
 				handleClose={handleErrorClose}
 			/>
-		</>
+		</Container>
 	)
 }

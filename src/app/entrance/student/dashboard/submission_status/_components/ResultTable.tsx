@@ -16,8 +16,14 @@ interface Props {
 	submissionData: IssueCover[]
 	isLoading: boolean
 	setIsOpen: Dispatch<SetStateAction<boolean>>
+	setCurrentSubmissionData: Dispatch<SetStateAction<IssueCover | null>>
 }
-export const ResultTable = ({ submissionData, isLoading, setIsOpen }: Props) => {
+export const ResultTable = ({
+	submissionData,
+	setCurrentSubmissionData,
+	isLoading,
+	setIsOpen,
+}: Props) => {
 	return (
 		<Paper
 			sx={{
@@ -92,13 +98,16 @@ export const ResultTable = ({ submissionData, isLoading, setIsOpen }: Props) => 
 						) : (
 							submissionData.map((row: IssueCover) => (
 								<TableRow
-									key={row.issue_cover_id}
+									key={row.issue_id}
 									sx={{
 										'&:last-child td, &:last-child th': { border: 0 },
 										cursor: 'pointer',
 										'&:hover': { backgroundColor: '#F5F5F5' },
 									}}
-									onClick={() => setIsOpen(true)}
+									onClick={() => {
+										setCurrentSubmissionData(row)
+										setIsOpen(true)
+									}}
 								>
 									<TableCell component='th' scope='row'>
 										{row.subject}
