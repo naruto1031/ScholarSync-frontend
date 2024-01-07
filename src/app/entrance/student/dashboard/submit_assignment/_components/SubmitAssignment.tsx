@@ -17,9 +17,5 @@ export default async function SubmitAssignment() {
 	})
 	const totalCount: TotalIssueCount = await totalCountResponse.json()
 
-	return (
-		<Box pt={'50px'} maxWidth={'1059px'} margin={'0 auto'}>
-			<SubmitAssignmentContents issueData={issues.issues} totalIssueCount={totalCount.count} />
-		</Box>
-	)
+	return <SubmitAssignmentContents issueData={issues.issues} totalIssueCount={totalCount.count} />
 }

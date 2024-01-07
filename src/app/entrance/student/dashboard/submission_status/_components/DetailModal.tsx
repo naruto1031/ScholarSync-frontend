@@ -1,17 +1,26 @@
 'use client'
-import { Box, Button, Modal, Step, StepLabel, Stepper, TextField } from '@mui/material'
-
+import { IssueCover } from '@/app/types/apiResponseTypes'
+import { Box, Button, Modal, Step, StepLabel, Stepper, TextField, Paper } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import { submissionStatuses } from './SubmissionStatusContents'
 interface Props {
 	isOpen: boolean
+	currentSubmissionData: IssueCover | null
 	handleClose: () => void
 }
 
 const steps = ['申請', '承認待ち', '承認済み']
 
-export const DetailModal = ({ isOpen, handleClose }: Props) => {
+const currentStep = (step: string | undefined): number => {
+	const currentStep = submissionStatuses.find((status) => status.value === step)
+	return currentStep ? currentStep.step : 0
+}
+
+export const DetailModal = ({ isOpen, currentSubmissionData, handleClose }: Props) => {
+	const theme = useTheme()
 	return (
 		<Modal open={isOpen} onClose={() => false}>
-			<Box
+			<Paper
 				sx={{
 					maxWidth: '700px',
 					width: '100%',
@@ -30,11 +39,19 @@ export const DetailModal = ({ isOpen, handleClose }: Props) => {
 					'&:active': {
 						outline: 'none',
 					},
+					// レスポンシブスタイル
+					[theme.breakpoints.down('md')]: {
+						maxWidth: '70%',
+						padding: '20px 30px',
+					},
+					[theme.breakpoints.down('sm')]: {
+						padding: '15px 20px',
+					},
 				}}
 			>
 				<Box sx={{ display: 'flex', gap: '20px', fontSize: '20px' }}>
-					<Box>test</Box>
-					<Box>課題No.test</Box>
+					<Box>{currentSubmissionData?.subject}</Box>
+					<Box>課題No.{currentSubmissionData?.task_number}</Box>
 				</Box>
 				<Box
 					sx={{
@@ -42,7 +59,7 @@ export const DetailModal = ({ isOpen, handleClose }: Props) => {
 						fontWeight: 'bold',
 					}}
 				>
-					<Box>testName</Box>
+					<Box>{currentSubmissionData?.name}</Box>
 				</Box>
 				<Box
 					sx={{
@@ -50,7 +67,7 @@ export const DetailModal = ({ isOpen, handleClose }: Props) => {
 						color: '#929292',
 					}}
 				>
-					<Box>提出期限: sssss</Box>
+					<Box>提出期限: {currentSubmissionData?.due_date}</Box>
 				</Box>
 				<Box
 					sx={{
@@ -59,9 +76,16 @@ export const DetailModal = ({ isOpen, handleClose }: Props) => {
 					}}
 				>
 					<Box sx={{ width: '100%' }}>
-						<Stepper activeStep={1} alternativeLabel>
+						<Stepper activeStep={currentStep(currentSubmissionData?.status)} alternativeLabel>
 							{steps.map((label) => (
-								<Step key={label}>
+								<Step
+									key={label}
+									sx={{
+										'& .MuiStepLabel-root .Mui-completed': {
+											color: '#4caf50',
+										},
+									}}
+								>
 									<StepLabel>{label}</StepLabel>
 								</Step>
 							))}
@@ -75,7 +99,7 @@ export const DetailModal = ({ isOpen, handleClose }: Props) => {
 						</Button>
 					</Box>
 				</Box>
-			</Box>
+			</Paper>
 		</Modal>
 	)
 }
