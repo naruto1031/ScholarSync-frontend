@@ -21,7 +21,7 @@ interface Props {
 	totalIssueCount: number
 }
 
-export const AssignmentTableBody = ({ issueData, totalIssueCount }: Props) => {
+export const SubmitAssignmentContents = ({ issueData, totalIssueCount }: Props) => {
 	const [assignmentIssueData, setAssignmentIssueData] = useState<Issue[]>(issueData)
 	const [isOpen, setIsOpen] = useState(false)
 	const [currentTask, setCurrentTask] = useState<Issue | null>(null)

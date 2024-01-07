@@ -21,7 +21,7 @@ interface Props {
 	classList: Class[]
 }
 
-export const SignUpForm = ({ classList }: Props) => {
+export const SignUpContents = ({ classList }: Props) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [isRegistered, setIsRegistered] = useState<boolean>(false)
 	const [isError, setIsError] = useState<boolean>(false)
