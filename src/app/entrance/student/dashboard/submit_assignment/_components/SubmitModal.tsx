@@ -1,8 +1,9 @@
 'use client'
-import { Box, Button, Modal, TextField } from '@mui/material'
+import { Box, Button, Checkbox, FormControlLabel, FormGroup, Modal, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { Issue } from '@/app/types/apiResponseTypes'
 import { useTheme } from '@mui/material/styles'
+import { useState } from 'react'
 
 interface Props {
 	data: Issue | null
@@ -28,6 +29,7 @@ export const SubmitModal = ({
 	isExemptionLoading,
 }: Props) => {
 	const theme = useTheme()
+	const [isChecked, setIsChecked] = useState(false)
 	return (
 		<Modal open={isOpen} onClose={() => false} sx={{ border: 'none' }}>
 			<Box
@@ -102,6 +104,20 @@ export const SubmitModal = ({
 				<Box
 					sx={{
 						marginTop: '10px',
+						width: 'fit-content',
+					}}
+				>
+					<FormGroup>
+						<FormControlLabel
+							required
+							control={<Checkbox onChange={() => setIsChecked((prev) => !prev)} />}
+							label='課題は提出済みです'
+						/>
+					</FormGroup>
+				</Box>
+				<Box
+					sx={{
+						mt: '20px',
 						marginBottom: '40px',
 					}}
 				>
@@ -109,14 +125,25 @@ export const SubmitModal = ({
 				</Box>
 				<Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
 					<Box sx={{ display: 'flex', gap: '20px', ml: 'auto' }}>
-						<Button variant='text' onClick={handleClose} size='large'>
+						<Button
+							variant='text'
+							onClick={() => {
+								setIsChecked(false)
+								handleClose()
+							}}
+							size='large'
+						>
 							キャンセル
 						</Button>
 						<LoadingButton
 							loading={isLoading}
 							variant='contained'
 							size='large'
-							onClick={() => handleSubmit(data?.issue_id)}
+							onClick={() => {
+								if (!isChecked) return
+								handleSubmit(data?.issue_id)
+							}}
+							disabled={!isChecked}
 						>
 							課題を提出する
 						</LoadingButton>
