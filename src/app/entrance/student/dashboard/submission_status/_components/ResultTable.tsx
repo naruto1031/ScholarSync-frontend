@@ -8,9 +8,12 @@ import {
 	TableCell,
 	TableBody,
 	CircularProgress,
+	Box,
 } from '@mui/material'
 import InfoIcon from '@mui/icons-material/Info'
 import { Dispatch, SetStateAction } from 'react'
+import { convertStatus } from '@/app/utils/statusUtils'
+import { ConvertStatusIcon } from '@/app/components'
 
 interface Props {
 	submissionData: IssueCover[]
@@ -115,7 +118,19 @@ export const ResultTable = ({
 									<TableCell align='right'>{row.task_number}</TableCell>
 									<TableCell align='right'>{row.name}</TableCell>
 									<TableCell align='right'>{row.due_date}</TableCell>
-									<TableCell align='right'>{row.status}</TableCell>
+									<TableCell
+										align='right'
+										sx={{
+											display: 'flex',
+											alignItems: 'center',
+											gap: '5px',
+										}}
+									>
+										<Box>{convertStatus(row.status)}</Box>
+										<span>
+											<ConvertStatusIcon status={row.status} />
+										</span>
+									</TableCell>
 								</TableRow>
 							))
 						)}

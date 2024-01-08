@@ -1,8 +1,20 @@
 'use client'
 import { IssueCover } from '@/app/types/apiResponseTypes'
-import { Box, Button, Modal, Step, StepLabel, Stepper, TextField, Paper } from '@mui/material'
+import {
+	Box,
+	Button,
+	Modal,
+	Step,
+	StepLabel,
+	Stepper,
+	TextField,
+	Paper,
+	Typography,
+} from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { submissionStatuses } from './SubmissionStatusContents'
+import { useRouter } from 'next/navigation'
+import { convertStatus } from '@/app/utils/statusUtils'
 interface Props {
 	isOpen: boolean
 	currentSubmissionData: IssueCover | null
@@ -18,6 +30,7 @@ const currentStep = (step: string | undefined): number => {
 
 export const DetailModal = ({ isOpen, currentSubmissionData, handleClose }: Props) => {
 	const theme = useTheme()
+	const router = useRouter()
 	return (
 		<Modal open={isOpen} onClose={() => false}>
 			<Paper
@@ -39,7 +52,6 @@ export const DetailModal = ({ isOpen, currentSubmissionData, handleClose }: Prop
 					'&:active': {
 						outline: 'none',
 					},
-					// レスポンシブスタイル
 					[theme.breakpoints.down('md')]: {
 						maxWidth: '70%',
 						padding: '20px 30px',
@@ -71,32 +83,61 @@ export const DetailModal = ({ isOpen, currentSubmissionData, handleClose }: Prop
 				</Box>
 				<Box
 					sx={{
-						marginTop: '10px',
+						marginTop: '40px',
 						marginBottom: '40px',
 					}}
 				>
 					<Box sx={{ width: '100%' }}>
 						<Stepper activeStep={currentStep(currentSubmissionData?.status)} alternativeLabel>
-							{steps.map((label) => (
-								<Step
-									key={label}
-									sx={{
-										'& .MuiStepLabel-root .Mui-completed': {
-											color: '#4caf50',
-										},
-									}}
-								>
-									<StepLabel>{label}</StepLabel>
-								</Step>
-							))}
+							{steps.map((label, index) => {
+								const labelProps: {
+									optional?: React.ReactNode
+									error?: boolean
+								} = {}
+								if (index === 1 && currentSubmissionData?.status === 'resubmission') {
+									labelProps.error = true
+									label = '再提出'
+								}
+								return (
+									<Step
+										key={label}
+										sx={{
+											'& .MuiStepLabel-root .Mui-completed': {
+												color: '#4caf50',
+											},
+										}}
+									>
+										<StepLabel {...labelProps}>{label}</StepLabel>
+									</Step>
+								)
+							})}
 						</Stepper>
+					</Box>
+					<Box>
+						<Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+							{currentSubmissionData?.evaluation && (
+								<Box sx={{ fontWeight: 'bold', fontSize: '20px' }}>評定:</Box>
+							)}
+						</Box>
 					</Box>
 				</Box>
 				<Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
 					<Box sx={{ display: 'flex', gap: '20px', ml: 'auto' }}>
 						<Button variant='text' onClick={handleClose} size='large'>
-							キャンセル
+							{currentSubmissionData?.status === 'approved' ||
+							currentSubmissionData?.status === 'pending'
+								? '閉じる'
+								: 'キャンセル'}
 						</Button>
+						{currentSubmissionData?.status === 'not_submitted' && (
+							<Button
+								variant='contained'
+								size='large'
+								onClick={() => router.push('/entrance/student/dashboard/submit_assignment')}
+							>
+								課題表紙の提出画面へ
+							</Button>
+						)}
 					</Box>
 				</Box>
 			</Paper>

@@ -121,7 +121,14 @@ export const SubmitAssignmentContents = ({ issueData, totalIssueCount }: Props) 
 			}}
 		>
 			<Box display={'flex'} width={'100%'} alignItems={'center'}>
-				<Box>課題総数: {assignmentIssueData.length}件</Box>
+				<Box
+					sx={{
+						fontWeight: 'bold',
+						fontSize: '20px',
+					}}
+				>
+					課題総数: {assignmentIssueData.length}件
+				</Box>
 				<Box width={'fit-content'} m={'0 0 20px auto'}>
 					<Pagination
 						count={Math.ceil(assignmentIssueData.length / 10)}

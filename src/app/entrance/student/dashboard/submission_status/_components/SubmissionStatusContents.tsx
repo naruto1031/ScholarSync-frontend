@@ -28,7 +28,7 @@ export const submissionStatuses: SubmissionStatusLabel[] = [
 	{ value: 'not_submitted', label: '未提出', step: 0 },
 	{ value: 'approved', label: '承認済み', step: 3 },
 	{ value: 'overdue', label: '期限超過', step: 1 },
-	{ value: 'resubmission', label: '再提出', step: 1 },
+	{ value: 'resubmission', label: '再提出', step: 0 },
 	{ value: 'rejected', label: '提出不可', step: 0 },
 	{ value: 'absence', label: '公欠申請', step: 1 },
 	{ value: 'exemption', label: '免除申請', step: 1 },

@@ -91,7 +91,13 @@ export const SignUpContents = ({ classList }: Props) => {
 			</Box>
 			<FormControl sx={{ width: '100%' }}>
 				<InputLabel id='class'>クラス</InputLabel>
-				<Select labelId='class' label='クラス' error={!!errors.classId} {...register('classId')}>
+				<Select
+					labelId='class'
+					label='クラス'
+					error={!!errors.classId}
+					{...register('classId')}
+					disabled={isLoading}
+				>
 					{classList.map((classData) => (
 						<MenuItem key={classData.class_id} value={`${classData.class_id}`}>
 							{classData.name}
@@ -115,6 +121,7 @@ export const SignUpContents = ({ classList }: Props) => {
 						mb: '20px',
 					}}
 					{...register('studentId')}
+					disabled={isLoading}
 				/>
 				<TextField
 					label='出席番号'
@@ -125,6 +132,7 @@ export const SignUpContents = ({ classList }: Props) => {
 						mb: '20px',
 					}}
 					{...register('studentNumber')}
+					disabled={isLoading}
 				/>
 			</FormControl>
 			<LoadingButton
