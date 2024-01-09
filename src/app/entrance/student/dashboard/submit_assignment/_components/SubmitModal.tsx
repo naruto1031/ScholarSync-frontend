@@ -62,7 +62,7 @@ export const SubmitModal = ({
 				}}
 			>
 				<Box sx={{ display: 'flex', gap: '20px', fontSize: '20px' }}>
-					<Box>{data?.name}</Box>
+					<Box>{data?.subject_name}</Box>
 					<Box>課題No.{data?.task_number}</Box>
 					<Box sx={{ display: 'flex', gap: '6px', ml: 'auto' }}>
 						<LoadingButton
