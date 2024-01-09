@@ -9,6 +9,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 	if (!session?.user) {
 		redirect('/login')
 	}
+
 	const studentGroupID = process.env.STUDENT
 	if (!studentGroupID) {
 		throw new Error('STUDENT environment variable is not set.')
@@ -38,7 +39,6 @@ export default async function DashboardLayout({ children }: { children: React.Re
 		redirect('/entrance/student/signup')
 	}
 
-	const isStudent = data.exists
 	return (
 		<>
 			<Header />
