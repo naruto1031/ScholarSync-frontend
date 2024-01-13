@@ -56,3 +56,12 @@ export interface Class {
 	class_id: number
 	name: string
 }
+
+export interface Subject {
+	id: number
+	name: string
+}
+
+export interface TeacherExists {
+	exists: boolean
+}

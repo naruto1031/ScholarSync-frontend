@@ -19,24 +19,20 @@ interface DrawerMenuItems {
 	url: string
 }
 
-export const StudentDrawer = ({ isOpen, setIsOpen }: Props) => {
+export const TeacherDrawer = ({ isOpen, setIsOpen }: Props) => {
 	const router = useRouter()
 	const drawerMenuItems: DrawerMenuItems[] = [
 		{
-			text: '学生トップ',
+			text: '教師トップ',
 			url: 'top',
 		},
 		{
-			text: '教科一覧',
-			url: 'subject_list',
+			text: '担任クラスの管理',
+			url: 'class_management',
 		},
 		{
-			text: '課題表紙提出',
-			url: 'submit_assignment',
-		},
-		{
-			text: '提出状況',
-			url: 'submission_status',
+			text: '課題表紙承認',
+			url: 'approve_assignment',
 		},
 	]
 
@@ -82,7 +78,7 @@ export const StudentDrawer = ({ isOpen, setIsOpen }: Props) => {
 				{drawerMenuItems.map((item, index) => (
 					<ListItem key={index} disablePadding>
 						<ListItemButton
-							onClick={() => handleMenuClick(`/entrance/student/dashboard/${item.url}`)}
+							onClick={() => handleMenuClick(`/entrance/teacher/dashboard/${item.url}`)}
 						>
 							<ListItemText primary={item.text} />
 						</ListItemButton>

@@ -21,8 +21,8 @@ export default async function Login() {
 	const isAdministrator = isTeacher && isStudent
 
 	if (isAdministrator) redirect('/entrance')
-	if (isStudent) redirect('/entrance/student/dashboard/submit_assignment')
-	if (isTeacher) redirect('/entrance/teacher')
+	if (isStudent) redirect('/entrance/student/dashboard/top')
+	if (isTeacher) redirect('/entrance/teacher/dashboard/top')
 
 	return (
 		<Box

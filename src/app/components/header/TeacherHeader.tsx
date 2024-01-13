@@ -7,9 +7,9 @@ import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useState } from 'react'
 import { signOut } from 'next-auth/react'
-import { StudentDrawer } from '../drawer/StudentDrawer'
+import { TeacherDrawer } from '../drawer/TeacherDrawer'
 
-export const Header = () => {
+export const TeacherHeader = () => {
 	const [isOpen, setIsOpen] = useState(false)
 	return (
 		<AppBar position='static'>
@@ -31,7 +31,7 @@ export const Header = () => {
 					SignOut
 				</Button>
 			</Toolbar>
-			<StudentDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
+			<TeacherDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
 		</AppBar>
 	)
 }
