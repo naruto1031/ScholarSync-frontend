@@ -24,7 +24,7 @@ export const TeacherHeader = () => {
 				>
 					<MenuIcon />
 				</IconButton>
-				<Typography variant='h6' component='div' sx={{ flexGrow: 1, fontWeight: '' }}>
+				<Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
 					ScholarSync
 				</Typography>
 				<Button color='inherit' onClick={() => signOut()}>

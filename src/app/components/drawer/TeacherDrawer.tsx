@@ -14,14 +14,14 @@ interface Props {
 	isOpen: boolean
 	setIsOpen: Dispatch<SetStateAction<boolean>>
 }
-interface Menu {
+interface DrawerMenuItems {
 	text: string
 	url: string
 }
 
 export const TeacherDrawer = ({ isOpen, setIsOpen }: Props) => {
 	const router = useRouter()
-	const menu: Menu[] = [
+	const drawerMenuItems: DrawerMenuItems[] = [
 		{
 			text: '教師トップ',
 			url: 'top',
@@ -75,7 +75,7 @@ export const TeacherDrawer = ({ isOpen, setIsOpen }: Props) => {
 				</Typography>
 			</Box>
 			<List>
-				{menu.map((item, index) => (
+				{drawerMenuItems.map((item, index) => (
 					<ListItem key={index} disablePadding>
 						<ListItemButton
 							onClick={() => handleMenuClick(`/entrance/teacher/dashboard/${item.url}`)}
