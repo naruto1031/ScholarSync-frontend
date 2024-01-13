@@ -4,6 +4,7 @@ import { options } from '@/app/options'
 import { Header, SignOutButton } from '@/app/components'
 import { Box } from '@mui/material'
 import { TeacherExists } from '@/app/types/apiResponseTypes'
+import { TeacherHeader } from '@/app/components'
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
 	const session = await getServerSession(options)
@@ -41,6 +42,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 	}
 	return (
 		<>
+			<TeacherHeader />
 			<Box>{children}</Box>
 		</>
 	)
