@@ -21,7 +21,7 @@ export default async function Entrance() {
 			{isStudent && (
 				<Link href={'/entrance/student/dashboard/submit_assignment'}>学生ページへ</Link>
 			)}
-			{isTeacher && <Link href={'/entrance/teacher'}>教員ページへ</Link>}
+			{isTeacher && <Link href={'/entrance/teacher/dashboard'}>教員ページへ</Link>}
 		</Container>
 	)
 }
