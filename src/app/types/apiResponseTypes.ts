@@ -1,7 +1,7 @@
 // 課題に関する情報
 export interface Issue {
 	issue_id: number
-	teacher_subject_id: number
+	teacherSubjectId: number
 	name: string
 	due_date: string
 	comment: string
@@ -64,4 +64,14 @@ export interface Subject {
 
 export interface TeacherExists {
 	exists: boolean
+}
+
+export interface TeacherSubjectAssign {
+	teacher_subject_id: number
+	name: string
+}
+
+export interface Department {
+	department_id: number
+	name: string
 }

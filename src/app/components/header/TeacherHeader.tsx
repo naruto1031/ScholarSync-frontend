@@ -9,17 +9,30 @@ import { useState } from 'react'
 import { signOut } from 'next-auth/react'
 import { TeacherDrawer } from '../drawer/TeacherDrawer'
 
-export const TeacherHeader = () => {
+interface Props {
+	drawerWidth: number
+}
+
+export const TeacherHeader = ({ drawerWidth }: Props) => {
 	const [isOpen, setIsOpen] = useState(false)
 	return (
-		<AppBar position='static'>
+		<AppBar
+			position='static'
+			sx={{
+				width: { sm: `calc(100% - ${drawerWidth}px)` },
+				ml: { sm: `${drawerWidth}px` },
+			}}
+		>
 			<Toolbar>
 				<IconButton
 					size='large'
 					edge='start'
 					color='inherit'
 					aria-label='menu'
-					sx={{ mr: 2 }}
+					sx={{
+						mr: 2,
+						display: { sm: 'none' },
+					}}
 					onClick={() => setIsOpen(true)}
 				>
 					<MenuIcon />
@@ -31,7 +44,7 @@ export const TeacherHeader = () => {
 					SignOut
 				</Button>
 			</Toolbar>
-			<TeacherDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
+			<TeacherDrawer isOpen={isOpen} setIsOpen={setIsOpen} drawerWidth={drawerWidth} />
 		</AppBar>
 	)
 }
