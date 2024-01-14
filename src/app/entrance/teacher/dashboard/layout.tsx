@@ -40,10 +40,19 @@ export default async function DashboardLayout({ children }: { children: React.Re
 	if (!data.exists) {
 		redirect('/entrance/teacher/signup')
 	}
+
+	const drawerWidth = 250
 	return (
 		<>
-			<TeacherHeader />
-			<Box>{children}</Box>
+			<TeacherHeader drawerWidth={drawerWidth} />
+			<Box
+				sx={{
+					width: { sm: `calc(100% - ${drawerWidth}px)` },
+					ml: { sm: `${drawerWidth}px` },
+				}}
+			>
+				{children}
+			</Box>
 		</>
 	)
 }

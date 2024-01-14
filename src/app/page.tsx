@@ -22,7 +22,7 @@ const Page = () => {
 								教育の未来を、テクノロジーと共に。Scholar
 								Syncは、教育機関が直面する現代の課題に対応するために設計された、革新的な管理ツールです。Microsoftアカウントとの連携により、安全かつ効率的な学生情報管理を可能にします。信頼性の高いセキュリティ機能で、学生情報を守ります。
 							</Typography>
-							<NextLink href={'./entrance/student/dashboard/top'} passHref>
+							<NextLink href={'./login'} passHref>
 								<Button
 									variant='contained'
 									color='primary'
