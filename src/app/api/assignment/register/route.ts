@@ -1,16 +1,19 @@
 import { options } from '@/app/options'
 import { AssignmentRegisterSchemaType } from '@/app/types/form/schema'
+import { toMySQLFormat } from '@/app/utils/toMySQLDateTimeFormatUtil'
 import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 
 interface RequestBody {
 	teacher_subject_id: string
 	name: string
-	due_date: string
+	due_dates: {
+		class_id: number
+		due_date: string
+	}[]
 	comment?: string
 	task_number: string
 	private_flag: boolean
-	department_ids: string[]
 	challenge_flag: boolean
 	challenge_max_score: number | undefined
 }
@@ -19,18 +22,23 @@ export async function POST(request: NextRequest) {
 	const session = await getServerSession(options)
 	if (!session) return new NextResponse('Unauthorized', { status: 401 })
 
-	function toMySQLFormat(date: Date) {
-		const dt = new Date(date)
-		return dt.toISOString().slice(0, 19).replace('T', ' ')
-	}
+	const dueDates =
+		assignmentData.dueDates
+			?.map((dueDate) => {
+				if (!dueDate || !dueDate.classId) return
+				return {
+					class_id: dueDate.classId,
+					due_date: toMySQLFormat(dueDate.dueDate),
+				}
+			})
+			.filter((date): date is { class_id: number; due_date: string } => date !== undefined) || []
 
 	const requestBody: RequestBody = {
 		teacher_subject_id: assignmentData.teacherSubjectId,
 		name: assignmentData.name,
-		due_date: toMySQLFormat(assignmentData.dueDate),
+		due_dates: dueDates,
 		task_number: assignmentData.taskNumber,
 		private_flag: assignmentData.privateFlag,
-		department_ids: assignmentData.departmentIds,
 		challenge_flag: assignmentData.challengeFlag,
 		challenge_max_score: assignmentData.challengeFlag ? assignmentData.challengeMaxScore : 0,
 	}

@@ -38,7 +38,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 	const data: TeacherExists = await res.json()
 
 	if (!data.exists) {
-		redirect('/entrance/teacher/signup')
+		redirect('/teacher/signup')
 	}
 
 	const drawerWidth = 250

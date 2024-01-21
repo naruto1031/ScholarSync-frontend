@@ -133,7 +133,7 @@ export const DetailModal = ({ isOpen, currentSubmissionData, handleClose }: Prop
 							<Button
 								variant='contained'
 								size='large'
-								onClick={() => router.push('/entrance/student/dashboard/submit_assignment')}
+								onClick={() => router.push('/student/dashboard/submit_assignment')}
 							>
 								課題表紙の提出画面へ
 							</Button>

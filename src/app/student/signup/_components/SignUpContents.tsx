@@ -39,7 +39,7 @@ export const SignUpContents = ({ classList }: Props) => {
 				}),
 			})
 			setIsRegistered(true)
-			router.push('/entrance/student/dashboard/top')
+			router.push('/student/dashboard/top')
 		} catch (error) {
 			setIsError(true)
 			return

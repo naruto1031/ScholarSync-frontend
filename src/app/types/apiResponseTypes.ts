@@ -4,12 +4,24 @@ export interface Issue {
 	teacherSubjectId: number
 	name: string
 	due_date: string
+	issue_classes: IssueClass[]
 	comment: string
 	task_number: string
 	private_flag: number
 	challenge_flag: number
 	challenge_max_score: null | number
-	subject_name: string
+	subject_name?: string
+	created_at?: string
+	updated_at?: string
+}
+
+export interface IssueClass {
+	issue_class_id: number
+	issue_id: number
+	class_id: number
+	due_date: string | null
+	department_name: string
+	class_name: string
 }
 
 export interface IssueCover {
@@ -68,7 +80,15 @@ export interface TeacherExists {
 
 export interface TeacherSubjectAssign {
 	teacher_subject_id: number
+	subject_id: number
 	name: string
+	departments: DepartmentClass[]
+}
+
+export interface DepartmentClass {
+	department_id: number
+	name: string
+	classes: Class[]
 }
 
 export interface Department {

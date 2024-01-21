@@ -36,7 +36,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 	const data: StudentExists = await res.json()
 
 	if (!data.exists) {
-		redirect('/entrance/student/signup')
+		redirect('/student/signup')
 	}
 
 	return (

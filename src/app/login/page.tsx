@@ -20,9 +20,9 @@ export default async function Login() {
 	const isTeacher = session?.user.groups?.includes(teacherGroupID)
 	const isAdministrator = isTeacher && isStudent
 
-	if (isAdministrator) redirect('/entrance')
-	if (isStudent) redirect('/entrance/student/dashboard/top')
-	if (isTeacher) redirect('/entrance/teacher/dashboard/top')
+	if (isAdministrator) redirect('')
+	if (isStudent) redirect('/student/dashboard/top')
+	if (isTeacher) redirect('/teacher/dashboard/top')
 
 	return (
 		<Box

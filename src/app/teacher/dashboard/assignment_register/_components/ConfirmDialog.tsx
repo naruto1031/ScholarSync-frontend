@@ -15,6 +15,8 @@ export interface DialogProps {
 	assignmentData?: AssignmentRegisterSchemaType
 }
 export const ConfirmDialog = ({ open, assignmentData, handleClose }: DialogProps) => {
+	if (!assignmentData) return
+	const dueDates = assignmentData.dueDates?.filter((dueDate) => dueDate !== undefined)
 	return (
 		<Dialog
 			open={open}
@@ -27,7 +29,14 @@ export const ConfirmDialog = ({ open, assignmentData, handleClose }: DialogProps
 				<DialogContentText id='alert-dialog-description'>
 					<Box>課題名: {assignmentData?.name}</Box>
 					<Box>課題番号: {assignmentData?.taskNumber}</Box>
-					<Box>提出期限: {assignmentData?.dueDate.toString()}</Box>
+					{dueDates?.map((dueDate, index) => (
+						<Box key={dueDate?.classId}>
+							<Box>{dueDate?.className}</Box>
+							<Box>
+								課題提出期限{index + 1}: {dueDate?.dueDate?.toDateString() || '未設定'}
+							</Box>
+						</Box>
+					))}
 				</DialogContentText>
 			</DialogContent>
 			<DialogActions>

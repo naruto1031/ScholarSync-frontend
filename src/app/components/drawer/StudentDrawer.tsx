@@ -81,9 +81,7 @@ export const StudentDrawer = ({ isOpen, setIsOpen }: Props) => {
 			<List>
 				{drawerMenuItems.map((item, index) => (
 					<ListItem key={index} disablePadding>
-						<ListItemButton
-							onClick={() => handleMenuClick(`/entrance/student/dashboard/${item.url}`)}
-						>
+						<ListItemButton onClick={() => handleMenuClick(`/student/dashboard/${item.url}`)}>
 							<ListItemText primary={item.text} />
 						</ListItemButton>
 					</ListItem>
