@@ -1,7 +1,7 @@
 // 課題に関する情報
 export interface Issue {
 	issue_id: number
-	teacherSubjectId: number
+	teacher_subject_id: number
 	name: string
 	due_date: string
 	issue_classes: IssueClass[]
@@ -15,6 +15,22 @@ export interface Issue {
 	updated_at?: string
 }
 
+export interface TransformedIssue {
+	issue_id: number
+	teacher_subject_id: number
+	name: string
+	due_date: string
+	issue_classes: IssueClass[]
+	comment: string
+	task_number: string
+	private_flag: boolean
+	challenge_flag: boolean
+	challenge_max_score: null | number
+	subject_name?: string
+	created_at?: string
+	updated_at?: string
+}
+
 export interface IssueClass {
 	issue_class_id: number
 	issue_id: number
@@ -22,6 +38,25 @@ export interface IssueClass {
 	due_date: string | null
 	department_name: string
 	class_name: string
+}
+
+export interface UpdateIssue {
+	issue_id: string | undefined
+	teacher_subject_id?: string | undefined
+	name?: string | undefined
+	comment?: string | undefined
+	task_number?: string | undefined
+	private_flag?: boolean | undefined
+	challenge_flag?: boolean | undefined
+	challenge_max_score?: number | undefined | null
+	due_dates?:
+		| {
+				issue_class_id: number
+				due_date: string | null
+				class_id: number
+				class_name: string
+		  }[]
+		| undefined
 }
 
 export interface IssueCover {

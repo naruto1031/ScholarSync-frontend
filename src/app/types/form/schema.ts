@@ -41,18 +41,17 @@ export const assignmentRegisterSchema = z.object({
 
 export const updateAssignmentSchema = z.object({
 	name: z.string().nonempty(),
-	dueDates: z
-		.array(
-			z
-				.object({
-					dueDate: z.date().optional(),
-					classId: z.number(),
-					className: z.string(),
-				})
-				.optional(),
-		)
-		.optional(),
+	dueDates: z.array(
+		z
+			.object({
+				dueDate: z.date().optional(),
+				classId: z.number(),
+				className: z.string(),
+			})
+			.optional(),
+	),
 	comment: z.string().optional(),
+	taskNumber: z.string().nonempty().regex(numericRegex, '課題番号は半角数字のみです'),
 	privateFlag: z.boolean(),
 	challengeFlag: z.boolean(),
 	challengeMaxScore: z.number().int().optional(),

@@ -178,7 +178,6 @@ export const AssignmentRegisterContents = ({ teacherSubjects }: Props) => {
 		},
 	})
 
-	console.log(errors)
 	return (
 		<Box>
 			<Paper

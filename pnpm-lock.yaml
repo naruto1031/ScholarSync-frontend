@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@date-io/dayjs':
+    specifier: ^3.0.0
+    version: 3.0.0(dayjs@1.11.10)
   '@emotion/react':
     specifier: ^11.11.1
     version: 11.11.1(@types/react@18.2.8)(react@18.2.0)
@@ -166,6 +169,28 @@ packages:
       '@babel/helper-string-parser': 7.22.5
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
+    dev: false
+
+  /@date-io/core@3.0.0:
+    resolution:
+      {
+        integrity: sha512-S3j+IAQVBYNkQzchVVhX40eBkGDreBpScy9RXwTS5j2+k07+62pMVPisQ44Gq76Rqy5AOG/EZXCwBpY/jbemvA==,
+      }
+    dev: false
+
+  /@date-io/dayjs@3.0.0(dayjs@1.11.10):
+    resolution:
+      {
+        integrity: sha512-vy7DSwoQiPA2L0stRqW3le7lcEBMjoMMEmbpCNkyoX3xXizKInFvhbnOBmCyusIQ7tL/WsNC4X5bVgdNWX0JLA==,
+      }
+    peerDependencies:
+      dayjs: ^1.8.17
+    peerDependenciesMeta:
+      dayjs:
+        optional: true
+    dependencies:
+      '@date-io/core': 3.0.0
+      dayjs: 1.11.10
     dev: false
 
   /@emotion/babel-plugin@11.11.0:

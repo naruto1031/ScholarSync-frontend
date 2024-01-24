@@ -1,4 +1,4 @@
-import { Issue, IssueCover } from '@/app/types/apiResponseTypes'
+import { Issue, IssueCover, TransformedIssue } from '@/app/types/apiResponseTypes'
 import {
 	Paper,
 	TableContainer,
@@ -14,13 +14,19 @@ import InfoIcon from '@mui/icons-material/Info'
 import { Dispatch, SetStateAction } from 'react'
 
 interface Props {
-	issues: Issue[]
+	issues: TransformedIssue[]
 	isLoading: boolean
 	setIsOpen: Dispatch<SetStateAction<boolean>>
-	setCurrentIssue: Dispatch<SetStateAction<Issue | null>>
+	setCurrentIssue: Dispatch<SetStateAction<TransformedIssue | null>>
+	setEditCurrentIssueData: Dispatch<SetStateAction<TransformedIssue | null>>
 }
-export const ResultTable = ({ issues, setCurrentIssue, isLoading, setIsOpen }: Props) => {
-	const timezoneOffset = new Date().getTimezoneOffset() + 9 * 60 * 60 * 1000
+export const ResultTable = ({
+	issues,
+	setCurrentIssue,
+	setEditCurrentIssueData,
+	isLoading,
+	setIsOpen,
+}: Props) => {
 	return (
 		<Paper
 			sx={{
@@ -92,7 +98,7 @@ export const ResultTable = ({ issues, setCurrentIssue, isLoading, setIsOpen }: P
 								</TableCell>
 							</TableRow>
 						) : (
-							issues.map((row: Issue) => (
+							issues.map((row: TransformedIssue) => (
 								<TableRow
 									key={row.issue_id}
 									sx={{
@@ -102,6 +108,7 @@ export const ResultTable = ({ issues, setCurrentIssue, isLoading, setIsOpen }: P
 									}}
 									onClick={() => {
 										setCurrentIssue(row)
+										setEditCurrentIssueData(row)
 										setIsOpen(true)
 									}}
 								>
