@@ -11,27 +11,56 @@ export const submissionStatusSchema = z.object({
 	statuses: z.array(z.string().optional()),
 })
 
-export type StudentSchemaType = z.infer<typeof studentSchema>
-export type SubmissionStatusSchemaType = z.infer<typeof submissionStatusSchema>
-
 // 教員情報
 export const teacherSchema = z.object({
 	classId: z.string().optional(),
 	teacherSubjects: z.array(z.string().nonempty()),
 })
-export type TeacherSchemaType = z.infer<typeof teacherSchema>
 
 // 課題情報
 export const assignmentRegisterSchema = z.object({
 	teacherSubjectId: z.string().nonempty(),
 	name: z.string().nonempty(),
-	dueDate: z.date(),
+	dueDates: z
+		.array(
+			z
+				.object({
+					dueDate: z.date().optional(),
+					classId: z.number(),
+					className: z.string(),
+				})
+				.optional(),
+		)
+		.optional(),
 	comment: z.string().optional(),
 	taskNumber: z.string().nonempty().regex(numericRegex, '課題番号は半角数字のみです'),
 	privateFlag: z.boolean(),
-	departmentIds: z.array(z.string().nonempty()).nonempty(),
 	challengeFlag: z.boolean(),
 	challengeMaxScore: z.number().int().optional(),
 })
 
+export const updateAssignmentSchema = z.object({
+	name: z.string().nonempty(),
+	dueDates: z.array(
+		z
+			.object({
+				dueDate: z.date().optional(),
+				classId: z.number(),
+				className: z.string(),
+			})
+			.optional(),
+	),
+	comment: z.string().optional(),
+	taskNumber: z.string().nonempty().regex(numericRegex, '課題番号は半角数字のみです'),
+	privateFlag: z.boolean(),
+	challengeFlag: z.boolean(),
+	challengeMaxScore: z.number().int().optional(),
+})
+
+export type StudentSchemaType = z.infer<typeof studentSchema>
+export type SubmissionStatusSchemaType = z.infer<typeof submissionStatusSchema>
+
+export type TeacherSchemaType = z.infer<typeof teacherSchema>
+
 export type AssignmentRegisterSchemaType = z.infer<typeof assignmentRegisterSchema>
+export type UpdateAssignmentSchemaType = z.infer<typeof updateAssignmentSchema>

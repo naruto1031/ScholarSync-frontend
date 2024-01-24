@@ -18,19 +18,5 @@ export default async function AssignmentRegister() {
 	})
 	const teacherSubjectAssignData: TeacherSubjectAssign[] = await teacherSubjectAssignResponse.json()
 
-	const departmentResponse = await fetch(`${process.env.API_URL}/api/teacher/department`, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${session?.user.accessToken}`,
-		},
-	})
-
-	const departmentData: Department[] = await departmentResponse.json()
-	return (
-		<AssignmentRegisterContents
-			teacherSubjects={teacherSubjectAssignData}
-			departments={departmentData}
-		/>
-	)
+	return <AssignmentRegisterContents teacherSubjects={teacherSubjectAssignData} />
 }

@@ -25,30 +25,60 @@ import { Toast } from '@/app/components'
 
 interface Props {
 	teacherSubjects: TeacherSubjectAssign[]
-	departments: Department[]
 }
 
-export const AssignmentRegisterContents = ({ teacherSubjects, departments }: Props) => {
+export const AssignmentRegisterContents = ({ teacherSubjects }: Props) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [isError, setIsError] = useState<boolean>(false)
 	const [isSuccess, setIsSuccess] = useState<boolean>(false)
 	const [dialogConfig, setDialogConfig] = useState<DialogProps | undefined>()
 	const [open, setOpen] = useState(false)
+	const [isDueDateError, setIsDueDateError] = useState<boolean>(false)
+
+	const onBlurDueDateChange = () => {
+		let isSetDueDate = 0
+		watch('dueDates')?.forEach((dueDate) => {
+			if (dueDate && dueDate.dueDate) {
+				isSetDueDate++
+			}
+		})
+		if (isSetDueDate === 0) {
+			setIsDueDateError(true)
+			return
+		}
+		setIsDueDateError(false)
+	}
+
+	const groupedClassesByTeacherSubject = teacherSubjects.reduce<{ [key: string]: number[] }>(
+		(accumulator, teacherSubject) => {
+			accumulator[teacherSubject.teacher_subject_id] = teacherSubject.departments.reduce<number[]>(
+				(deptAccumulator, department) => {
+					const classIds = department.classes.map((cl) => cl.class_id)
+					return deptAccumulator.concat(classIds)
+				},
+				[],
+			)
+			return accumulator
+		},
+		{},
+	)
 
 	const onSubmit = async ({
 		teacherSubjectId,
 		name,
 		taskNumber,
-		dueDate,
-		departmentIds,
+		dueDates,
 		privateFlag,
 		challengeFlag,
 		challengeMaxScore,
 		comment,
 	}: AssignmentRegisterSchemaType) => {
 		try {
+			onBlurDueDateChange()
+			setIsDueDateError(false)
 			setIsLoading(true)
 			setOpen(true)
+
 			const ret = await new Promise((resolve) => {
 				setDialogConfig({
 					open: open,
@@ -60,8 +90,7 @@ export const AssignmentRegisterContents = ({ teacherSubjects, departments }: Pro
 						teacherSubjectId,
 						name,
 						taskNumber,
-						dueDate,
-						departmentIds,
+						dueDates,
 						privateFlag,
 						challengeFlag,
 						challengeMaxScore,
@@ -73,6 +102,23 @@ export const AssignmentRegisterContents = ({ teacherSubjects, departments }: Pro
 				setIsLoading(false)
 				return
 			}
+			const dueDatesData = dueDates?.filter((dueDate) => dueDate !== undefined)
+			const dueDateClassIds: (number | undefined)[] | undefined = dueDatesData?.map(
+				(dueDate) => dueDate?.classId,
+			)
+			const unSetClassIds = Object.values(groupedClassesByTeacherSubject[teacherSubjectId]).filter(
+				(classId) => {
+					return !dueDateClassIds?.includes(classId)
+				},
+			)
+			unSetClassIds.forEach((classId) => {
+				dueDatesData?.push({
+					dueDate: undefined,
+					classId,
+					className: '',
+				})
+			})
+
 			const res = await fetch('/api/assignment/register', {
 				method: 'POST',
 				headers: {
@@ -82,8 +128,7 @@ export const AssignmentRegisterContents = ({ teacherSubjects, departments }: Pro
 					teacherSubjectId,
 					name,
 					taskNumber,
-					dueDate,
-					departmentIds,
+					dueDates: dueDatesData,
 					privateFlag,
 					challengeFlag,
 					challengeMaxScore,
@@ -125,8 +170,7 @@ export const AssignmentRegisterContents = ({ teacherSubjects, departments }: Pro
 			teacherSubjectId: '',
 			name: '',
 			taskNumber: '',
-			dueDate: undefined,
-			departmentIds: undefined,
+			dueDates: undefined,
 			privateFlag: false,
 			challengeFlag: false,
 			challengeMaxScore: 0,
@@ -155,6 +199,7 @@ export const AssignmentRegisterContents = ({ teacherSubjects, departments }: Pro
 
 				<Box
 					sx={{
+						fontWeight: 'bold',
 						mb: '10px',
 					}}
 				>
@@ -170,6 +215,7 @@ export const AssignmentRegisterContents = ({ teacherSubjects, departments }: Pro
 						disabled={isLoading}
 						defaultValue={undefined}
 					>
+						<MenuItem value={undefined}>選択してください</MenuItem>
 						{teacherSubjects.map((subject) => (
 							<MenuItem key={subject.teacher_subject_id} value={`${subject.teacher_subject_id}`}>
 								{subject.name}
@@ -184,6 +230,7 @@ export const AssignmentRegisterContents = ({ teacherSubjects, departments }: Pro
 					<Box>
 						<Box
 							sx={{
+								fontWeight: 'bold',
 								mb: '10px',
 							}}
 						>
@@ -205,68 +252,72 @@ export const AssignmentRegisterContents = ({ teacherSubjects, departments }: Pro
 
 						<Box
 							sx={{
+								fontWeight: 'bold',
 								mb: '10px',
 							}}
 						>
-							提出期限を入力
+							提出期限を入力(必ず一クラス以上設定)
 						</Box>
-						<FormControl sx={{ width: '100%', mb: '20px' }}>
-							<Controller
-								control={control}
-								name='dueDate'
-								render={({ field }) => (
-									<DateTimePicker
-										label='提出期限'
-										onChange={(value) => {
-											field.onChange((value as Dayjs).toDate())
-										}}
-										slotProps={{
-											textField: {
-												error: !!errors.dueDate,
-												onBlur: () => {
-													field.onBlur()
-												},
-											},
-										}}
-									/>
-								)}
-							/>
-							{errors.dueDate?.message && (
-								<FormHelperText error>{errors.dueDate?.message}</FormHelperText>
-							)}
-						</FormControl>
-						<Box
-							sx={{
-								mb: '10px',
-							}}
-						>
-							課題を提示する学科を設定
-						</Box>
-						<FormControl sx={{ width: '100%', mb: '20px' }}>
-							<InputLabel id='teacher-subjects'>提示学科</InputLabel>
-							<Select
-								labelId='teacher-subjects'
-								label='提示学科'
-								error={!!errors.departmentIds}
-								{...register('departmentIds')}
-								disabled={isLoading}
-								multiple
-								defaultValue={[]}
+						{isDueDateError && (
+							<FormHelperText
+								error
+								sx={{
+									mb: '20px',
+									fontWeight: 'bold',
+									fontSize: '14px',
+								}}
 							>
-								{departments.map((department) => (
-									<MenuItem key={department.department_id} value={`${department.department_id}`}>
-										{department.name}
-									</MenuItem>
-								))}
-							</Select>
-							{errors.departmentIds?.message && (
-								<FormHelperText error>{errors.departmentIds?.message}</FormHelperText>
+								提出期限を一つ以上入力してください
+							</FormHelperText>
+						)}
+						{teacherSubjects
+							.find((subject) => subject.teacher_subject_id === Number(watch('teacherSubjectId')))
+							?.departments.map((department) =>
+								department.classes.map((classData) => (
+									<Box key={classData.class_id}>
+										<Box
+											sx={{
+												mb: '10px',
+											}}
+										>
+											{department.name}
+											{classData.name}
+										</Box>
+										<FormControl sx={{ width: '100%', mb: '20px' }}>
+											<Controller
+												control={control}
+												name={`dueDates.${classData.class_id}`}
+												render={({ field }) => (
+													<DateTimePicker
+														label='提出期限'
+														ampm={false}
+														onChange={(value) => {
+															field.onChange({
+																dueDate: (value as Dayjs).toDate(),
+																classId: classData.class_id,
+																className: department.name + classData.name,
+															})
+															onBlurDueDateChange()
+														}}
+														slotProps={{
+															textField: {
+																error: isDueDateError,
+																onBlur: () => {
+																	onBlurDueDateChange()
+																},
+															},
+														}}
+													/>
+												)}
+											/>
+										</FormControl>
+									</Box>
+								)),
 							)}
-							<FormHelperText>複数選択可</FormHelperText>
-						</FormControl>
 						<Box
 							sx={{
 								mb: '10px',
+								fontWeight: 'bold',
 							}}
 						>
 							課題番号を入力
@@ -287,6 +338,7 @@ export const AssignmentRegisterContents = ({ teacherSubjects, departments }: Pro
 						<Box
 							sx={{
 								mb: '10px',
+								fontWeight: 'bold',
 							}}
 						>
 							コメントを入力(任意)
@@ -306,6 +358,7 @@ export const AssignmentRegisterContents = ({ teacherSubjects, departments }: Pro
 						</FormControl>
 						<Box
 							sx={{
+								fontWeight: 'bold',
 								mb: '10px',
 							}}
 						>
@@ -320,6 +373,7 @@ export const AssignmentRegisterContents = ({ teacherSubjects, departments }: Pro
 
 						<Box
 							sx={{
+								fontWeight: 'bold',
 								mb: '10px',
 							}}
 						>
@@ -335,6 +389,7 @@ export const AssignmentRegisterContents = ({ teacherSubjects, departments }: Pro
 							<Box>
 								<Box
 									sx={{
+										fontWeight: 'bold',
 										mb: '10px',
 									}}
 								>
