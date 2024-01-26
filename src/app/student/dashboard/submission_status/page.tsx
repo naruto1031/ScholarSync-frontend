@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import Loading from '@/app/loading'
+import Loading from '../loading'
 const SubmissionStatus = dynamic(() => import('./_components/SubmissionStatus'), {
 	loading: () => <Loading />,
 })
