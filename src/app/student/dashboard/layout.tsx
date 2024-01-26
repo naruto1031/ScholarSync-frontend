@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth'
 import { options } from '@/app/options'
 import { SignOutButton, Header } from '@/app/components'
-import { StudentExists } from '@/app/types/apiResponseTypes'
+import { StudentExists } from '@/types/apiResponseTypes'
 import { redirect } from 'next/navigation'
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {

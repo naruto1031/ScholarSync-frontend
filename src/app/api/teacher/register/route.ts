@@ -1,5 +1,5 @@
 import { options } from '@/app/options'
-import { TeacherSchemaType } from '@/app/types/form/schema'
+import { TeacherSchemaType } from '@/types/form/schema'
 import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 

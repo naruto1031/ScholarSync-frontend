@@ -1,6 +1,6 @@
 'use client'
-import { Department, TeacherSubjectAssign } from '@/app/types/apiResponseTypes'
-import { AssignmentRegisterSchemaType, assignmentRegisterSchema } from '@/app/types/form/schema'
+import { Department, TeacherSubjectAssign } from '@/types/apiResponseTypes'
+import { AssignmentRegisterSchemaType, assignmentRegisterSchema } from '@/types/form/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Box,

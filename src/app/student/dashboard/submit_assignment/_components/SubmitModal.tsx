@@ -1,7 +1,7 @@
 'use client'
 import { Box, Button, Checkbox, FormControlLabel, FormGroup, Modal, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
-import { Issue } from '@/app/types/apiResponseTypes'
+import { Issue } from '@/types/apiResponseTypes'
 import { useTheme } from '@mui/material/styles'
 import { useState } from 'react'
 

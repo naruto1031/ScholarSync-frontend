@@ -1,6 +1,6 @@
 'use client'
-import { Class } from '@/app/types/apiResponseTypes'
-import { StudentSchemaType, studentSchema } from '@/app/types/form/schema'
+import { Class } from '@/types/apiResponseTypes'
+import { StudentSchemaType, studentSchema } from '@/types/form/schema'
 import { LoadingButton } from '@mui/lab'
 import {
 	Box,

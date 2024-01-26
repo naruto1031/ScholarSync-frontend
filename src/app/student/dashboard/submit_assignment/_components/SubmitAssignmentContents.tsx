@@ -13,7 +13,7 @@ import {
 } from '@mui/material'
 import { useState } from 'react'
 import { SubmitModal } from './SubmitModal'
-import { Issue, PendingIssuesResponse } from '@/app/types/apiResponseTypes'
+import { Issue, PendingIssuesResponse } from '@/types/apiResponseTypes'
 import InfoIcon from '@mui/icons-material/Info'
 import { Toast } from '@/app/components'
 
