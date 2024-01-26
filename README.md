@@ -1,17 +1,17 @@
-# Scholar Sync: 学内手続プラットフォーム
+# Scholar Sync: Academic Procedures Platform
 
-## 概要
+## Overview
 
-「Scholar Sync」は、学内で行われている、課題表紙提出や、その他各種手続きを Web ブラウザで簡単に行うことができるプラットフォームです。
+"Scholar Sync" is a platform that simplifies the process of submitting assignment covers and various other academic procedures within educational institutions via a web browser.
 
-[Scholar Sync を今すぐ試す](https://www.scholar-sync.systems/)
+[Try Scholar Sync now](https://www.scholar-sync.systems/)
 
-## 使用技術
+## Technologies Used
 
-### フロントエンド
+### Frontend
 
-- **デプロイ先**: Vercel
-- **技術スタック**:
+- **Deployment**: Vercel
+- **Technology Stack**:
   - Material UI Lab: v5.0.0-alpha.153
   - Material UI: v5.14.0
   - Prettier: v2.8.8
@@ -23,11 +23,11 @@
   - React: v18.2.0
   - TypeScript: v5.1.3
 
-### バックエンド(API サーバ)
+### Backend (API Server)
 
-[リポジトリはこちらから](https://github.com/naruto1031/ScholarSync-backend)
+[Repository can be found here](https://github.com/naruto1031/ScholarSync-backend)
 
-- **技術スタック**:
+- **Technology Stack**:
 
   - PHP: v8.1
   - Firebase/PHP-JWT: v6.8
@@ -38,7 +38,7 @@
   - Owen-it/Laravel-Auditing: v13.6
   - Paragonie/Sodium_Compat: v1.20
 
-- **クラウドサービス**:
-  - **認証**: Microsoft Entra ID
-  - **サーバ**: Azure App Service
-  - **データベース**: Azure Database for MySQL
+- **Cloud Services**:
+  - **Authentication**: Microsoft Entra ID
+  - **Server**: Azure App Service
+  - **Database**: Azure Database for MySQL
