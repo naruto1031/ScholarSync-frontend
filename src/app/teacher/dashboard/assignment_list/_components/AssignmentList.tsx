@@ -1,5 +1,5 @@
 import { options } from '@/app/options'
-import { TeacherSubjectAssign } from '@/app/types/apiResponseTypes'
+import { TeacherSubjectAssign } from '@/types/apiResponseTypes'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 import { AssignmentListContents } from './AssignmentListContents'

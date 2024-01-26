@@ -1,6 +1,6 @@
 import type { NextAuthOptions } from 'next-auth'
 import AzureProvider from 'next-auth/providers/azure-ad'
-import { JwtToken } from './types/next-auth'
+import { JwtToken } from '../types/next-auth'
 
 const clientId = process.env.AZURE_AD_CLIENT_ID
 const clientSecret = process.env.AZURE_AD_CLIENT_SECRET

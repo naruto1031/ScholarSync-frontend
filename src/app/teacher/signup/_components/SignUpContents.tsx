@@ -1,11 +1,11 @@
 'use client'
-import { Class, Subject } from '@/app/types/apiResponseTypes'
+import { Class, Subject } from '@/types/apiResponseTypes'
 import {
 	StudentSchemaType,
 	TeacherSchemaType,
 	studentSchema,
 	teacherSchema,
-} from '@/app/types/form/schema'
+} from '@/types/form/schema'
 import { LoadingButton } from '@mui/lab'
 import {
 	Box,

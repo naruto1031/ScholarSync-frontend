@@ -10,11 +10,11 @@ import {
 	Pagination,
 	Paper,
 } from '@mui/material'
-import { SubmissionStatusSchemaType, submissionStatusSchema } from '@/app/types/form/schema'
+import { SubmissionStatusSchemaType, submissionStatusSchema } from '@/types/form/schema'
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
 import { useRef, useState } from 'react'
 import { DetailModal } from './DetailModal'
-import { IssueCover, IssueCoverResponse } from '@/app/types/apiResponseTypes'
+import { IssueCover, IssueCoverResponse } from '@/types/apiResponseTypes'
 import { ResultTable } from './ResultTable'
 
 export interface SubmissionStatusLabel {

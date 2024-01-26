@@ -1,4 +1,4 @@
-import { Issue, IssueCover, TransformedIssue } from '@/app/types/apiResponseTypes'
+import { Issue, IssueCover, TransformedIssue } from '@/types/apiResponseTypes'
 import {
 	Paper,
 	TableContainer,

@@ -1,5 +1,5 @@
 import { options } from '@/app/options'
-import { UpdateIssue } from '@/app/types/apiResponseTypes'
+import { UpdateIssue } from '@/types/apiResponseTypes'
 import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 

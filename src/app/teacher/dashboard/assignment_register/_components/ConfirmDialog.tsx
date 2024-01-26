@@ -1,4 +1,4 @@
-import { AssignmentRegisterSchemaType } from '@/app/types/form/schema'
+import { AssignmentRegisterSchemaType } from '@/types/form/schema'
 import {
 	Dialog,
 	DialogTitle,

@@ -1,5 +1,5 @@
 'use client'
-import { IssueCover } from '@/app/types/apiResponseTypes'
+import { IssueCover } from '@/types/apiResponseTypes'
 import {
 	Box,
 	Button,
@@ -14,7 +14,7 @@ import {
 import { useTheme } from '@mui/material/styles'
 import { submissionStatuses } from './SubmissionStatusContents'
 import { useRouter } from 'next/navigation'
-import { convertStatus } from '@/app/utils/statusUtils'
+import { convertStatus } from '@/utils/statusUtils'
 interface Props {
 	isOpen: boolean
 	currentSubmissionData: IssueCover | null

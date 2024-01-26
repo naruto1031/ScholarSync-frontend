@@ -1,8 +1,9 @@
 import { getServerSession } from 'next-auth'
 import { options } from '@/app/options'
 import { SignOutButton, Header } from '@/app/components'
-import { StudentExists } from '@/app/types/apiResponseTypes'
+import { StudentExists } from '@/types/apiResponseTypes'
 import { redirect } from 'next/navigation'
+import Box from '@mui/material/Box/Box'
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
 	const session = await getServerSession(options)
@@ -39,10 +40,18 @@ export default async function DashboardLayout({ children }: { children: React.Re
 		redirect('/student/signup')
 	}
 
+	const drawerWidth = 250
 	return (
 		<>
-			<Header />
-			{children}
+			<Header drawerWidth={drawerWidth} />
+			<Box
+				sx={{
+					width: { sm: `calc(100% - ${drawerWidth}px)` },
+					ml: { sm: `${drawerWidth}px` },
+				}}
+			>
+				{children}
+			</Box>
 		</>
 	)
 }

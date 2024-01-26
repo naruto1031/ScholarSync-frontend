@@ -1,4 +1,4 @@
-import { IssueCover } from '@/app/types/apiResponseTypes'
+import { IssueCover } from '@/types/apiResponseTypes'
 import {
 	Paper,
 	TableContainer,
@@ -12,7 +12,7 @@ import {
 } from '@mui/material'
 import InfoIcon from '@mui/icons-material/Info'
 import { Dispatch, SetStateAction } from 'react'
-import { convertStatus } from '@/app/utils/statusUtils'
+import { convertStatus } from '@/utils/statusUtils'
 import { ConvertStatusIcon } from '@/app/components'
 
 interface Props {

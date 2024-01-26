@@ -1,5 +1,5 @@
 'use client'
-import { Issue, TransformedIssue, UpdateIssue } from '@/app/types/apiResponseTypes'
+import { Issue, TransformedIssue, UpdateIssue } from '@/types/apiResponseTypes'
 
 import {
 	Box,
@@ -17,8 +17,8 @@ import dayjs, { Dayjs } from 'dayjs'
 import { Dispatch, SetStateAction, useState } from 'react'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
-import { toMySQLFormat } from '@/app/utils/toMySQLDateTimeFormatUtil'
-import { numberToBoolean } from '@/app/utils/numberToBoolean'
+import { toMySQLFormat } from '@/utils/toMySQLDateTimeFormatUtil'
+import { numberToBoolean } from '@/utils/numberToBoolean'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
