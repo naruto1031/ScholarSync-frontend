@@ -16,6 +16,12 @@ import { SubmitModal } from './SubmitModal'
 import { Issue, PendingIssuesResponse } from '@/types/apiResponseTypes'
 import InfoIcon from '@mui/icons-material/Info'
 import { Toast } from '@/app/components'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 interface Props {
 	issueData: Issue[]
@@ -197,7 +203,9 @@ export const SubmitAssignmentContents = ({ issueData, totalIssueCount }: Props) 
 										</TableCell>
 										<TableCell align='right'>{row.task_number}</TableCell>
 										<TableCell align='right'>{row.name}</TableCell>
-										<TableCell align='right'>{row.due_date}</TableCell>
+										<TableCell align='right'>
+											{dayjs.utc(row.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')}
+										</TableCell>
 									</TableRow>
 								))
 							)}

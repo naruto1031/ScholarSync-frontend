@@ -289,6 +289,9 @@ export const DetailModal = ({
 									disabled={!isEdit}
 									label='提出期限'
 									ampm={false}
+									timeSteps={{
+										minutes: 1,
+									}}
 									value={
 										(issueClass.due_date && dayjs.utc(issueClass.due_date).tz('Asia/Tokyo')) || null
 									}

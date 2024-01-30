@@ -291,6 +291,9 @@ export const AssignmentRegisterContents = ({ teacherSubjects }: Props) => {
 													<DateTimePicker
 														label='提出期限'
 														ampm={false}
+														timeSteps={{
+															minutes: 1,
+														}}
 														onChange={(value) => {
 															field.onChange({
 																dueDate: (value as Dayjs).toDate(),

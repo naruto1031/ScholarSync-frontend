@@ -57,6 +57,16 @@ export const updateAssignmentSchema = z.object({
 	challengeMaxScore: z.number().int().optional(),
 })
 
+// 課題検索条件
+export const assignmentSearchConditionSchema = z.object({
+	teacherSubjectId: z.string().nonempty(),
+	classId: z.string().nonempty(),
+	issueId: z.string().nonempty(),
+	status: z.string().nonempty(),
+	studentNumber: z.array(z.string().optional()).optional(),
+	excludeStudentNumber: z.array(z.string().optional()).optional(),
+})
+
 export type StudentSchemaType = z.infer<typeof studentSchema>
 export type SubmissionStatusSchemaType = z.infer<typeof submissionStatusSchema>
 
@@ -64,3 +74,5 @@ export type TeacherSchemaType = z.infer<typeof teacherSchema>
 
 export type AssignmentRegisterSchemaType = z.infer<typeof assignmentRegisterSchema>
 export type UpdateAssignmentSchemaType = z.infer<typeof updateAssignmentSchema>
+
+export type AssignmentSearchConditionSchemaType = z.infer<typeof assignmentSearchConditionSchema>

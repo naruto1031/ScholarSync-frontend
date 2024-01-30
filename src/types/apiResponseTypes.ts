@@ -77,6 +77,22 @@ export interface IssueCover {
 	resubmission_comment: string | null
 }
 
+export interface IssueCoverSearchCondition {
+	issue_cover_id: number
+	issue_id: number
+	comment: string
+	student_id: string
+	student_name: string
+	registration_number: number
+	attendance_number: number
+	issue_cover_status_id: number
+	status: string
+	evaluation: string | null
+	current_score: number | null
+	resubmission_deadline: string | null
+	resubmission_comment: string | null
+}
+
 export interface IssueCoverResponse {
 	issue_covers: IssueCover[]
 }
@@ -88,6 +104,9 @@ export interface TotalIssueCount {
 // APIレスポンスの型
 export interface PendingIssuesResponse {
 	issues: Issue[]
+}
+export interface IssueCoverSearchConditionResponse {
+	issue_covers: IssueCoverSearchCondition[]
 }
 
 export interface IssuesData {

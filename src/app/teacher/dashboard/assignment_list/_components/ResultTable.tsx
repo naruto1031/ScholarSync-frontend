@@ -8,7 +8,6 @@ import {
 	TableCell,
 	TableBody,
 	CircularProgress,
-	Box,
 } from '@mui/material'
 import InfoIcon from '@mui/icons-material/Info'
 import { Dispatch, SetStateAction } from 'react'
