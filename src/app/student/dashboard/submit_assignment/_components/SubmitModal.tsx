@@ -1,7 +1,7 @@
 'use client'
 import { Box, Button, Checkbox, FormControlLabel, FormGroup, Modal, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
-import { Issue } from '@/types/apiResponseTypes'
+import { Issue } from '@/types/api-response-types'
 import { useTheme } from '@mui/material/styles'
 import { useState } from 'react'
 import dayjs from 'dayjs'

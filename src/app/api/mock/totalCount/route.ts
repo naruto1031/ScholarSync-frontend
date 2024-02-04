@@ -1,4 +1,4 @@
-import { TotalIssueCount } from '@/types/apiResponseTypes'
+import { TotalIssueCount } from '@/types/api-response-types'
 import { NextResponse } from 'next/server'
 
 export async function GET() {

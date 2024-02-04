@@ -1,5 +1,4 @@
 'use client'
-import { IssueCoverSearchCondition } from '@/types/apiResponseTypes'
 import CircularProgress from '@mui/material/CircularProgress'
 import Info from '@mui/icons-material/Info'
 import Paper from '@mui/material/Paper'
@@ -9,6 +8,10 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
+import Box from '@mui/material/Box'
+import { convertStatus } from '@/utils/statusUtils'
+import { ConvertStatusIcon } from '@/app/components'
+import { IssueCoverSearchCondition } from '@/types/api-response-types'
 
 interface Props {
 	issueCoverData: IssueCoverSearchCondition[]
@@ -21,15 +24,19 @@ export const ResultTable = ({ isLoading, issueCoverData }: Props) => {
 			<Table aria-label='simple table'>
 				<TableHead>
 					<TableRow>
-						<TableCell>Assignment</TableCell>
-						<TableCell align='right'>Result</TableCell>
+						<TableCell>出席番号</TableCell>
+						<TableCell align='right'>学籍番号</TableCell>
+						<TableCell align='right'>名前</TableCell>
+						<TableCell align='right'>チャレンジスコア</TableCell>
+						<TableCell align='right'>評定</TableCell>
+						<TableCell align='right'>提出状況</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
 					{isLoading ? (
 						<TableRow>
 							<TableCell
-								colSpan={5}
+								colSpan={6}
 								align='center'
 								sx={{
 									fontSize: '20px',
@@ -49,13 +56,13 @@ export const ResultTable = ({ isLoading, issueCoverData }: Props) => {
 										size={20}
 									/>
 								</span>
-								課題を検索中です
+								生徒を検索中です
 							</TableCell>
 						</TableRow>
 					) : issueCoverData.length === 0 ? (
 						<TableRow>
 							<TableCell
-								colSpan={5}
+								colSpan={6}
 								align='center'
 								sx={{
 									fontSize: '20px',
@@ -74,14 +81,37 @@ export const ResultTable = ({ isLoading, issueCoverData }: Props) => {
 										}}
 									/>
 								</span>
-								表示可能な課題はありません
+								表示可能な生徒情報がありません
 							</TableCell>
 						</TableRow>
 					) : (
 						issueCoverData.map((issueCover) => (
-							<TableRow key={issueCover.issue_id}>
+							<TableRow
+								key={issueCover.issue_id}
+								sx={{
+									'&:last-child td, &:last-child th': { border: 0 },
+									cursor: 'pointer',
+									'&:hover': { backgroundColor: '#F5F5F5' },
+								}}
+							>
 								<TableCell>{issueCover.attendance_number}</TableCell>
-								<TableCell>{issueCover.student_name}</TableCell>
+								<TableCell align='right'>{issueCover.registration_number}</TableCell>
+								<TableCell align='right'>{issueCover.student_name}</TableCell>
+								<TableCell align='right'>{issueCover.current_score || '未実施'}</TableCell>
+								<TableCell align='right'>{issueCover.evaluation || '未設定'}</TableCell>
+								<TableCell
+									align='right'
+									sx={{
+										display: 'flex',
+										alignItems: 'center',
+										gap: '5px',
+									}}
+								>
+									<Box>{convertStatus(issueCover.status)}</Box>
+									<span>
+										<ConvertStatusIcon status={issueCover.status} />
+									</span>
+								</TableCell>
 							</TableRow>
 						))
 					)}

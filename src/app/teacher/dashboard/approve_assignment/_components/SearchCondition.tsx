@@ -1,6 +1,6 @@
 'use client'
 import { submissionStatuses } from '@/app/student/dashboard/submission_status/_components/SubmissionStatusContents'
-import { Issue, TeacherSubjectAssign } from '@/types/apiResponseTypes'
+import { Issue, TeacherSubjectAssign } from '@/types/api-response-types'
 import {
 	AssignmentSearchConditionSchemaType,
 	assignmentSearchConditionSchema,

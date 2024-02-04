@@ -63,8 +63,8 @@ export const assignmentSearchConditionSchema = z.object({
 	classId: z.string().nonempty(),
 	issueId: z.string().nonempty(),
 	status: z.string().nonempty(),
-	studentNumber: z.array(z.string().optional()).optional(),
-	excludeStudentNumber: z.array(z.string().optional()).optional(),
+	attendanceNumbers: z.array(z.string().optional()).optional(),
+	excludeAttendanceNumbers: z.array(z.string().optional()).optional(),
 })
 
 export type StudentSchemaType = z.infer<typeof studentSchema>

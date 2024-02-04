@@ -1,5 +1,5 @@
 'use client'
-import { Issue, TransformedIssue, UpdateIssue } from '@/types/apiResponseTypes'
+import { Issue, TransformedIssue, UpdateIssue } from '@/types/api-response-types'
 
 import {
 	Box,
@@ -426,8 +426,8 @@ export const DetailModal = ({
 				<Box
 					sx={{
 						display: 'flex',
-						justifyContent: 'center',
 						mt: '20px',
+						mb: '20px',
 					}}
 				>
 					<Button

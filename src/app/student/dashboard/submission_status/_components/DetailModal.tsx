@@ -1,5 +1,5 @@
 'use client'
-import { IssueCover } from '@/types/apiResponseTypes'
+import { IssueCover } from '@/types/api-response-types'
 import {
 	Box,
 	Button,

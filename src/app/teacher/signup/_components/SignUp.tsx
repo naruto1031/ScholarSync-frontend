@@ -1,6 +1,6 @@
 import { options } from '@/app/options'
 import { getServerSession } from 'next-auth'
-import { Class, Subject, TeacherExists } from '@/types/apiResponseTypes'
+import { Class, Subject, TeacherExists } from '@/types/api-response-types'
 import { Box } from '@mui/material'
 import { redirect } from 'next/navigation'
 import { SignUpContents } from './SignUpContents'

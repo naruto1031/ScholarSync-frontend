@@ -1,5 +1,5 @@
 'use client'
-import { Class, Subject } from '@/types/apiResponseTypes'
+import { Class, Subject } from '@/types/api-response-types'
 import {
 	StudentSchemaType,
 	TeacherSchemaType,

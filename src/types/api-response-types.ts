@@ -81,7 +81,6 @@ export interface IssueCoverSearchCondition {
 	issue_cover_id: number
 	issue_id: number
 	comment: string
-	student_id: string
 	student_name: string
 	registration_number: number
 	attendance_number: number
@@ -148,4 +147,10 @@ export interface DepartmentClass {
 export interface Department {
 	department_id: number
 	name: string
+}
+
+export interface UpdateCorrectiveIssueCovers {
+	issue_cover_ids: string[]
+	status: string
+	evaluation?: string
 }

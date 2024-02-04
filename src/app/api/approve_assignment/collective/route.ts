@@ -1,20 +1,24 @@
 import { options } from '@/app/options'
-import { UpdateIssue } from '@/types/api-response-types'
+import { UpdateCorrectiveIssueCovers } from '@/types/api-response-types'
 import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
+	const updateCondition: UpdateCorrectiveIssueCovers = await request.json()
 	const session = await getServerSession(options)
+	console.log(updateCondition)
 	if (!session) return new NextResponse('Unauthorized', { status: 401 })
-
-	const issueData: UpdateIssue = await request.json()
-	const res = await fetch(`${process.env.API_URL}/api/issue/${issueData.issue_id}`, {
+	const res = await fetch(`${process.env.API_URL}/api/teacher/issue/cover/collective`, {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
 			Authorization: `Bearer ${session.user.accessToken}`,
 		},
-		body: JSON.stringify(issueData),
+		body: JSON.stringify({
+			issue_cover_ids: updateCondition.issue_cover_ids,
+			status: updateCondition.status,
+			evaluation: updateCondition.evaluation || undefined,
+		}),
 	})
 	if (!res.ok) return new NextResponse(res.statusText, { status: res.status })
 	const data = await res.json()

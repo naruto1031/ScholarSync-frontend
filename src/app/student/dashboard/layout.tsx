@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth'
 import { options } from '@/app/options'
 import { SignOutButton, Header } from '@/app/components'
-import { StudentExists } from '@/types/apiResponseTypes'
+import { StudentExists } from '@/types/api-response-types'
 import { redirect } from 'next/navigation'
 import Box from '@mui/material/Box/Box'
 
