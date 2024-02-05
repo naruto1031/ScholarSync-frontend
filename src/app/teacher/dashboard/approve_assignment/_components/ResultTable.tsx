@@ -28,7 +28,7 @@ export const ResultTable = ({ isLoading, issueCoverData }: Props) => {
 						<TableCell align='right'>学籍番号</TableCell>
 						<TableCell align='right'>名前</TableCell>
 						<TableCell align='right'>チャレンジスコア</TableCell>
-						<TableCell align='right'>評定</TableCell>
+						<TableCell align='right'>評価</TableCell>
 						<TableCell align='right'>提出状況</TableCell>
 					</TableRow>
 				</TableHead>
@@ -90,15 +90,17 @@ export const ResultTable = ({ isLoading, issueCoverData }: Props) => {
 								key={issueCover.issue_id}
 								sx={{
 									'&:last-child td, &:last-child th': { border: 0 },
-									cursor: 'pointer',
-									'&:hover': { backgroundColor: '#F5F5F5' },
+									cursor: issueCover.status === 'not_submitted' ? 'auto' : 'pointer',
+									'&:hover': {
+										backgroundColor: issueCover.status === 'not_submitted' ? undefined : '#F5F5F5',
+									},
 								}}
 							>
 								<TableCell>{issueCover.attendance_number}</TableCell>
 								<TableCell align='right'>{issueCover.registration_number}</TableCell>
 								<TableCell align='right'>{issueCover.student_name}</TableCell>
-								<TableCell align='right'>{issueCover.current_score || '未実施'}</TableCell>
-								<TableCell align='right'>{issueCover.evaluation || '未設定'}</TableCell>
+								<TableCell align='right'>{issueCover.current_score || 'ー'}</TableCell>
+								<TableCell align='right'>{issueCover.evaluation || 'ー'}</TableCell>
 								<TableCell
 									align='right'
 									sx={{

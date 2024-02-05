@@ -42,6 +42,8 @@ export const SearchCondition = ({ onSubmit, teacherSubjects, searchLoading }: Pr
 			teacherSubjectId: '',
 			classId: '',
 			issueId: '',
+			attendanceNumbers: [],
+			excludeAttendanceNumbers: [],
 		},
 	})
 
@@ -64,6 +66,16 @@ export const SearchCondition = ({ onSubmit, teacherSubjects, searchLoading }: Pr
 		}
 		findIssueByTeacherSubjectId(watch('teacherSubjectId'))
 	}, [watch('teacherSubjectId')])
+
+	const classId = Number(watch('classId'))
+	const studentCount = issues.reduce((_, issue) => {
+		const classStudentCount = issue.issue_classes
+			.filter((issueClass) => issueClass.class_id === classId)
+			.reduce((_, issueClass) => {
+				return issueClass.student_count
+			}, 0)
+		return classStudentCount
+	}, 0)
 
 	return (
 		<Paper
@@ -191,6 +203,60 @@ export const SearchCondition = ({ onSubmit, teacherSubjects, searchLoading }: Pr
 					</Select>
 					{errors.status?.message && (
 						<FormHelperText error>{errors.status?.message}</FormHelperText>
+					)}
+				</FormControl>
+
+				<FormControl sx={{ width: '200px' }} size='small'>
+					<InputLabel id='attendance_number'>出席番号</InputLabel>
+					<Select
+						labelId='attendance_number'
+						label='出席番号'
+						error={!!errors.attendanceNumbers}
+						{...register('attendanceNumbers')}
+						defaultValue={[]}
+						disabled={
+							searchLoading ||
+							(watch('excludeAttendanceNumbers')?.length ?? 0) > 0 ||
+							watch('classId') === '' ||
+							watch('status') === 'not_submitted'
+						}
+						multiple
+					>
+						{Array.from({ length: studentCount }).map((_, index) => (
+							<MenuItem key={index} value={`${index + 1}`}>
+								{index + 1}
+							</MenuItem>
+						))}
+					</Select>
+					{errors.attendanceNumbers?.message && (
+						<FormHelperText error>{errors.attendanceNumbers?.message}</FormHelperText>
+					)}
+				</FormControl>
+
+				<FormControl sx={{ width: '200px' }} size='small'>
+					<InputLabel id='exclude_attendance_number'>除外出席番号</InputLabel>
+					<Select
+						labelId='exclude_attendance_number'
+						label='除外出席番号'
+						error={!!errors.excludeAttendanceNumbers}
+						{...register('excludeAttendanceNumbers')}
+						defaultValue={[]}
+						disabled={
+							searchLoading ||
+							(watch('attendanceNumbers')?.length ?? 0) > 0 ||
+							watch('classId') === '' ||
+							watch('status') === 'not_submitted'
+						}
+						multiple
+					>
+						{Array.from({ length: studentCount }).map((_, index) => (
+							<MenuItem key={index} value={`${index + 1}`}>
+								{index + 1}
+							</MenuItem>
+						))}
+					</Select>
+					{errors.excludeAttendanceNumbers?.message && (
+						<FormHelperText error>{errors.excludeAttendanceNumbers?.message}</FormHelperText>
 					)}
 				</FormControl>
 				<LoadingButton variant='contained' loading={searchLoading} onClick={handleSubmit(onSubmit)}>

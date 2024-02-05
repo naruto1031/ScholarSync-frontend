@@ -1,5 +1,6 @@
 import { options } from '@/app/options'
 import { UpdateCorrectiveIssueCovers } from '@/types/api-response-types'
+import { toMySQLFormat } from '@/utils/toMySQLDateTimeFormatUtil'
 import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -18,6 +19,15 @@ export async function POST(request: NextRequest) {
 			issue_cover_ids: updateCondition.issue_cover_ids,
 			status: updateCondition.status,
 			evaluation: updateCondition.evaluation || undefined,
+			resubmission_deadline:
+				updateCondition.status === 'resubmission'
+					? updateCondition.resubmission_deadline &&
+					  toMySQLFormat(new Date(updateCondition.resubmission_deadline))
+					: undefined,
+			resubmission_comment:
+				updateCondition.status === 'resubmission'
+					? updateCondition.resubmission_comment
+					: undefined,
 		}),
 	})
 	if (!res.ok) return new NextResponse(res.statusText, { status: res.status })

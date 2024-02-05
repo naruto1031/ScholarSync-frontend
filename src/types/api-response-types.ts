@@ -38,6 +38,7 @@ export interface IssueClass {
 	due_date: string | null
 	department_name: string
 	class_name: string
+	student_count: number
 }
 
 export interface UpdateIssue {
@@ -153,4 +154,6 @@ export interface UpdateCorrectiveIssueCovers {
 	issue_cover_ids: string[]
 	status: string
 	evaluation?: string
+	resubmission_deadline?: string
+	resubmission_comment?: string
 }

@@ -19,6 +19,8 @@ export async function POST(request: NextRequest) {
 			issue_id: searchCondition.issueId,
 			class_id: searchCondition.classId,
 			status: searchCondition.status,
+			attendance_numbers: searchCondition.attendanceNumbers || undefined,
+			exclude_attendance_numbers: searchCondition.excludeAttendanceNumbers || undefined,
 		}),
 	})
 	const data = await res.json()

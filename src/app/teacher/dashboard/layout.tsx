@@ -42,6 +42,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 	}
 
 	const drawerWidth = 250
+
 	return (
 		<>
 			<TeacherHeader drawerWidth={drawerWidth} />

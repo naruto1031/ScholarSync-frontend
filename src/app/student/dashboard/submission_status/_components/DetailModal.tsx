@@ -98,6 +98,10 @@ export const DetailModal = ({ isOpen, currentSubmissionData, handleClose }: Prop
 									labelProps.error = true
 									label = '再提出'
 								}
+								if (index === 0 && currentSubmissionData?.status === 'rejected') {
+									labelProps.error = true
+									label = '提出不可'
+								}
 								return (
 									<Step
 										key={label}

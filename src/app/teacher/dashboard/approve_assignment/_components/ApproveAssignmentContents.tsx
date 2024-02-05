@@ -20,6 +20,7 @@ interface Props {
 
 export const ApproveAssignmentContents = ({ teacherSubjects }: Props) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [isStatusUpdateLoading, setIsStatusUpdateLoading] = useState<boolean>(false)
 	const [issueCoverData, setIssueCoverData] = useState<IssueCoverSearchCondition[]>([])
 	const [collectiveModalStatus, setCollectiveModalStatus] = useState<'approved' | 'reject'>(
 		'approved',
@@ -29,6 +30,8 @@ export const ApproveAssignmentContents = ({ teacherSubjects }: Props) => {
 	const [isError, setIsError] = useState<boolean>(false)
 	const [isSuccess, setIsSuccess] = useState<boolean>(false)
 	const [isSetEvaluation, setIsSetEvaluation] = useState<boolean>(false)
+	const [resubmissionDueDate, setResubmissionDueDate] = useState<string | null>(null)
+	const [resubmissionComment, setResubmissionComment] = useState<string>('')
 
 	const onSubmit = async (data: AssignmentSearchConditionSchemaType) => {
 		setIsLoading(true)
@@ -49,15 +52,23 @@ export const ApproveAssignmentContents = ({ teacherSubjects }: Props) => {
 		setIsLoading(false)
 	}
 
-	const onSubmitCollective = async () => {
-		setIsLoading(true)
+	const onSubmitCollective = async (status: string) => {
+		setIsStatusUpdateLoading(true)
+		if (status === 'resubmission') {
+			if (!resubmissionDueDate || !(resubmissionComment.length > 0)) {
+				setIsStatusUpdateLoading(false)
+				return
+			}
+		}
 		try {
 			const res = await fetch('/api/approve_assignment/collective', {
 				method: 'POST',
 				body: JSON.stringify({
 					issue_cover_ids: issueCoverData.map((issueCover) => String(issueCover.issue_cover_id)),
-					status: collectiveModalStatus,
+					status: status,
 					evaluation: isSetEvaluation ? String(currentScore) : undefined,
+					resubmission_deadline: status === 'resubmission' ? resubmissionDueDate : undefined,
+					resubmission_comment: status === 'resubmission' ? resubmissionComment : undefined,
 				}),
 			})
 			if (!res.ok) {
@@ -70,7 +81,7 @@ export const ApproveAssignmentContents = ({ teacherSubjects }: Props) => {
 			console.error(error)
 			setIsError(true)
 		}
-		setIsLoading(false)
+		setIsStatusUpdateLoading(false)
 		setCollectiveModalOpen(false)
 	}
 
@@ -92,6 +103,7 @@ export const ApproveAssignmentContents = ({ teacherSubjects }: Props) => {
 				setCollectiveModalStatus={setCollectiveModalStatus}
 				setCollectiveModalOpen={setCollectiveModalOpen}
 				isIssueCoverExist={issueCoverData.length > 0}
+				issueCoverData={issueCoverData}
 			/>
 			<ResultTable issueCoverData={issueCoverData} isLoading={isLoading} />
 			<CollectiveDetailModal
@@ -104,6 +116,11 @@ export const ApproveAssignmentContents = ({ teacherSubjects }: Props) => {
 				onSubmitCollective={onSubmitCollective}
 				isSetEvaluation={isSetEvaluation}
 				setIsSetEvaluation={setIsSetEvaluation}
+				resubmissionDueDate={resubmissionDueDate}
+				setResubmissionDueDate={setResubmissionDueDate}
+				resubmissionComment={resubmissionComment}
+				setResubmissionComment={setResubmissionComment}
+				isStatusUpdateLoading={isStatusUpdateLoading}
 			/>
 			<Toast
 				open={isError}
