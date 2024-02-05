@@ -1,6 +1,7 @@
 import { Box, Button, Container, Typography, Paper, Grid } from '@mui/material'
 import NextLink from 'next/link'
 import { Metadata } from 'next'
+import { InfoHeader } from './components'
 
 export const metadata: Metadata = {
 	title: 'Scholar Sync',
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
 
 const Page = () => {
 	return (
-		<Box sx={{ backgroundColor: '#f4f4f4', padding: '40px', height: '100vh' }}>
+		<Box>
+			<InfoHeader />
 			<Container maxWidth='lg'>
 				<Grid container spacing={2}>
 					<Grid item xs={12}>

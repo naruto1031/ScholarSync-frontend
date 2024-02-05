@@ -12,9 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				}}
 				className={mPlus1p.className}
 			>
-				<NextAuthProvider>
-					<LocalProvider>{children}</LocalProvider>
-				</NextAuthProvider>
+				<LocalProvider>{children}</LocalProvider>
 			</body>
 		</html>
 	)

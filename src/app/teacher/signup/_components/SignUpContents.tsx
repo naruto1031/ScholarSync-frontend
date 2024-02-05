@@ -1,5 +1,5 @@
 'use client'
-import { Class, Subject } from '@/types/apiResponseTypes'
+import { Class, Subject } from '@/types/api-response-types'
 import {
 	StudentSchemaType,
 	TeacherSchemaType,
@@ -47,7 +47,7 @@ export const SignUpContents = ({ classList, subjects }: Props) => {
 				}),
 			})
 			setIsRegistered(true)
-			router.push('/teacher/dashboard')
+			router.push('/teacher/dashboard/top')
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				console.error(error)

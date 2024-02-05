@@ -14,7 +14,7 @@ import { SubmissionStatusSchemaType, submissionStatusSchema } from '@/types/form
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
 import { useRef, useState } from 'react'
 import { DetailModal } from './DetailModal'
-import { IssueCover, IssueCoverResponse } from '@/types/apiResponseTypes'
+import { IssueCover, IssueCoverResponse } from '@/types/api-response-types'
 import { ResultTable } from './ResultTable'
 
 export interface SubmissionStatusLabel {

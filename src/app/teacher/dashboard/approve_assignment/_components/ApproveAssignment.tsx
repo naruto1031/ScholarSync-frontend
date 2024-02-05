@@ -1,10 +1,10 @@
 import { options } from '@/app/options'
-import { AssignmentRegisterContents } from './AssignmentRegisterContents'
-import { getServerSession } from 'next-auth/next'
+import { TeacherSubjectAssign } from '@/types/api-response-types'
+import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
-import { Department, TeacherSubjectAssign } from '@/types/api-response-types'
+import { ApproveAssignmentContents } from './ApproveAssignmentContents'
 
-export default async function AssignmentRegister() {
+export default async function ApproveAssignment() {
 	const session = await getServerSession(options)
 	if (!session?.user) {
 		redirect('/login')
@@ -17,6 +17,5 @@ export default async function AssignmentRegister() {
 		},
 	})
 	const teacherSubjectAssignData: TeacherSubjectAssign[] = await teacherSubjectAssignResponse.json()
-
-	return <AssignmentRegisterContents teacherSubjects={teacherSubjectAssignData} />
+	return <ApproveAssignmentContents teacherSubjects={teacherSubjectAssignData} />
 }

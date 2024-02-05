@@ -1,5 +1,5 @@
 'use client'
-import { Issue, TransformedIssue, UpdateIssue } from '@/types/apiResponseTypes'
+import { Issue, TransformedIssue, UpdateIssue } from '@/types/api-response-types'
 
 import {
 	Box,
@@ -289,6 +289,9 @@ export const DetailModal = ({
 									disabled={!isEdit}
 									label='提出期限'
 									ampm={false}
+									timeSteps={{
+										minutes: 1,
+									}}
 									value={
 										(issueClass.due_date && dayjs.utc(issueClass.due_date).tz('Asia/Tokyo')) || null
 									}
@@ -423,8 +426,8 @@ export const DetailModal = ({
 				<Box
 					sx={{
 						display: 'flex',
-						justifyContent: 'center',
 						mt: '20px',
+						mb: '20px',
 					}}
 				>
 					<Button

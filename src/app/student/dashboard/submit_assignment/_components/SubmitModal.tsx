@@ -1,9 +1,15 @@
 'use client'
 import { Box, Button, Checkbox, FormControlLabel, FormGroup, Modal, TextField } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
-import { Issue } from '@/types/apiResponseTypes'
+import { Issue } from '@/types/api-response-types'
 import { useTheme } from '@mui/material/styles'
 import { useState } from 'react'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 interface Props {
 	data: Issue | null
@@ -99,7 +105,7 @@ export const SubmitModal = ({
 						color: '#929292',
 					}}
 				>
-					提出期限: {data?.due_date}
+					提出期限: {dayjs.utc(data?.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')}
 				</Box>
 				<Box
 					sx={{

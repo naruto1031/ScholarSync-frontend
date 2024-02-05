@@ -1,5 +1,5 @@
 'use client'
-import { IssueCover } from '@/types/apiResponseTypes'
+import { IssueCover } from '@/types/api-response-types'
 import {
 	Box,
 	Button,
@@ -97,6 +97,10 @@ export const DetailModal = ({ isOpen, currentSubmissionData, handleClose }: Prop
 								if (index === 1 && currentSubmissionData?.status === 'resubmission') {
 									labelProps.error = true
 									label = '再提出'
+								}
+								if (index === 0 && currentSubmissionData?.status === 'rejected') {
+									labelProps.error = true
+									label = '提出不可'
 								}
 								return (
 									<Step

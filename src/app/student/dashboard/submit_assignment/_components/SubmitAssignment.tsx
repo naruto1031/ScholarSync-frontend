@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import { PendingIssuesResponse, TotalIssueCount } from '@/types/apiResponseTypes'
+import { PendingIssuesResponse, TotalIssueCount } from '@/types/api-response-types'
 import { SubmitAssignmentContents } from './SubmitAssignmentContents'
 import { options } from '@/app/options'
 import { getServerSession } from 'next-auth'

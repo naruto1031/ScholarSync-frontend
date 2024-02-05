@@ -6,7 +6,9 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function POST(request: NextRequest) {
 	const studentData: StudentSchemaType = await request.json()
 	const session = await getServerSession(options)
+
 	if (!session) return new NextResponse('Unauthorized', { status: 401 })
+
 	const res = await fetch(`${process.env.API_URL}/api/student/register`, {
 		method: 'POST',
 		headers: {
@@ -15,8 +17,8 @@ export async function POST(request: NextRequest) {
 		},
 		body: JSON.stringify({
 			class_id: studentData.classId,
-			email: session?.user.email,
-			name: session?.user.name,
+			email: session?.user.email || 'tmp',
+			name: session?.user.name || '',
 			registration_number: studentData.studentId,
 			attendance_number: studentData.studentNumber,
 		}),

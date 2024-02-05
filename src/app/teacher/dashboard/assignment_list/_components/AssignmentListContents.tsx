@@ -1,5 +1,5 @@
 'use client'
-import { Issue, TeacherSubjectAssign, TransformedIssue } from '@/types/apiResponseTypes'
+import { Issue, TeacherSubjectAssign, TransformedIssue } from '@/types/api-response-types'
 import { Box, FormControl, InputLabel, MenuItem, Paper, Select } from '@mui/material'
 import { useState } from 'react'
 import { ResultTable } from './ResultTable'

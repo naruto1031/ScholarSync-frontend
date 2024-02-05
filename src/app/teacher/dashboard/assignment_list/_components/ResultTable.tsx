@@ -1,4 +1,4 @@
-import { Issue, IssueCover, TransformedIssue } from '@/types/apiResponseTypes'
+import { Issue, IssueCover, TransformedIssue } from '@/types/api-response-types'
 import {
 	Paper,
 	TableContainer,
@@ -8,7 +8,6 @@ import {
 	TableCell,
 	TableBody,
 	CircularProgress,
-	Box,
 } from '@mui/material'
 import InfoIcon from '@mui/icons-material/Info'
 import { Dispatch, SetStateAction } from 'react'
