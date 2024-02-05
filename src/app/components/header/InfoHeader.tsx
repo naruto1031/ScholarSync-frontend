@@ -31,13 +31,13 @@ export const InfoHeader = () => {
 					<MenuIcon />
 				</IconButton>
 				<Typography variant='h6' component='div' sx={{ flexGrow: 1 }} color={'black'}>
-					<Box>
-						<Image
-							src='\public\Scholar sync.svg'
-							width={500}
-							height={500}
-							alt='Picture of the author'
-						/>
+					<Box
+						sx={{
+							display: 'flex',
+							alignItems: 'center',
+						}}
+					>
+						<Image src='/scholar_sync.jpg' width={300} height={47} alt='Picture of the author' />
 					</Box>
 				</Typography>
 			</Toolbar>
