@@ -220,7 +220,7 @@ export const CollectiveDetailModal = ({
 							<LoadingButton
 								disabled={isStatusUpdateLoading}
 								variant='contained'
-								onClick={() => onSubmitCollective('approve')}
+								onClick={() => onSubmitCollective('approved')}
 							>
 								承認
 							</LoadingButton>

@@ -13,6 +13,7 @@ import { useState } from 'react'
 import { CollectiveOperation } from './CollectiveOperation'
 import { CollectiveDetailModal } from './CollectiveDetailModal'
 import { Toast } from '@/app/components'
+import { IndividualDetailModal } from './IndividualDetailModal'
 
 interface Props {
 	teacherSubjects: TeacherSubjectAssign[]
@@ -122,6 +123,7 @@ export const ApproveAssignmentContents = ({ teacherSubjects }: Props) => {
 				setResubmissionComment={setResubmissionComment}
 				isStatusUpdateLoading={isStatusUpdateLoading}
 			/>
+			{/* <IndividualDetailModal /> */}
 			<Toast
 				open={isError}
 				handleClose={() => setIsError(false)}
