@@ -70,7 +70,7 @@ export interface IssueCover {
 	comment: string
 	status: string
 	evaluation: number | null
-	challenge_flag: boolean
+	challenge_flag: number
 	challenge_max_score: number | null
 	current_score: number | null
 	teacher_name: string
@@ -106,6 +106,9 @@ export interface PendingIssuesResponse {
 	issues: Issue[]
 }
 export interface IssueCoverSearchConditionResponse {
+	issue_covers: IssueCoverSearchCondition[]
+}
+export interface IssueCoverIndividualResponse {
 	issue_covers: IssueCoverSearchCondition[]
 }
 
@@ -156,4 +159,12 @@ export interface UpdateCorrectiveIssueCovers {
 	evaluation?: string
 	resubmission_deadline?: string
 	resubmission_comment?: string
+}
+export interface UpdateIndividualIssueCovers {
+	issue_cover_id: number
+	status: string
+	evaluation?: string
+	resubmission_deadline?: string
+	resubmission_comment?: string
+	current_score?: number
 }

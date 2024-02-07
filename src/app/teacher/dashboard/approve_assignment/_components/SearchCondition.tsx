@@ -15,17 +15,24 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Paper from '@mui/material/Paper'
 import Select from '@mui/material/Select'
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 interface Props {
 	onSubmit: (data: AssignmentSearchConditionSchemaType) => void
 	teacherSubjects: TeacherSubjectAssign[]
 	searchLoading: boolean
+	issues: Issue[]
+	setIssues: Dispatch<SetStateAction<Issue[]>>
 }
 
-export const SearchCondition = ({ onSubmit, teacherSubjects, searchLoading }: Props) => {
-	const [issues, setIssues] = useState<Issue[]>([])
+export const SearchCondition = ({
+	onSubmit,
+	teacherSubjects,
+	searchLoading,
+	issues,
+	setIssues,
+}: Props) => {
 	const [issueLoading, setIssueLoading] = useState<boolean>(false)
 
 	const {

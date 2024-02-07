@@ -14,7 +14,7 @@ import {
 import { useTheme } from '@mui/material/styles'
 import { submissionStatuses } from './SubmissionStatusContents'
 import { useRouter } from 'next/navigation'
-import { convertStatus } from '@/utils/statusUtils'
+import { numberToBoolean } from '@/utils/numberToBoolean'
 interface Props {
 	isOpen: boolean
 	currentSubmissionData: IssueCover | null
@@ -117,13 +117,22 @@ export const DetailModal = ({ isOpen, currentSubmissionData, handleClose }: Prop
 							})}
 						</Stepper>
 					</Box>
-					<Box>
-						<Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
-							{currentSubmissionData?.evaluation && (
-								<Box sx={{ fontWeight: 'bold', fontSize: '20px' }}>評定:</Box>
-							)}
+					{currentSubmissionData?.evaluation && (
+						<Box>
+							<Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+								<Box sx={{ fontWeight: 'bold', fontSize: '20px' }}>
+									評価: {currentSubmissionData.evaluation}点
+								</Box>
+							</Box>
 						</Box>
-					</Box>
+					)}
+					{numberToBoolean(currentSubmissionData?.challenge_flag) && (
+						<Box sx={{ display: 'flex', alignItems: 'center', gap: '20px', mt: '20px' }}>
+							<Box sx={{ fontWeight: 'bold', fontSize: '20px' }}>
+								チャレンジ問題スコア: {currentSubmissionData?.current_score}点
+							</Box>
+						</Box>
+					)}
 				</Box>
 				<Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
 					<Box sx={{ display: 'flex', gap: '20px', ml: 'auto' }}>

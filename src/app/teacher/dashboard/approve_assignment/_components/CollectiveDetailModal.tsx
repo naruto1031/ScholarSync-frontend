@@ -38,6 +38,7 @@ interface Props {
 	setResubmissionComment: Dispatch<SetStateAction<string>>
 	isStatusUpdateLoading: boolean
 }
+export const scores = Array.from({ length: 21 }, (_, i) => i * 5).sort((a, b) => b - a)
 
 export const CollectiveDetailModal = ({
 	isOpen,
@@ -56,7 +57,6 @@ export const CollectiveDetailModal = ({
 	isStatusUpdateLoading,
 }: Props) => {
 	const theme = useTheme()
-	const scores = Array.from({ length: 21 }, (_, i) => i * 5).sort((a, b) => b - a)
 	const [isRejectStatus, setIsRejectStatus] = useState<'resubmission' | 'rejected'>('resubmission')
 
 	return (
@@ -218,7 +218,7 @@ export const CollectiveDetailModal = ({
 								キャンセル
 							</Button>
 							<LoadingButton
-								disabled={isStatusUpdateLoading}
+								loading={isStatusUpdateLoading}
 								variant='contained'
 								onClick={() => onSubmitCollective('approved')}
 							>
@@ -388,7 +388,7 @@ export const CollectiveDetailModal = ({
 							<LoadingButton
 								color='error'
 								variant='contained'
-								disabled={isStatusUpdateLoading}
+								loading={isStatusUpdateLoading}
 								onClick={() => onSubmitCollective(isRejectStatus)}
 							>
 								{isRejectStatus === 'resubmission' ? '一括差戻し' : '一括拒否'}

@@ -383,7 +383,6 @@ export const DetailModal = ({
 						onChange={(e) => {
 							if (!editCurrentIssueData) return
 
-							console.log(e.target.value)
 							setEditCurrentIssueData({
 								...editCurrentIssueData,
 								challenge_flag: e.target.value === 'true' ? true : false,
