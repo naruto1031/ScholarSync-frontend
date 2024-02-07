@@ -9,7 +9,6 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
 	const updateCondition: UpdateIndividualIssueCovers = await request.json()
-	console.log(updateCondition)
 	const session = await getServerSession(options)
 	if (!session) return new NextResponse('Unauthorized', { status: 401 })
 	const res = await fetch(`${process.env.API_URL}/api/teacher/issue/cover/individual`, {
@@ -34,7 +33,11 @@ export async function POST(request: NextRequest) {
 			current_score: updateCondition.current_score || undefined,
 		}),
 	})
-	if (!res.ok) return new NextResponse(res.statusText, { status: res.status })
+	if (!res.ok) {
+		const error = await res.text()
+		console.error(`Error updating issue cover: ${error}`)
+		return new NextResponse('Error updating issue cover', { status: res.status })
+	}
 	const data = await res.json()
 	return NextResponse.json(data)
 }
