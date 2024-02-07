@@ -12,13 +12,15 @@ import Box from '@mui/material/Box'
 import { convertStatus } from '@/utils/statusUtils'
 import { ConvertStatusIcon } from '@/app/components'
 import { IssueCoverSearchCondition } from '@/types/api-response-types'
+import { Dispatch, SetStateAction } from 'react'
 
 interface Props {
 	issueCoverData: IssueCoverSearchCondition[]
 	isLoading: boolean
+	onOpenIndividualModal: (issueCover: IssueCoverSearchCondition) => void
 }
 
-export const ResultTable = ({ isLoading, issueCoverData }: Props) => {
+export const ResultTable = ({ isLoading, issueCoverData, onOpenIndividualModal }: Props) => {
 	return (
 		<TableContainer component={Paper}>
 			<Table aria-label='simple table'>
@@ -94,6 +96,10 @@ export const ResultTable = ({ isLoading, issueCoverData }: Props) => {
 									'&:hover': {
 										backgroundColor: issueCover.status === 'not_submitted' ? undefined : '#F5F5F5',
 									},
+								}}
+								onClick={() => {
+									if (issueCover.status === 'not_submitted') return
+									onOpenIndividualModal(issueCover)
 								}}
 							>
 								<TableCell>{issueCover.attendance_number}</TableCell>

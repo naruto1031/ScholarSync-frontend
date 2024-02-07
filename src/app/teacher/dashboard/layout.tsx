@@ -1,10 +1,9 @@
 import { redirect } from 'next/navigation'
 import { getServerSession } from 'next-auth'
 import { options } from '@/app/options'
-import { Header, SignOutButton } from '@/app/components'
 import { Box } from '@mui/material'
 import { TeacherExists } from '@/types/api-response-types'
-import { TeacherHeader } from '@/app/components'
+import { TeacherHeader, SignOutButton } from '@/app/components'
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
 	const session = await getServerSession(options)
