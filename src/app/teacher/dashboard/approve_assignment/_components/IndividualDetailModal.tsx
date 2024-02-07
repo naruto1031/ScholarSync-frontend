@@ -43,8 +43,6 @@ export const IndividualDetailModal = ({
 	onSubmitIndividual,
 }: Props) => {
 	const theme = useTheme()
-	// TODO: ステータス変更、チャレンジ問題の点数変更(チャレンジ問題がある場合のみ)、再提出コメントと再提出日を追加(再提出の場合のみ)、
-	console.log(currentIssue)
 	return (
 		<Modal open={individualModalOpen} onClose={() => false}>
 			<Paper

@@ -155,7 +155,6 @@ export const ApproveAssignmentContents = ({ teacherSubjects }: Props) => {
 		setCurrentUpdateIssueCover(issueCover)
 		setIndividualModalOpen(true)
 	}
-	console.log(issues, currentUpdateIssueCover)
 	return (
 		<Box
 			sx={{
