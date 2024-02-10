@@ -1,4 +1,4 @@
-import { submissionStatuses } from '@/app/student/dashboard/submission_status/_components/SubmissionStatusContents'
+import { submissionStatuses } from '@/app/student/portal/submission_status/_components/SubmissionStatusContents'
 import { Issue, IssueCoverSearchCondition } from '@/types/api-response-types'
 import { numberToBoolean } from '@/utils/numberToBoolean'
 import Box from '@mui/material/Box'

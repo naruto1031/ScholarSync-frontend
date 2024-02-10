@@ -28,7 +28,7 @@ export const TeacherDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 
 	const drawerMenuItems: DrawerMenuItems[] = [
 		{
-			text: '教師トップ',
+			text: 'トップ',
 			url: 'top',
 		},
 		{
@@ -56,6 +56,20 @@ export const TeacherDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 			text: '課題表紙承認',
 			url: 'approve_assignment',
 		},
+		{
+			text: '生徒通知(教室通知くん)',
+		},
+		{
+			text: '通知登録',
+			url: 'notification_register',
+		},
+		{
+			text: '設定',
+		},
+		{
+			text: 'アカウント設定',
+			url: 'account_setting',
+		},
 	]
 
 	const handleMenuClick = (url: string, urlPrefix: string | undefined) => {
@@ -76,7 +90,7 @@ export const TeacherDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 									backgroundColor: '#0000001A',
 								},
 							}}
-							onClick={() => handleMenuClick(`/teacher/dashboard/${item.url}`, item.url)}
+							onClick={() => handleMenuClick(`/teacher/portal/${item.url}`, item.url)}
 						>
 							<ListItemText
 								primary={item.text}

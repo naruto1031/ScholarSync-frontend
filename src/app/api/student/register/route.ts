@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
 		}),
 	})
 	if (res.status === 200) {
-		return NextResponse.redirect('/student/dashboard/top')
+		return NextResponse.redirect('/student/portal/top')
 	} else {
 		return new NextResponse(res.statusText, { status: res.status })
 	}

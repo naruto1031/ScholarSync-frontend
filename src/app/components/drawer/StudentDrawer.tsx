@@ -69,7 +69,7 @@ export const StudentDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 									backgroundColor: '#0000001A',
 								},
 							}}
-							onClick={() => handleMenuClick(`/student/dashboard/${item.url}`, item.url)}
+							onClick={() => handleMenuClick(`/student/portal/${item.url}`, item.url)}
 						>
 							<ListItemText
 								primary={item.text}

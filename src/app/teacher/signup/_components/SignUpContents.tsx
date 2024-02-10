@@ -47,7 +47,7 @@ export const SignUpContents = ({ classList, subjects }: Props) => {
 				}),
 			})
 			setIsRegistered(true)
-			router.push('/teacher/dashboard/top')
+			router.push('/teacher/portal/top')
 		} catch (error: unknown) {
 			if (error instanceof Error) {
 				console.error(error)

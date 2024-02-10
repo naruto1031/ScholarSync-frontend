@@ -5,7 +5,7 @@ import { StudentExists } from '@/types/api-response-types'
 import { redirect } from 'next/navigation'
 import Box from '@mui/material/Box/Box'
 
-export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default async function portalLayout({ children }: { children: React.ReactNode }) {
 	const session = await getServerSession(options)
 	if (!session?.user) {
 		redirect('/login')
