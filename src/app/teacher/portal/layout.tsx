@@ -5,7 +5,7 @@ import { Box } from '@mui/material'
 import { TeacherExists } from '@/types/api-response-types'
 import { TeacherHeader, SignOutButton } from '@/app/components'
 
-export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default async function portalLayout({ children }: { children: React.ReactNode }) {
 	const session = await getServerSession(options)
 	if (!session?.user) {
 		redirect('/login')

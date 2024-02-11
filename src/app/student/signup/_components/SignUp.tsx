@@ -16,7 +16,7 @@ export default async function SignUp() {
 	})
 	const studentExists = await res.json()
 	if (studentExists.exists) {
-		redirect('/student/dashboard/top')
+		redirect('/student/portal/top')
 	}
 	const classListResponse = await fetch(`${process.env.API_URL}/api/student/class`, {
 		method: 'GET',

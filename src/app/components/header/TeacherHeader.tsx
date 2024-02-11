@@ -2,12 +2,13 @@
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useState } from 'react'
 import { signOut } from 'next-auth/react'
 import { TeacherDrawer } from '../drawer/TeacherDrawer'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import Box from '@mui/material/Box'
 
 interface Props {
 	drawerWidth: number
@@ -40,9 +41,14 @@ export const TeacherHeader = ({ drawerWidth }: Props) => {
 				<Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
 					ScholarSync
 				</Typography>
-				<Button color='inherit' onClick={() => signOut()}>
-					SignOut
-				</Button>
+				<Box
+					onClick={() => signOut()}
+					sx={{
+						cursor: 'pointer',
+					}}
+				>
+					<AccountCircleIcon fontSize='large' />
+				</Box>
 			</Toolbar>
 			<TeacherDrawer isOpen={isOpen} setIsOpen={setIsOpen} drawerWidth={drawerWidth} />
 		</AppBar>
