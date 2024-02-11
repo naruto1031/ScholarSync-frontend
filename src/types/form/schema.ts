@@ -67,6 +67,13 @@ export const assignmentSearchConditionSchema = z.object({
 	excludeAttendanceNumbers: z.array(z.string().optional()).optional(),
 })
 
+export const notificationRegisterSchema = z.object({
+	subject: z.string().nonempty(),
+	classId: z.string().nonempty(),
+	title: z.string().nonempty(),
+	memo: z.string().nonempty(),
+})
+
 export type StudentSchemaType = z.infer<typeof studentSchema>
 export type SubmissionStatusSchemaType = z.infer<typeof submissionStatusSchema>
 
@@ -76,3 +83,4 @@ export type AssignmentRegisterSchemaType = z.infer<typeof assignmentRegisterSche
 export type UpdateAssignmentSchemaType = z.infer<typeof updateAssignmentSchema>
 
 export type AssignmentSearchConditionSchemaType = z.infer<typeof assignmentSearchConditionSchema>
+export type NotificationRegisterSchemaType = z.infer<typeof notificationRegisterSchema>
