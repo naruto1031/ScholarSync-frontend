@@ -21,18 +21,7 @@ export async function POST(request: NextRequest) {
 		const guildData = await res.json()
 		if (Object.keys(guildData).length === 0)
 			return new NextResponse('Guild Not Found', { status: 404 })
-		console.log(
-			'guildData',
-			guildData,
-			'requestData',
-			requestData,
-			'session',
-			session.user.name,
-			'apiKey',
-			apiKey,
-			'process.env.ROOM_NOTIFY_API_URL',
-			process.env.ROOM_NOTIFY_API_URL,
-		)
+
 		const notifyRes = await fetch(`${process.env.ROOM_NOTIFY_API_URL}`, {
 			method: 'POST',
 			headers: {
