@@ -183,7 +183,6 @@ export const NotificationRegisterContents = ({ teacherSubjectAssignData }: Props
 				<Box
 					sx={{
 						mt: '20px',
-						width: '500px',
 					}}
 				>
 					<FormControl sx={{ width: '200px' }} size='small'>

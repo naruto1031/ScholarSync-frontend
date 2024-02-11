@@ -9,6 +9,7 @@ import { signOut } from 'next-auth/react'
 import { TeacherDrawer } from '../drawer/TeacherDrawer'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 import Box from '@mui/material/Box'
+import { useRouter } from 'next/navigation'
 
 interface Props {
 	drawerWidth: number
@@ -16,6 +17,7 @@ interface Props {
 
 export const TeacherHeader = ({ drawerWidth }: Props) => {
 	const [isOpen, setIsOpen] = useState(false)
+	const router = useRouter()
 	return (
 		<AppBar
 			position='static'
@@ -42,7 +44,7 @@ export const TeacherHeader = ({ drawerWidth }: Props) => {
 					ScholarSync
 				</Typography>
 				<Box
-					onClick={() => signOut()}
+					onClick={() => router.push('/teacher/portal/account_setting')}
 					sx={{
 						cursor: 'pointer',
 					}}

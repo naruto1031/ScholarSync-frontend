@@ -168,3 +168,15 @@ export interface UpdateIndividualIssueCovers {
 	resubmission_comment?: string
 	current_score?: number
 }
+
+export interface Teacher {
+	name: string
+	email: string
+	teacher_subjects: TeacherSubject[]
+	class_teacher: Class[]
+}
+
+export interface TeacherSubject {
+	subject_id: number
+	subject_name: string
+}
