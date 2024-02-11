@@ -3,6 +3,7 @@ import { Teacher } from '@/types/api-response-types'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
+import { signOut } from 'next-auth/react'
 
 interface Props {
 	teacher: Teacher
@@ -64,7 +65,7 @@ export const AccountSettingContents = ({ teacher }: Props) => {
 					mt: '20px',
 				}}
 			>
-				<Button variant='contained' color='error'>
+				<Button variant='contained' color='error' onClick={() => signOut()}>
 					サインアウト
 				</Button>
 			</Box>
