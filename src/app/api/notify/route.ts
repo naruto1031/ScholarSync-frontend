@@ -39,6 +39,7 @@ export async function POST(request: NextRequest) {
 				entry_user_id: '',
 				entry_user_name: session.user.name,
 				entry_date: new Date().getTime(),
+				is_released: false,
 			}),
 		})
 		if (notifyRes.status !== 200)

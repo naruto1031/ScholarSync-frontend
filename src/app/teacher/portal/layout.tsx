@@ -26,17 +26,20 @@ export default async function portalLayout({ children }: { children: React.React
 		)
 	}
 
-	const res = await fetch(`${process.env.API_URL}/api/teacher/exists`, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${session?.user.accessToken}`,
-		},
-	})
+	if (typeof session?.user.isTeacher === 'undefined') {
+		const res = await fetch(`${process.env.API_URL}/api/teacher/exists`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${session?.user.accessToken}`,
+			},
+		})
 
-	const data: TeacherExists = await res.json()
+		const data: TeacherExists = await res.json()
+		session.user.isTeacher = data.exists
+	}
 
-	if (!data.exists) {
+	if (!session.user.isTeacher) {
 		redirect('/teacher/signup')
 	}
 

@@ -12,6 +12,8 @@ declare module 'next-auth' {
 			idToken?: string
 			refreshToken?: string
 			groups?: string[] | null
+			isTeacher?: boolean
+			isStudent?: boolean
 		} & DefaultSession['user']
 	}
 }

@@ -67,6 +67,12 @@ export const assignmentSearchConditionSchema = z.object({
 	excludeAttendanceNumbers: z.array(z.string().optional()).optional(),
 })
 
+// クラス別課題検索
+export const classAssignmentSearchConditionSchema = z.object({
+	classId: z.string().nonempty(),
+	subjectId: z.string().nonempty(),
+})
+
 export const notificationRegisterSchema = z.object({
 	subject: z.string().nonempty(),
 	classId: z.string().nonempty(),
@@ -84,3 +90,7 @@ export type UpdateAssignmentSchemaType = z.infer<typeof updateAssignmentSchema>
 
 export type AssignmentSearchConditionSchemaType = z.infer<typeof assignmentSearchConditionSchema>
 export type NotificationRegisterSchemaType = z.infer<typeof notificationRegisterSchema>
+
+export type ClassAssignmentSearchConditionSchemaType = z.infer<
+	typeof classAssignmentSearchConditionSchema
+>
