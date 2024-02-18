@@ -82,6 +82,7 @@ export const TeacherDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 							sx={{
 								fontWeight: 'bold',
 								backgroundColor: lastPartOfUrl === item.url ? '#0000001A' : 'transparent',
+								padding: 0,
 								'&:hover': {
 									backgroundColor: '#0000001A',
 								},
@@ -94,6 +95,7 @@ export const TeacherDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 									color: '#000000DE',
 									display: 'block',
 									width: '100%',
+									padding: '10px 15px',
 								}}
 							>
 								<ListItemText
