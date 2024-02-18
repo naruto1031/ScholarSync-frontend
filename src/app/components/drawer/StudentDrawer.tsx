@@ -65,7 +65,15 @@ export const StudentDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 								},
 							}}
 						>
-							<Link href={`/student/portal/${item.url}`}>
+							<Link
+								href={`/student/portal/${item.url}`}
+								style={{
+									textDecoration: 'none',
+									color: '#000000DE',
+									display: 'block',
+									width: '100%',
+								}}
+							>
 								<ListItemText
 									primary={item.text}
 									sx={{
