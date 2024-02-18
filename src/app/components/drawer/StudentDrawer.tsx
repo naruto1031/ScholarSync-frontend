@@ -10,6 +10,7 @@ import {
 } from '@mui/material'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 interface Props {
 	isOpen: boolean
@@ -22,7 +23,6 @@ interface DrawerMenuItems {
 }
 
 export const StudentDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
-	const router = useRouter()
 	const pathName = usePathname()
 	const lastPartOfUrl = pathName.split('/').pop()
 
@@ -51,11 +51,6 @@ export const StudentDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 		},
 	]
 
-	const handleMenuClick = (url: string, urlPrefix: string | undefined) => {
-		setIsOpen(false)
-		router.push(url)
-	}
-
 	const drawer = (
 		<List>
 			{drawerMenuItems.map((item, index) =>
@@ -69,14 +64,15 @@ export const StudentDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 									backgroundColor: '#0000001A',
 								},
 							}}
-							onClick={() => handleMenuClick(`/student/portal/${item.url}`, item.url)}
 						>
-							<ListItemText
-								primary={item.text}
-								sx={{
-									fontWeight: 'bold',
-								}}
-							/>
+							<Link href={`/student/portal/${item.url}`}>
+								<ListItemText
+									primary={item.text}
+									sx={{
+										fontWeight: 'bold',
+									}}
+								/>
+							</Link>
 						</ListItemButton>
 					</ListItem>
 				) : (
