@@ -169,11 +169,54 @@ export interface UpdateIndividualIssueCovers {
 	current_score?: number
 }
 
+export interface TeacherClass {
+	class_teacher_id: number
+	class_id: number
+	department_id: number
+	class_name: string
+}
+
+export interface ClassSubject {
+	subject_id: number
+	name: string
+	created_at: string
+	updated_at: string
+}
+
+export interface ClassIssueCover {
+	issues: Issue[]
+	students: Student[]
+	issue_covers: ClassIssueStatus[][]
+}
+
+export interface ClassIssueStatus {
+	issue_cover_id: number
+	issue_id: number
+	student_id: string
+	status: string
+	evaluation: number | null
+	current_score: number | null
+	resubmission_deadline: string | null
+	resubmission_comment: string | null
+	challenge_flag: number
+	challenge_max_score: number | null
+	name: string
+	task_number: string
+}
+
 export interface Teacher {
 	name: string
 	email: string
 	teacher_subjects: TeacherSubject[]
 	class_teacher: Class[]
+}
+
+export interface Student {
+	student_id: string
+	registration_number: string
+	attendance_number: string
+	name: string
+	class_id: number
 }
 
 export interface TeacherSubject {

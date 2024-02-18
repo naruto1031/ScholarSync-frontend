@@ -40,6 +40,23 @@ export default async function portalLayout({ children }: { children: React.React
 		redirect('/student/signup')
 	}
 
+	if (typeof session?.user.isStudent === 'undefined') {
+		const res = await fetch(`${process.env.API_URL}/api/student/exists`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${session?.user.accessToken}`,
+			},
+		})
+
+		const data: StudentExists = await res.json()
+		session.user.isStudent = data.exists
+	}
+
+	if (!session.user.isStudent) {
+		redirect('/student/signup')
+	}
+
 	const drawerWidth = 250
 	return (
 		<>
