@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
 		body: JSON.stringify({
 			issue_id: searchCondition.issueId,
 			class_id: searchCondition.classId,
-			status: searchCondition.status,
+			status: searchCondition.status || 'all',
 			attendance_numbers: searchCondition.attendanceNumbers || undefined,
 			exclude_attendance_numbers: searchCondition.excludeAttendanceNumbers || undefined,
 		}),

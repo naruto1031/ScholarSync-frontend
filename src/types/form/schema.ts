@@ -62,7 +62,7 @@ export const assignmentSearchConditionSchema = z.object({
 	teacherSubjectId: z.string().nonempty(),
 	classId: z.string().nonempty(),
 	issueId: z.string().nonempty(),
-	status: z.string().nonempty(),
+	status: z.string().optional(),
 	attendanceNumbers: z.array(z.string().optional()).optional(),
 	excludeAttendanceNumbers: z.array(z.string().optional()).optional(),
 })

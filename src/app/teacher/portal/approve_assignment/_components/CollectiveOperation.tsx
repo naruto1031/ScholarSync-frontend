@@ -34,7 +34,8 @@ export const CollectiveOperation = ({
 							issueCover.status === 'pending' ||
 							issueCover.status === 'resubmission' ||
 							issueCover.status === 'rejected',
-					)
+					) ||
+					issueCoverData.some((issueCover) => issueCover.status === 'not_submitted')
 				}
 				onClick={() => {
 					setCollectiveModalStatus('reject')
@@ -53,7 +54,8 @@ export const CollectiveOperation = ({
 							issueCover.status === 'pending' ||
 							issueCover.status === 'rejected' ||
 							issueCover.status === 'resubmission',
-					)
+					) ||
+					issueCoverData.some((issueCover) => issueCover.status === 'not_submitted')
 				}
 				onClick={() => {
 					setCollectiveModalStatus('approved')

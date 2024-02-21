@@ -202,6 +202,7 @@ export const SearchCondition = ({
 						defaultValue={''}
 						disabled={searchLoading}
 					>
+						<MenuItem value='all'>全て</MenuItem>
 						{submissionStatuses.map((status) => (
 							<MenuItem key={status.value} value={`${status.value}`}>
 								{status.label}
