@@ -26,6 +26,7 @@ export interface SubmissionStatusLabel {
 
 export const submissionStatuses: SubmissionStatusLabel[] = [
 	{ value: 'pending', label: '承認待ち', step: 1 },
+	{ value: 'late_pending', label: '遅れ承認待ち', step: 1 },
 	{ value: 'not_submitted', label: '未提出', step: 0 },
 	{ value: 'approved', label: '承認済み', step: 3 },
 	{ value: 'overdue', label: '期限超過', step: 1 },

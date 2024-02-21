@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
-	const { issueId } = await request.json()
+	const { issueId, status } = await request.json()
 
 	const session = await getServerSession(options)
 
@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
 		},
 		body: JSON.stringify({
 			issue_id: `${issueId}`,
-			status: 'pending',
+			status: status,
 		}),
 	})
 	const data = await res.json()
