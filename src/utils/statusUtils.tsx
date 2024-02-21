@@ -2,6 +2,8 @@ export const convertStatus = (status: string | undefined): string => {
 	switch (status) {
 		case 'pending':
 			return '承認待ち'
+		case 'late_pending':
+			return '遅れ承認待ち'
 		case 'approved':
 			return '承認'
 		case 'not_submitted':
@@ -24,6 +26,8 @@ export const convertStatus = (status: string | undefined): string => {
 export const convertStatusColor = (status: string | undefined): string => {
 	switch (status) {
 		case 'pending':
+			return '#87cefa'
+		case 'late_pending':
 			return '#87cefa'
 		case 'approved':
 			return '#98fb98'

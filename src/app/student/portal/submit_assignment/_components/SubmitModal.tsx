@@ -7,6 +7,7 @@ import { useState } from 'react'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
+import { ConvertStatusIcon } from '@/app/components'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -16,6 +17,7 @@ interface Props {
 	isOpen: boolean
 	isLoading: boolean
 	isAbsenceLoading: boolean
+	isLate: boolean
 	isExemptionLoading: boolean
 	handleClose: () => void
 	handleSubmit: (id: number | undefined) => void
@@ -26,12 +28,11 @@ interface Props {
 export const SubmitModal = ({
 	data,
 	isOpen,
+	isLate,
 	handleClose,
 	handleSubmit,
-	handleAbsenceApplication,
 	handleExemptionApplication,
 	isLoading,
-	isAbsenceLoading,
 	isExemptionLoading,
 }: Props) => {
 	const theme = useTheme()
@@ -80,15 +81,6 @@ export const SubmitModal = ({
 						>
 							免除申請
 						</LoadingButton>
-						<LoadingButton
-							variant='outlined'
-							color='secondary'
-							size='small'
-							loading={isAbsenceLoading}
-							onClick={() => handleAbsenceApplication(data?.issue_id)}
-						>
-							公欠申請
-						</LoadingButton>
 					</Box>
 				</Box>
 				<Box
@@ -105,7 +97,34 @@ export const SubmitModal = ({
 						color: '#929292',
 					}}
 				>
-					提出期限: {dayjs.utc(data?.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')}
+					{isLate ? (
+						<Box
+							sx={{
+								display: 'flex',
+								alignItems: 'center',
+								width: 'fit-content',
+								gap: '5px',
+							}}
+						>
+							<Box
+								sx={{
+									mb: '1px',
+								}}
+							>
+								<ConvertStatusIcon status='overdue' />
+							</Box>
+							<span style={{ color: 'red' }}>
+								期限超過しています:{' '}
+								{dayjs.utc(data?.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')}
+							</span>
+						</Box>
+					) : (
+						<Box>
+							<span>
+								提出期限: {dayjs.utc(data?.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')}
+							</span>
+						</Box>
+					)}
 				</Box>
 				<Box
 					sx={{
@@ -150,6 +169,7 @@ export const SubmitModal = ({
 								handleSubmit(data?.issue_id)
 							}}
 							disabled={!isChecked}
+							color={isLate ? 'error' : 'primary'}
 						>
 							課題を提出する
 						</LoadingButton>

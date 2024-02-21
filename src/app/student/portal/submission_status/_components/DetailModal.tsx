@@ -10,15 +10,22 @@ import {
 	TextField,
 	Paper,
 	Typography,
+	FormControlLabel,
+	FormGroup,
+	Checkbox,
 } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { submissionStatuses } from './SubmissionStatusContents'
 import { useRouter } from 'next/navigation'
 import { numberToBoolean } from '@/utils/numberToBoolean'
+import { LoadingButton } from '@mui/lab'
+import { useState } from 'react'
 interface Props {
 	isOpen: boolean
+	isResubmissionLoading: boolean
 	currentSubmissionData: IssueCover | null
 	handleClose: () => void
+	updateSubmissionAssignment: () => void
 }
 
 const steps = ['申請', '承認待ち', '承認済み']
@@ -28,7 +35,14 @@ const currentStep = (step: string | undefined): number => {
 	return currentStep ? currentStep.step : 0
 }
 
-export const DetailModal = ({ isOpen, currentSubmissionData, handleClose }: Props) => {
+export const DetailModal = ({
+	isOpen,
+	currentSubmissionData,
+	handleClose,
+	updateSubmissionAssignment,
+	isResubmissionLoading,
+}: Props) => {
+	const [isChecked, setIsChecked] = useState(false)
 	const theme = useTheme()
 	const router = useRouter()
 	return (
@@ -76,10 +90,13 @@ export const DetailModal = ({ isOpen, currentSubmissionData, handleClose }: Prop
 				<Box
 					sx={{
 						fontSize: '20px',
-						color: '#929292',
 					}}
 				>
-					<Box>提出期限: {currentSubmissionData?.due_date}</Box>
+					{currentSubmissionData?.status === 'resubmission' ? (
+						<Box>再提出期限: {currentSubmissionData?.resubmission_deadline}</Box>
+					) : (
+						<Box>提出期限: {currentSubmissionData?.due_date}</Box>
+					)}
 				</Box>
 				<Box
 					sx={{
@@ -117,7 +134,7 @@ export const DetailModal = ({ isOpen, currentSubmissionData, handleClose }: Prop
 							})}
 						</Stepper>
 					</Box>
-					{currentSubmissionData?.evaluation && (
+					{currentSubmissionData?.status === 'approved' && currentSubmissionData?.evaluation && (
 						<Box>
 							<Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
 								<Box sx={{ fontWeight: 'bold', fontSize: '20px' }}>
@@ -134,9 +151,37 @@ export const DetailModal = ({ isOpen, currentSubmissionData, handleClose }: Prop
 						</Box>
 					)}
 				</Box>
-				<Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-					<Box sx={{ display: 'flex', gap: '20px', ml: 'auto' }}>
-						<Button variant='text' onClick={handleClose} size='large'>
+				<Box sx={{ width: '100%' }}>
+					{currentSubmissionData?.status === 'resubmission' && (
+						<Box sx={{ my: '20px', fontSize: '20px' }}>
+							<Box>
+								<span>講師からのコメント:</span> {currentSubmissionData.resubmission_comment}
+							</Box>
+							<Box
+								sx={{
+									marginTop: '10px',
+									width: 'fit-content',
+								}}
+							>
+								<FormGroup>
+									<FormControlLabel
+										required
+										control={<Checkbox onChange={() => setIsChecked((prev) => !prev)} />}
+										label='課題は再提出済みです'
+									/>
+								</FormGroup>
+							</Box>
+						</Box>
+					)}
+					<Box sx={{ display: 'flex', gap: '20px', ml: 'auto', width: 'fit-content' }}>
+						<Button
+							variant='text'
+							onClick={() => {
+								handleClose()
+								setIsChecked(false)
+							}}
+							size='large'
+						>
 							{currentSubmissionData?.status === 'approved' ||
 							currentSubmissionData?.status === 'pending'
 								? '閉じる'
@@ -150,6 +195,16 @@ export const DetailModal = ({ isOpen, currentSubmissionData, handleClose }: Prop
 							>
 								課題表紙の提出画面へ
 							</Button>
+						)}
+						{currentSubmissionData?.status === 'resubmission' && (
+							<LoadingButton
+								variant='contained'
+								disabled={!isChecked}
+								loading={isResubmissionLoading}
+								onClick={updateSubmissionAssignment}
+							>
+								再提出する
+							</LoadingButton>
 						)}
 					</Box>
 				</Box>

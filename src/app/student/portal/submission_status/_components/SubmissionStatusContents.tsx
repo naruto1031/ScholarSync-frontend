@@ -16,6 +16,7 @@ import { useRef, useState } from 'react'
 import { DetailModal } from './DetailModal'
 import { IssueCover, IssueCoverResponse } from '@/types/api-response-types'
 import { ResultTable } from './ResultTable'
+import { Toast } from '@/app/components'
 
 export interface SubmissionStatusLabel {
 	value: string
@@ -25,6 +26,7 @@ export interface SubmissionStatusLabel {
 
 export const submissionStatuses: SubmissionStatusLabel[] = [
 	{ value: 'pending', label: '承認待ち', step: 1 },
+	{ value: 'late_pending', label: '遅れ承認待ち', step: 1 },
 	{ value: 'not_submitted', label: '未提出', step: 0 },
 	{ value: 'approved', label: '承認済み', step: 3 },
 	{ value: 'overdue', label: '期限超過', step: 1 },
@@ -39,6 +41,9 @@ export const SubmissionStatusContents = () => {
 	const [submissionData, setSubmissionData] = useState<IssueCover[]>([])
 	const [currentSubmissionData, setCurrentSubmissionData] = useState<IssueCover | null>(null)
 	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const [isResubmissionLoading, setIsResubmissionLoading] = useState<boolean>(false)
+	const [isError, setIsError] = useState<boolean>(false)
+	const [isSuccess, setIsSuccess] = useState<boolean>(false)
 	const [page, setPage] = useState(1)
 	const currentRequestIdRef = useRef(0)
 
@@ -79,6 +84,52 @@ export const SubmissionStatusContents = () => {
 			if (currentRequestIdRef.current === requestId) {
 				setIsLoading(false)
 			}
+		}
+	}
+
+	const updateSubmissionAssignment = async () => {
+		setIsResubmissionLoading(true)
+		const submitData = getValues('statuses').filter((d) => d !== undefined)
+		try {
+			const res = await fetch('/api/submission_status/update', {
+				method: 'POST',
+				body: JSON.stringify({
+					issue_cover_id: currentSubmissionData?.issue_cover_id,
+					status: 'pending',
+				}),
+			})
+
+			if (!res.ok) {
+				setIsError(true)
+				const error = await res.text()
+				console.error(`Error updating issue cover: ${error}`)
+				return
+			}
+
+			setIsSuccess(true)
+			setIsResubmissionLoading(false)
+			setIsOpen(false)
+			setIsLoading(true)
+
+			const searchResponse = await fetch('/api/submission_status/search', {
+				method: 'POST',
+				body: JSON.stringify({ statuses: submitData }),
+			})
+
+			if (!searchResponse.ok) {
+				const error = await searchResponse.text()
+				console.error(`Error updating issue cover: ${error}`)
+				return
+			}
+
+			const submissionData: IssueCoverResponse = await searchResponse.json()
+			setSubmissionData(submissionData.issue_covers)
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error('Fetch failed:', error)
+			}
+		} finally {
+			setIsLoading(false)
 		}
 	}
 
@@ -179,8 +230,22 @@ export const SubmissionStatusContents = () => {
 			/>
 			<DetailModal
 				isOpen={isOpen}
+				isResubmissionLoading={isResubmissionLoading}
 				handleClose={() => setIsOpen(false)}
 				currentSubmissionData={currentSubmissionData}
+				updateSubmissionAssignment={updateSubmissionAssignment}
+			/>
+			<Toast
+				open={isError}
+				handleClose={() => setIsError(false)}
+				severity='error'
+				message='エラーが発生しました'
+			/>
+			<Toast
+				open={isSuccess}
+				handleClose={() => setIsSuccess(false)}
+				severity='success'
+				message='生徒情報を登録しました'
 			/>
 		</Container>
 	)

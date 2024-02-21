@@ -15,7 +15,7 @@ import { useState } from 'react'
 import { SubmitModal } from './SubmitModal'
 import { Issue, PendingIssuesResponse } from '@/types/api-response-types'
 import InfoIcon from '@mui/icons-material/Info'
-import { Toast } from '@/app/components'
+import { ConvertStatusIcon, Toast } from '@/app/components'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
@@ -55,6 +55,11 @@ export const SubmitAssignmentContents = ({ issueData, totalIssueCount }: Props) 
 				method: 'POST',
 				body: JSON.stringify({
 					issueId: id,
+					status:
+						dayjs.utc(new Date()).tz('Asia/Tokyo') >
+						dayjs.utc(currentTask?.due_date).tz('Asia/Tokyo')
+							? 'late_pending'
+							: 'pending',
 				}),
 			})
 			if (res.status === 200) {
@@ -204,7 +209,33 @@ export const SubmitAssignmentContents = ({ issueData, totalIssueCount }: Props) 
 										<TableCell align='right'>{row.task_number}</TableCell>
 										<TableCell align='right'>{row.name}</TableCell>
 										<TableCell align='right'>
-											{dayjs.utc(row.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')}
+											{dayjs.utc(new Date()).tz('Asia/Tokyo') >
+											dayjs.utc(row.due_date).tz('Asia/Tokyo') ? (
+												<Box
+													sx={{
+														display: 'flex',
+														alignItems: 'center',
+														width: 'fit-content',
+														gap: '5px',
+														ml: 'auto',
+													}}
+												>
+													<Box
+														sx={{
+															mb: '1px',
+														}}
+													>
+														<ConvertStatusIcon status='overdue' />
+													</Box>
+													<span style={{ color: 'red' }}>
+														{dayjs.utc(row.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')}
+													</span>
+												</Box>
+											) : (
+												<span>
+													{dayjs.utc(row.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')}
+												</span>
+											)}
 										</TableCell>
 									</TableRow>
 								))
@@ -214,6 +245,10 @@ export const SubmitAssignmentContents = ({ issueData, totalIssueCount }: Props) 
 							data={currentTask}
 							isOpen={isOpen}
 							isLoading={isLoading}
+							isLate={
+								dayjs.utc(new Date()).tz('Asia/Tokyo') >
+								dayjs.utc(currentTask?.due_date).tz('Asia/Tokyo')
+							}
 							isAbsenceLoading={isAbsenceLoading}
 							isExemptionLoading={isExemptionLoading}
 							handleClose={handleClose}
