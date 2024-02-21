@@ -169,6 +169,11 @@ export interface UpdateIndividualIssueCovers {
 	current_score?: number
 }
 
+export interface UpdateIssueCover {
+	issue_cover_id: string
+	status: string
+}
+
 export interface TeacherClass {
 	class_teacher_id: number
 	class_id: number
