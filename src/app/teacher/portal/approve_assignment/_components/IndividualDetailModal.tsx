@@ -130,7 +130,11 @@ export const IndividualDetailModal = ({
 							}}
 						>
 							{submissionStatuses
-								.filter((status) => status.value !== 'not_submitted')
+								.filter(
+									(status) =>
+										status.value !== 'not_submitted' &&
+										status.value !== 'pending_exemption_approval',
+								)
 								.map((status) => (
 									<MenuItem key={status.value} value={`${status.value}`}>
 										{status.label}

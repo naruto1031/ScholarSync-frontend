@@ -25,10 +25,9 @@ dayjs.extend(timezone)
 
 interface Props {
 	issueData: Issue[]
-	totalIssueCount: number
 }
 
-export const SubmitAssignmentContents = ({ issueData, totalIssueCount }: Props) => {
+export const SubmitAssignmentContents = ({ issueData }: Props) => {
 	const [assignmentIssueData, setAssignmentIssueData] = useState<Issue[]>(issueData)
 	const [isOpen, setIsOpen] = useState(false)
 	const [currentTask, setCurrentTask] = useState<Issue | null>(null)
@@ -38,6 +37,7 @@ export const SubmitAssignmentContents = ({ issueData, totalIssueCount }: Props) 
 	const [isExemptionLoading, setIsExemptionLoading] = useState(false)
 	const [isRegistered, setIsRegistered] = useState<boolean>(false)
 	const [isError, setIsError] = useState<boolean>(false)
+	const [submitStatus, setSubmitStatus] = useState<'normal' | 'exemption'>('normal')
 
 	const handleRegisterClose = () => {
 		setIsRegistered(false)
@@ -48,6 +48,13 @@ export const SubmitAssignmentContents = ({ issueData, totalIssueCount }: Props) 
 	}
 
 	const handleSubmission = async (id: number | undefined) => {
+		const status =
+			submitStatus === 'exemption'
+				? 'pending_exemption_approval'
+				: dayjs.utc(new Date()).tz('Asia/Tokyo') > dayjs.utc(currentTask?.due_date).tz('Asia/Tokyo')
+				? 'late_pending'
+				: 'pending'
+
 		try {
 			if (!id) return
 			setIsLoading(true)
@@ -55,11 +62,7 @@ export const SubmitAssignmentContents = ({ issueData, totalIssueCount }: Props) 
 				method: 'POST',
 				body: JSON.stringify({
 					issueId: id,
-					status:
-						dayjs.utc(new Date()).tz('Asia/Tokyo') >
-						dayjs.utc(currentTask?.due_date).tz('Asia/Tokyo')
-							? 'late_pending'
-							: 'pending',
+					status: status,
 				}),
 			})
 			if (res.status === 200) {
@@ -249,8 +252,10 @@ export const SubmitAssignmentContents = ({ issueData, totalIssueCount }: Props) 
 								dayjs.utc(new Date()).tz('Asia/Tokyo') >
 								dayjs.utc(currentTask?.due_date).tz('Asia/Tokyo')
 							}
+							submitStatus={submitStatus}
 							isAbsenceLoading={isAbsenceLoading}
 							isExemptionLoading={isExemptionLoading}
+							setSubmitStatus={setSubmitStatus}
 							handleClose={handleClose}
 							handleSubmit={handleSubmission}
 							handleAbsenceApplication={handleAbsenceApplication}

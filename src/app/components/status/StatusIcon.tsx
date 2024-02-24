@@ -23,6 +23,10 @@ export const ConvertStatusIcon = ({ status }: Props) => {
 			return <CheckCircleIcon sx={{ color: '#FF1744', mt: '3px' }} />
 		case 'exemption':
 			return <CheckCircleIcon sx={{ color: '#FF1744', mt: '3px' }} />
+		case 'pending_exemption_approval':
+			return <PendingIcon sx={{ color: '#1976d2', mt: '3px' }} />
+		case 'pending_exemption':
+			return <PendingIcon sx={{ color: '#1976d2', mt: '3px' }} />
 		default:
 			return <PendingIcon sx={{ color: '#FF1744', mt: '3px' }} />
 	}

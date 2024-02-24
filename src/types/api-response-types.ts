@@ -78,6 +78,21 @@ export interface IssueCover {
 	resubmission_comment: string | null
 }
 
+export interface ExemptionIssueCover {
+	issue_cover_id: number
+	issue_id: number
+	subject: string
+	task_number: string
+	name: string
+	due_date: string
+	comment: string
+	status: string
+	attendance_number: string
+	registration_number: string
+	student_name: string
+	teacher_name: string
+}
+
 export interface IssueCoverSearchCondition {
 	issue_cover_id: number
 	issue_id: number
@@ -110,6 +125,9 @@ export interface IssueCoverSearchConditionResponse {
 }
 export interface IssueCoverIndividualResponse {
 	issue_covers: IssueCoverSearchCondition[]
+}
+export interface ExemptionIssueCoverResponse {
+	issue_covers: ExemptionIssueCover[]
 }
 
 export interface IssuesData {
