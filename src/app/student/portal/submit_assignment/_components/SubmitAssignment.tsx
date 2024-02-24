@@ -12,10 +12,5 @@ export default async function SubmitAssignment() {
 	})
 	const issues: PendingIssuesResponse = await issuesResponse.json()
 
-	const totalCountResponse = await fetch(`${process.env.MOCK_API_URL}/api/mock/totalCount`, {
-		headers: { authorization: `Bearer ${session?.user.accessToken}` },
-	})
-	const totalCount: TotalIssueCount = await totalCountResponse.json()
-
-	return <SubmitAssignmentContents issueData={issues.issues} totalIssueCount={totalCount.count} />
+	return <SubmitAssignmentContents issueData={issues.issues} />
 }

@@ -18,6 +18,10 @@ export const convertStatus = (status: string | undefined): string => {
 			return '欠席'
 		case 'exemption':
 			return '免除'
+		case 'pending_exemption_approval':
+			return '免除申請許可待ち'
+		case 'pending_exemption':
+			return '免除申請中'
 		default:
 			return '未提出'
 	}
@@ -42,7 +46,11 @@ export const convertStatusColor = (status: string | undefined): string => {
 		case 'absence':
 			return '#FF0000'
 		case 'exemption':
-			return '#008000'
+			return '#FFD700'
+		case 'pending_exemption_approval':
+			return '#87cefa'
+		case 'pending_exemption':
+			return '#87cefa'
 		default:
 			return '#EA9999'
 	}

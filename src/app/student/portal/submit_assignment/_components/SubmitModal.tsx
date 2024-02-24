@@ -1,9 +1,21 @@
 'use client'
-import { Box, Button, Checkbox, FormControlLabel, FormGroup, Modal, TextField } from '@mui/material'
+import {
+	Box,
+	Button,
+	Checkbox,
+	FormControl,
+	FormControlLabel,
+	FormGroup,
+	FormLabel,
+	Modal,
+	Radio,
+	RadioGroup,
+	TextField,
+} from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { Issue } from '@/types/api-response-types'
 import { useTheme } from '@mui/material/styles'
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
@@ -19,19 +31,23 @@ interface Props {
 	isAbsenceLoading: boolean
 	isLate: boolean
 	isExemptionLoading: boolean
+	submitStatus: 'normal' | 'exemption'
 	handleClose: () => void
 	handleSubmit: (id: number | undefined) => void
 	handleAbsenceApplication: (id: number | undefined) => void
 	handleExemptionApplication: (id: number | undefined) => void
+	setSubmitStatus: Dispatch<SetStateAction<'normal' | 'exemption'>>
 }
 
 export const SubmitModal = ({
 	data,
 	isOpen,
 	isLate,
+	submitStatus,
 	handleClose,
 	handleSubmit,
 	handleExemptionApplication,
+	setSubmitStatus,
 	isLoading,
 	isExemptionLoading,
 }: Props) => {
@@ -72,15 +88,31 @@ export const SubmitModal = ({
 					<Box>{data?.subject_name}</Box>
 					<Box>課題No.{data?.task_number}</Box>
 					<Box sx={{ display: 'flex', gap: '6px', ml: 'auto' }}>
-						<LoadingButton
-							variant='outlined'
-							color='secondary'
-							size='small'
-							loading={isExemptionLoading}
-							onClick={() => handleExemptionApplication(data?.issue_id)}
-						>
-							免除申請
-						</LoadingButton>
+						<FormControl>
+							<RadioGroup
+								row
+								aria-labelledby='radio-buttons-group'
+								name='radio-buttons-group'
+								value={submitStatus}
+								onChange={(e) =>
+									(e.target.value === 'exemption' || e.target.value === 'normal') &&
+									setSubmitStatus(e.target.value)
+								}
+							>
+								<FormControlLabel
+									labelPlacement='end'
+									value='normal'
+									control={<Radio />}
+									label='通常申請'
+								/>
+								<FormControlLabel
+									labelPlacement='end'
+									value='exemption'
+									control={<Radio />}
+									label='免除申請'
+								/>
+							</RadioGroup>
+						</FormControl>
 					</Box>
 				</Box>
 				<Box
@@ -134,7 +166,8 @@ export const SubmitModal = ({
 				>
 					<FormGroup>
 						<FormControlLabel
-							required
+							required={submitStatus === 'normal'}
+							disabled={submitStatus === 'exemption'}
 							control={<Checkbox onChange={() => setIsChecked((prev) => !prev)} />}
 							label='課題は提出済みです'
 						/>
@@ -165,13 +198,13 @@ export const SubmitModal = ({
 							variant='contained'
 							size='large'
 							onClick={() => {
-								if (!isChecked) return
+								if (!isChecked && submitStatus === 'normal') return
 								handleSubmit(data?.issue_id)
 							}}
-							disabled={!isChecked}
-							color={isLate ? 'error' : 'primary'}
+							disabled={!isChecked && submitStatus === 'normal'}
+							color={submitStatus === 'exemption' ? 'secondary' : isLate ? 'error' : 'primary'}
 						>
-							課題を提出する
+							{submitStatus === 'exemption' ? '免除申請' : '提出'}
 						</LoadingButton>
 					</Box>
 				</Box>

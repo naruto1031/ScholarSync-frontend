@@ -29,6 +29,8 @@ interface Props {
 }
 
 const steps = ['申請', '承認待ち', '承認済み']
+const exemptionSteps = ['申請', '免除申請許可待ち', '免除申請中', '免除']
+const exemptionStatuses = ['pending_exemption_approval', 'pending_exemption', 'exemption']
 
 const currentStep = (step: string | undefined): number => {
 	const currentStep = submissionStatuses.find((status) => status.value === step)
@@ -106,32 +108,45 @@ export const DetailModal = ({
 				>
 					<Box sx={{ width: '100%' }}>
 						<Stepper activeStep={currentStep(currentSubmissionData?.status)} alternativeLabel>
-							{steps.map((label, index) => {
-								const labelProps: {
-									optional?: React.ReactNode
-									error?: boolean
-								} = {}
-								if (index === 1 && currentSubmissionData?.status === 'resubmission') {
-									labelProps.error = true
-									label = '再提出'
-								}
-								if (index === 0 && currentSubmissionData?.status === 'rejected') {
-									labelProps.error = true
-									label = '提出不可'
-								}
-								return (
-									<Step
-										key={label}
-										sx={{
-											'& .MuiStepLabel-root .Mui-completed': {
-												color: '#4caf50',
-											},
-										}}
-									>
-										<StepLabel {...labelProps}>{label}</StepLabel>
-									</Step>
-								)
-							})}
+							{!exemptionStatuses.includes(currentSubmissionData?.status!)
+								? steps.map((label, index) => {
+										const labelProps: {
+											optional?: React.ReactNode
+											error?: boolean
+										} = {}
+										if (index === 1 && currentSubmissionData?.status === 'resubmission') {
+											labelProps.error = true
+											label = '再提出'
+										}
+										if (index === 0 && currentSubmissionData?.status === 'rejected') {
+											labelProps.error = true
+											label = '提出不可'
+										}
+										return (
+											<Step
+												key={label}
+												sx={{
+													'& .MuiStepLabel-root .Mui-completed': {
+														color: '#4caf50',
+													},
+												}}
+											>
+												<StepLabel {...labelProps}>{label}</StepLabel>
+											</Step>
+										)
+								  })
+								: exemptionSteps.map((label, index) => (
+										<Step
+											key={label}
+											sx={{
+												'& .MuiStepLabel-root .Mui-completed': {
+													color: '#4caf50',
+												},
+											}}
+										>
+											<StepLabel>{label}</StepLabel>
+										</Step>
+								  ))}
 						</Stepper>
 					</Box>
 					{currentSubmissionData?.status === 'approved' && currentSubmissionData?.evaluation && (

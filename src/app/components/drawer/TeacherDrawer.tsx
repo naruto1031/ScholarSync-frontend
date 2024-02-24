@@ -40,6 +40,10 @@ export const TeacherDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 			url: 'class_management',
 		},
 		{
+			text: '課題免除許可',
+			url: 'exemption_approval',
+		},
+		{
 			text: '課題管理',
 		},
 		{

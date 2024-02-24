@@ -32,8 +32,9 @@ export const submissionStatuses: SubmissionStatusLabel[] = [
 	{ value: 'overdue', label: '期限超過', step: 1 },
 	{ value: 'resubmission', label: '再提出', step: 0 },
 	{ value: 'rejected', label: '提出不可', step: 0 },
-	{ value: 'absence', label: '公欠申請', step: 1 },
-	{ value: 'exemption', label: '免除申請', step: 1 },
+	{ value: 'pending_exemption_approval', label: '免除申請許可待ち', step: 1 },
+	{ value: 'pending_exemption', label: '免除申請中', step: 2 },
+	{ value: 'exemption', label: '免除', step: 3 },
 ]
 
 export const SubmissionStatusContents = () => {
@@ -61,9 +62,15 @@ export const SubmissionStatusContents = () => {
 
 		try {
 			const submitData = data.filter((d) => d !== undefined)
+
 			if (submitData.length === 0) {
 				setSubmissionData([])
 				return
+			}
+
+			if (submitData.includes('exemption')) {
+				submitData.push('pending_exemption_approval')
+				submitData.push('pending_exemption')
 			}
 
 			const res = await fetch('/api/submission_status/search', {
@@ -156,32 +163,38 @@ export const SubmissionStatusContents = () => {
 					課題表紙検索
 				</Box>
 				<FormGroup sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
-					{submissionStatuses.map((status, i) => (
-						<Controller
-							key={status.value}
-							name={`statuses.${i}`}
-							control={control}
-							render={({ field }) => (
-								<FormControlLabel
-									control={
-										<Checkbox
-											checked={!!field.value}
-											onChange={(e) => {
-												if (e.target.checked) {
-													setValue(`statuses.${i}`, e.target.value)
-												} else {
-													setValue(`statuses.${i}`, undefined)
-												}
-												handleSubmit(getValues('statuses'))
-											}}
-										/>
-									}
-									value={status.value}
-									label={status.label}
-								/>
-							)}
-						/>
-					))}
+					{submissionStatuses
+						.filter(
+							(status) =>
+								status.value !== 'pending_exemption_approval' &&
+								status.value !== 'pending_exemption',
+						)
+						.map((status, i) => (
+							<Controller
+								key={status.value}
+								name={`statuses.${i}`}
+								control={control}
+								render={({ field }) => (
+									<FormControlLabel
+										control={
+											<Checkbox
+												checked={!!field.value}
+												onChange={(e) => {
+													if (e.target.checked) {
+														setValue(`statuses.${i}`, e.target.value)
+													} else {
+														setValue(`statuses.${i}`, undefined)
+													}
+													handleSubmit(getValues('statuses'))
+												}}
+											/>
+										}
+										value={status.value}
+										label={status.label}
+									/>
+								)}
+							/>
+						))}
 				</FormGroup>
 			</Paper>
 			<Box
