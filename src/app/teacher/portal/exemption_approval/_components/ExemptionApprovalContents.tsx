@@ -49,7 +49,10 @@ export const ExemptionApprovalContents = ({ teacherClasses }: Props) => {
 					'Content-Type': 'application/json',
 				},
 			})
-			if (!res.ok) throw new Error(res.statusText)
+			if (!res.ok) {
+				setIsError(true)
+				throw new Error(res.statusText)
+			}
 			const data: ExemptionIssueCoverResponse = await res.json()
 			setIssueCoverData(data.issue_covers)
 		} catch (error) {
