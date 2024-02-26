@@ -32,13 +32,6 @@ export const StudentDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 			url: 'top',
 		},
 		{
-			text: '教科',
-		},
-		{
-			text: '教科一覧',
-			url: 'subject_list',
-		},
-		{
 			text: '課題',
 		},
 		{

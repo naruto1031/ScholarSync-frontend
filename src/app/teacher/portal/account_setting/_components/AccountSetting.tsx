@@ -18,5 +18,9 @@ export default async function AccountSetting() {
 	})
 
 	const teacherInfoData: Teacher[] = await teacherInfoResponse.json()
-	return <AccountSettingContents teacher={teacherInfoData[0]} />
+	const teacherData = teacherInfoData.find((teacher) => teacher.email === session.user.email)
+	if (!teacherData) {
+		redirect('/teacher/portal/top')
+	}
+	return <AccountSettingContents teacher={teacherData} />
 }
