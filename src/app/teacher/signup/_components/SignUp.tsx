@@ -18,10 +18,10 @@ export default async function SignUp() {
 		},
 	})
 
-	const studentExists: TeacherExists = await res.json()
+	const teacherExists: TeacherExists = await res.json()
 
-	if (studentExists.exists) {
-		redirect('/teacher/portal')
+	if (teacherExists.exists) {
+		redirect('/teacher/portal/top')
 	}
 
 	const classListResponse = await fetch(`${process.env.API_URL}/api/teacher/class`, {
