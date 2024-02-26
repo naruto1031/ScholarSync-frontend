@@ -39,13 +39,17 @@ export const SignUpContents = ({ classList, subjects }: Props) => {
 	const onSubmit = async ({ classId, teacherSubjects }: TeacherSchemaType) => {
 		try {
 			setIsLoading(true)
-			await fetch('/api/teacher/register', {
+			const res = await fetch('/api/teacher/register', {
 				method: 'POST',
 				body: JSON.stringify({
 					classId: classId,
 					teacherSubjects: teacherSubjects,
 				}),
 			})
+			if (!res.ok) {
+				const error = await res.text()
+				throw new Error(error)
+			}
 			setIsRegistered(true)
 			router.push('/teacher/portal/top')
 		} catch (error: unknown) {
