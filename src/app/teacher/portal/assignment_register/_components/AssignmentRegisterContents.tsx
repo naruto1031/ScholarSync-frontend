@@ -1,5 +1,5 @@
 'use client'
-import { Department, TeacherSubjectAssign } from '@/types/api-response-types'
+import { TeacherSubjectAssign } from '@/types/api-response-types'
 import { AssignmentRegisterSchemaType, assignmentRegisterSchema } from '@/types/form/schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -72,6 +72,7 @@ export const AssignmentRegisterContents = ({ teacherSubjects }: Props) => {
 		challengeFlag,
 		challengeMaxScore,
 		comment,
+		isNotify,
 	}: AssignmentRegisterSchemaType) => {
 		try {
 			onBlurDueDateChange()
@@ -143,6 +144,33 @@ export const AssignmentRegisterContents = ({ teacherSubjects }: Props) => {
 				throw new Error('エラーが発生しました')
 			}
 
+			const data = await res.json()
+			const subject = teacherSubjects.find(
+				(subject) => subject.teacher_subject_id === Number(teacherSubjectId),
+			)?.name
+
+			if (isNotify) {
+				dueDatesData?.forEach(async (dueDate) => {
+					const res = await fetch('/api/notify', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							classId: dueDate?.classId.toString(),
+							subject: subject,
+							title: `【${subject}】課題表紙が作成されました`,
+							memo: `課題名: ${name}\n課題No: ${taskNumber}\n下記URLから詳細な課題表紙情報をご確認ください。\n\nhttps://www.scholar-sync.systems/student/portal/submit_assignment?issue_id=${data.issue_id}`,
+						}),
+					})
+
+					if (!res.ok) {
+						console.error(res.statusText)
+						throw new Error('エラーが発生しました')
+					}
+				})
+			}
+
 			setIsSuccess(true)
 			setIsLoading(false)
 			reset()
@@ -175,6 +203,7 @@ export const AssignmentRegisterContents = ({ teacherSubjects }: Props) => {
 			challengeFlag: false,
 			challengeMaxScore: 0,
 			comment: '',
+			isNotify: true,
 		},
 	})
 
@@ -419,6 +448,20 @@ export const AssignmentRegisterContents = ({ teacherSubjects }: Props) => {
 								</FormControl>
 							</Box>
 						)}
+						<Box
+							sx={{
+								fontWeight: 'bold',
+								mb: '10px',
+							}}
+						>
+							生徒に課題表紙登録を通知する
+						</Box>
+						<FormControl sx={{ width: '100%', mb: '20px' }}>
+							<FormControlLabel
+								control={<Checkbox {...register('isNotify')} defaultChecked={true} />}
+								label='通知する'
+							/>
+						</FormControl>
 						<LoadingButton
 							color='primary'
 							variant='contained'

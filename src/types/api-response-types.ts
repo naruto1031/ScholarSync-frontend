@@ -246,3 +246,19 @@ export interface TeacherSubject {
 	subject_id: number
 	subject_name: string
 }
+
+export interface IssueCoverStatusCount {
+	issue_cover_status_count: {
+		total: number
+		pending?: number
+		rejected?: number
+		resubmission?: number
+		approved?: number
+		pending_absence?: number
+		absence?: number
+		pending_exemption_approval?: number
+		pending_exemption?: number
+		exemption?: number
+		late_pending?: number
+	}
+}

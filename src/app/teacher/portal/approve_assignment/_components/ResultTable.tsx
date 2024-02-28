@@ -12,7 +12,6 @@ import Box from '@mui/material/Box'
 import { convertStatus } from '@/utils/statusUtils'
 import { ConvertStatusIcon } from '@/app/components'
 import { IssueCoverSearchCondition } from '@/types/api-response-types'
-import { Dispatch, SetStateAction } from 'react'
 
 interface Props {
 	issueCoverData: IssueCoverSearchCondition[]
@@ -92,13 +91,25 @@ export const ResultTable = ({ isLoading, issueCoverData, onOpenIndividualModal }
 								key={issueCover.issue_id}
 								sx={{
 									'&:last-child td, &:last-child th': { border: 0 },
-									cursor: issueCover.status === 'not_submitted' ? 'auto' : 'pointer',
+									cursor:
+										issueCover.status === 'not_submitted' ||
+										issueCover.status === 'pending_exemption_approval'
+											? 'auto'
+											: 'pointer',
 									'&:hover': {
-										backgroundColor: issueCover.status === 'not_submitted' ? undefined : '#F5F5F5',
+										backgroundColor:
+											issueCover.status === 'not_submitted' ||
+											issueCover.status === 'pending_exemption_approval'
+												? undefined
+												: '#F5F5F5',
 									},
 								}}
 								onClick={() => {
-									if (issueCover.status === 'not_submitted') return
+									if (
+										issueCover.status === 'not_submitted' ||
+										issueCover.status === 'pending_exemption_approval'
+									)
+										return
 									onOpenIndividualModal(issueCover)
 								}}
 							>

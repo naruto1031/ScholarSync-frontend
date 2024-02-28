@@ -22,6 +22,10 @@ export async function POST(request: NextRequest) {
 			}),
 		})
 
+		if (!teacherRegisterResponse.ok) {
+			return new NextResponse('Failed to register teacher', { status: 500 })
+		}
+
 		const subjectAssignResponse = await fetch(`${process.env.API_URL}/api/subject/assign`, {
 			method: 'POST',
 			headers: {
@@ -32,6 +36,10 @@ export async function POST(request: NextRequest) {
 				subject_id: teacherData.teacherSubjects,
 			}),
 		})
+
+		if (!subjectAssignResponse.ok) {
+			return new NextResponse('Failed to assign subjects', { status: 500 })
+		}
 
 		if (teacherData.classId) {
 			const classAssignResponse = await fetch(`${process.env.API_URL}/api/class/assign`, {
@@ -44,6 +52,10 @@ export async function POST(request: NextRequest) {
 					class_id: teacherData.classId,
 				}),
 			})
+
+			if (!classAssignResponse.ok) {
+				return new NextResponse('Failed to assign class', { status: 500 })
+			}
 		}
 
 		return new NextResponse('ok', { status: 200 })

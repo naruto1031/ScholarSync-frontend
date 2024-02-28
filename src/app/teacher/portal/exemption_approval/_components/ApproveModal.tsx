@@ -1,22 +1,12 @@
-import { submissionStatuses } from '@/app/student/portal/submission_status/_components/SubmissionStatusContents'
-import { Issue, ExemptionIssueCover } from '@/types/api-response-types'
-import { numberToBoolean } from '@/utils/numberToBoolean'
+import { ExemptionIssueCover } from '@/types/api-response-types'
 import Box from '@mui/material/Box'
-import FormControl from '@mui/material/FormControl'
-import FormHelperText from '@mui/material/FormHelperText'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
 import Modal from '@mui/material/Modal'
 import Paper from '@mui/material/Paper'
-import Select from '@mui/material/Select'
 import { useTheme } from '@mui/material/styles'
 import { Dispatch, SetStateAction } from 'react'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
-import { DateTimePicker } from '@mui/x-date-pickers'
-import dayjs, { Dayjs } from 'dayjs'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
+import dayjs from 'dayjs'
 import LoadingButton from '@mui/lab/LoadingButton'
 import { convertStatus } from '@/utils/statusUtils'
 
@@ -36,7 +26,6 @@ export const ApproveModal = ({
 	currentUpdateIssueCover,
 	modalOpen,
 	setModalOpen,
-	setCurrentUpdateIssueCover,
 	isStatusUpdateLoading,
 	onSubmit,
 }: Props) => {

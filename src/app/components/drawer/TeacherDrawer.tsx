@@ -8,8 +8,8 @@ import {
 	ListItemText,
 	Divider,
 } from '@mui/material'
-import { Dispatch, SetStateAction, useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { Dispatch, SetStateAction } from 'react'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 interface Props {
@@ -23,7 +23,6 @@ interface DrawerMenuItems {
 }
 
 export const TeacherDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
-	const router = useRouter()
 	const pathName = usePathname()
 	const lastPartOfUrl = pathName.split('/').pop()
 
@@ -101,6 +100,7 @@ export const TeacherDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 									width: '100%',
 									padding: '10px 15px',
 								}}
+								prefetch={true}
 							>
 								<ListItemText
 									primary={item.text}

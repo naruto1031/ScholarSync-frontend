@@ -1,8 +1,10 @@
-import { NextAuthProvider } from '@/app/components'
 import './globals.css'
 import { LocalProvider } from './components/provider/LocalProvider'
 import { M_PLUS_1_Code } from 'next/font/google'
 import { Metadata } from 'next'
+import { ReactNode } from 'react'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const mPlus1p = M_PLUS_1_Code({ weight: '400', subsets: ['latin'] })
 const APP_NAME = 'Scholar Sync'
@@ -33,7 +35,7 @@ export const metadata: Metadata = {
 	},
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
 	return (
 		<html lang='ja'>
 			<body
@@ -43,6 +45,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				className={mPlus1p.className}
 			>
 				<LocalProvider>{children}</LocalProvider>
+				<Analytics />
+				<SpeedInsights />
 			</body>
 		</html>
 	)

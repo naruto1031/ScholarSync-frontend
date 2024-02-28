@@ -3,7 +3,6 @@ import { Issue, IssueCoverSearchCondition } from '@/types/api-response-types'
 import { numberToBoolean } from '@/utils/numberToBoolean'
 import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
-import FormHelperText from '@mui/material/FormHelperText'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Modal from '@mui/material/Modal'
@@ -130,7 +129,11 @@ export const IndividualDetailModal = ({
 							}}
 						>
 							{submissionStatuses
-								.filter((status) => status.value !== 'not_submitted')
+								.filter(
+									(status) =>
+										status.value !== 'not_submitted' &&
+										status.value !== 'pending_exemption_approval',
+								)
 								.map((status) => (
 									<MenuItem key={status.value} value={`${status.value}`}>
 										{status.label}

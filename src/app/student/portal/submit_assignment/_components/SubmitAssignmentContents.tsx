@@ -11,7 +11,7 @@ import {
 	TableHead,
 	TableRow,
 } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SubmitModal } from './SubmitModal'
 import { Issue, PendingIssuesResponse } from '@/types/api-response-types'
 import InfoIcon from '@mui/icons-material/Info'
@@ -24,10 +24,11 @@ dayjs.extend(utc)
 dayjs.extend(timezone)
 
 interface Props {
+	issue_id?: string
 	issueData: Issue[]
 }
 
-export const SubmitAssignmentContents = ({ issueData }: Props) => {
+export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 	const [assignmentIssueData, setAssignmentIssueData] = useState<Issue[]>(issueData)
 	const [isOpen, setIsOpen] = useState(false)
 	const [currentTask, setCurrentTask] = useState<Issue | null>(null)
@@ -38,6 +39,17 @@ export const SubmitAssignmentContents = ({ issueData }: Props) => {
 	const [isRegistered, setIsRegistered] = useState<boolean>(false)
 	const [isError, setIsError] = useState<boolean>(false)
 	const [submitStatus, setSubmitStatus] = useState<'normal' | 'exemption'>('normal')
+
+	useEffect(() => {
+		const getAssignmentByIssueId = assignmentIssueData.find(
+			(issue) => issue.issue_id === Number(issue_id),
+		)
+		if (issue_id && getAssignmentByIssueId) {
+			setCurrentTask(getAssignmentByIssueId)
+			setIsOpen(true)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
 
 	const handleRegisterClose = () => {
 		setIsRegistered(false)
@@ -112,7 +124,7 @@ export const SubmitAssignmentContents = ({ issueData }: Props) => {
 		try {
 			if (!id) return
 			setIsExemptionLoading(true)
-			const res = await fetch('/api/submit_assignment/exemption', {
+			await fetch('/api/submit_assignment/exemption', {
 				method: 'POST',
 				body: JSON.stringify({
 					issueId: id,
@@ -231,12 +243,16 @@ export const SubmitAssignmentContents = ({ issueData }: Props) => {
 														<ConvertStatusIcon status='overdue' />
 													</Box>
 													<span style={{ color: 'red' }}>
-														{dayjs.utc(row.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')}
+														{row.due_date
+															? dayjs.utc(row.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')
+															: '未設定'}
 													</span>
 												</Box>
 											) : (
 												<span>
-													{dayjs.utc(row.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')}
+													{row.due_date
+														? dayjs.utc(row.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')
+														: '未設定'}
 												</span>
 											)}
 										</TableCell>

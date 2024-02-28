@@ -1,8 +1,5 @@
 import { options } from '@/app/options'
-import {
-	UpdateCorrectiveIssueCovers,
-	UpdateIndividualIssueCovers,
-} from '@/types/api-response-types'
+import { UpdateIndividualIssueCovers } from '@/types/api-response-types'
 import { toMySQLFormat } from '@/utils/toMySQLDateTimeFormatUtil'
 import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'

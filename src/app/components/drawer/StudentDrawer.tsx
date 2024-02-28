@@ -8,8 +8,8 @@ import {
 	ListItemText,
 	Divider,
 } from '@mui/material'
-import { Dispatch, SetStateAction, useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { Dispatch, SetStateAction } from 'react'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 interface Props {
@@ -30,13 +30,6 @@ export const StudentDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 		{
 			text: '学生トップ',
 			url: 'top',
-		},
-		{
-			text: '教科',
-		},
-		{
-			text: '教科一覧',
-			url: 'subject_list',
 		},
 		{
 			text: '課題',
