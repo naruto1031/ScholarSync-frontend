@@ -34,7 +34,7 @@ export const submissionStatuses: SubmissionStatusLabel[] = [
 	{ value: 'rejected', label: '提出不可', step: 0 },
 	{ value: 'pending_exemption_approval', label: '免除申請許可待ち', step: 1 },
 	{ value: 'pending_exemption', label: '免除申請中', step: 2 },
-	{ value: 'exemption', label: '免除', step: 3 },
+	{ value: 'exemption', label: '免除', step: 4 },
 ]
 
 export const SubmissionStatusContents = () => {

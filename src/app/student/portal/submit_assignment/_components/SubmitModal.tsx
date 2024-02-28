@@ -147,13 +147,18 @@ export const SubmitModal = ({
 							</Box>
 							<span style={{ color: 'red' }}>
 								期限超過しています:{' '}
-								{dayjs.utc(data?.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')}
+								{data?.due_date
+									? dayjs.utc(data?.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')
+									: '未設定'}
 							</span>
 						</Box>
 					) : (
 						<Box>
 							<span>
-								提出期限: {dayjs.utc(data?.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')}
+								提出期限:{' '}
+								{data?.due_date
+									? dayjs.utc(data?.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')
+									: '未設定'}
 							</span>
 						</Box>
 					)}

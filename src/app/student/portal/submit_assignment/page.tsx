@@ -4,6 +4,10 @@ const SubmitAssignmentPage = dynamic(() => import('./_components/SubmitAssignmen
 	loading: () => <Loading />,
 })
 
-export default async function Page() {
-	return <SubmitAssignmentPage />
+interface Params {
+	issue_id?: string
+}
+
+export default async function Page({ searchParams }: { searchParams: Params }) {
+	return <SubmitAssignmentPage issue_id={searchParams.issue_id} />
 }
