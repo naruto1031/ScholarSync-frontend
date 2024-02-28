@@ -2,6 +2,7 @@ import './globals.css'
 import { LocalProvider } from './components/provider/LocalProvider'
 import { M_PLUS_1_Code } from 'next/font/google'
 import { ReactNode } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 
 const mPlus1p = M_PLUS_1_Code({ weight: '400', subsets: ['latin'] })
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -14,6 +15,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 				className={mPlus1p.className}
 			>
 				<LocalProvider>{children}</LocalProvider>
+				<Analytics />
 			</body>
 		</html>
 	)
