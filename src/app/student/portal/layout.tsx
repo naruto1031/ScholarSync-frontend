@@ -4,8 +4,9 @@ import { SignOutButton, Header } from '@/app/components'
 import { StudentExists } from '@/types/api-response-types'
 import { redirect } from 'next/navigation'
 import Box from '@mui/material/Box/Box'
+import { ReactNode } from 'react'
 
-export default async function portalLayout({ children }: { children: React.ReactNode }) {
+export default async function portalLayout({ children }: { children: ReactNode }) {
 	const session = await getServerSession(options)
 	if (!session?.user) {
 		redirect('/login')

@@ -24,7 +24,7 @@ import {
 	TableHead,
 	TableRow,
 } from '@mui/material'
-import { SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { ApproveModal } from './ApproveModal'
 
 interface Props {

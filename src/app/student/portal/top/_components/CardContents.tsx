@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 interface Props {
 	title: string
-	icon: OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
+	icon: OverridableComponent<SvgIconTypeMap<object, 'svg'>> & {
 		muiName: string
 	}
 	url: string

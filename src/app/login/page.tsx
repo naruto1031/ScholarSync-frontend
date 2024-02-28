@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
-import { Box, Typography, Button } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { options } from '@/app/options'
 import { SignInButton } from '../components'
 

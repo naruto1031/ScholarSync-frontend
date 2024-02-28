@@ -19,8 +19,10 @@ export async function POST(request: NextRequest) {
 		if (!res.ok) return new NextResponse(res.statusText, { status: res.status })
 
 		const guildData = await res.json()
-		if (Object.keys(guildData).length === 0)
-			return new NextResponse('Guild Not Found', { status: 404 })
+		if (Object.keys(guildData).length === 0) {
+			// エラーではなく、通知先がないことを通知する
+			return new NextResponse('guild_id_not_found', { status: 200 })
+		}
 
 		const notifyRes = await fetch(`${process.env.ROOM_NOTIFY_API_URL}`, {
 			method: 'POST',

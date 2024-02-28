@@ -46,13 +46,21 @@ export async function POST(request: NextRequest) {
 	if (assignmentData.comment && assignmentData.comment.length > 0) {
 		requestBody.comment = assignmentData.comment
 	}
-	const res = await fetch(`${process.env.API_URL}/api/issue/register`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Authorization: `Bearer ${session?.user.accessToken}`,
-		},
-		body: JSON.stringify(requestBody),
-	})
-	return new NextResponse(res.statusText, { status: res.status })
+
+	try {
+		const res = await fetch(`${process.env.API_URL}/api/issue/register`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${session?.user.accessToken}`,
+			},
+			body: JSON.stringify(requestBody),
+		})
+
+		if (!res.ok) return new NextResponse(res.statusText, { status: res.status })
+		const issue = await res.json()
+		return new NextResponse(JSON.stringify(issue), { status: res.status })
+	} catch (error) {
+		return new NextResponse('Internal Server Error', { status: 500 })
+	}
 }

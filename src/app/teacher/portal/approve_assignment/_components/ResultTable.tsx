@@ -12,7 +12,6 @@ import Box from '@mui/material/Box'
 import { convertStatus } from '@/utils/statusUtils'
 import { ConvertStatusIcon } from '@/app/components'
 import { IssueCoverSearchCondition } from '@/types/api-response-types'
-import { Dispatch, SetStateAction } from 'react'
 
 interface Props {
 	issueCoverData: IssueCoverSearchCondition[]

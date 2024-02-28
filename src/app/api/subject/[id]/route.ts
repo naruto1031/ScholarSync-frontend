@@ -2,7 +2,7 @@ import { options } from '@/app/options'
 import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET(request: NextRequest, { params }: { params: any }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
 	const id = params.id
 	const session = await getServerSession(options)
 	if (!session) return new NextResponse('Unauthorized', { status: 401 })

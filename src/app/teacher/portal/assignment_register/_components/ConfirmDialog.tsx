@@ -24,9 +24,16 @@ export const ConfirmDialog = ({ open, assignmentData, handleClose }: DialogProps
 			aria-labelledby='alert-dialog-title'
 			aria-describedby='alert-dialog-description'
 		>
-			<DialogTitle id='alert-dialog-title'>{'課題を登録しますか？'}</DialogTitle>
+			<DialogTitle id='alert-dialog-title'>{'課題表紙を登録しますか？'}</DialogTitle>
 			<DialogContent>
 				<DialogContentText id='alert-dialog-description'>
+					<Box
+						sx={{
+							mb: 1,
+						}}
+					>
+						登録後、対象となるクラスの生徒に通知されます。
+					</Box>
 					<Box>課題名: {assignmentData?.name}</Box>
 					<Box>課題番号: {assignmentData?.taskNumber}</Box>
 					{dueDates?.map((dueDate, index) => (
@@ -41,7 +48,7 @@ export const ConfirmDialog = ({ open, assignmentData, handleClose }: DialogProps
 			</DialogContent>
 			<DialogActions>
 				<Button onClick={() => handleClose('close')}>キャンセル</Button>
-				<Button onClick={() => handleClose('ok')} autoFocus>
+				<Button onClick={() => handleClose('ok')} variant='contained' autoFocus>
 					登録する
 				</Button>
 			</DialogActions>

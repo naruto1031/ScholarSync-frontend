@@ -37,6 +37,7 @@ export const assignmentRegisterSchema = z.object({
 	privateFlag: z.boolean(),
 	challengeFlag: z.boolean(),
 	challengeMaxScore: z.number().int().optional(),
+	isNotify: z.boolean().optional(),
 })
 
 export const updateAssignmentSchema = z.object({

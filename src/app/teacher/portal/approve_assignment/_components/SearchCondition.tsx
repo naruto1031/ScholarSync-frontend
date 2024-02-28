@@ -72,6 +72,7 @@ export const SearchCondition = ({
 			return
 		}
 		findIssueByTeacherSubjectId(watch('teacherSubjectId'))
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [watch('teacherSubjectId')])
 
 	const classId = Number(watch('classId'))

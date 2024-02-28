@@ -114,7 +114,7 @@ export const TopContents = ({ count }: Props) => {
 					<Box>
 						課題承認率:{' '}
 						{Math.floor(
-							((approvedCount + exemptionCount) / count.issue_cover_status_count.total) * 100,
+							(approvedCount / (count.issue_cover_status_count.total - exemptionCount)) * 100,
 						)}
 						%
 					</Box>
