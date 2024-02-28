@@ -18,7 +18,7 @@ export const CardContents = (props: Props) => {
 				width: 'fit-content',
 				textDecoration: 'none',
 			}}
-			prefetch={false}
+			prefetch={true}
 		>
 			<Paper
 				sx={{
