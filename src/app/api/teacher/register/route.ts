@@ -23,7 +23,6 @@ export async function POST(request: NextRequest) {
 		})
 
 		if (!teacherRegisterResponse.ok) {
-			const error = await teacherRegisterResponse.text()
 			return new NextResponse('Failed to register teacher', { status: 500 })
 		}
 

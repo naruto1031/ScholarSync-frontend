@@ -26,7 +26,7 @@ export const AssignmentListContents = ({ subjects }: Props) => {
 	const [issues, setIssues] = useState<TransformedIssue[]>([])
 	const [currentIssue, setCurrentIssue] = useState<TransformedIssue | null>(null)
 	const [editCurrentIssueData, setEditCurrentIssueData] = useState<TransformedIssue | null>(null)
-	const [isAsc, setIsAsc] = useState<boolean>(true)
+	const [isAsc] = useState<boolean>(true)
 
 	const handleSubmit = async (teacherSubjectId: string | undefined) => {
 		try {

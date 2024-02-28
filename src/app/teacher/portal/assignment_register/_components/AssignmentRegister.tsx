@@ -2,7 +2,7 @@ import { options } from '@/app/options'
 import { AssignmentRegisterContents } from './AssignmentRegisterContents'
 import { getServerSession } from 'next-auth/next'
 import { redirect } from 'next/navigation'
-import { Department, TeacherSubjectAssign } from '@/types/api-response-types'
+import { TeacherSubjectAssign } from '@/types/api-response-types'
 
 export default async function AssignmentRegister() {
 	const session = await getServerSession(options)

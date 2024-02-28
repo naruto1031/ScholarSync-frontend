@@ -6,7 +6,6 @@ import {
 	FormControl,
 	FormControlLabel,
 	FormGroup,
-	FormLabel,
 	Modal,
 	Radio,
 	RadioGroup,
@@ -46,10 +45,8 @@ export const SubmitModal = ({
 	submitStatus,
 	handleClose,
 	handleSubmit,
-	handleExemptionApplication,
 	setSubmitStatus,
 	isLoading,
-	isExemptionLoading,
 }: Props) => {
 	const theme = useTheme()
 	const [isChecked, setIsChecked] = useState(false)

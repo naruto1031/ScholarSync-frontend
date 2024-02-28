@@ -1,5 +1,5 @@
 'use client'
-import { ClassIssueCover, TeacherClass } from '@/types/api-response-types'
+import { ClassIssueCover, TeacherClass, ClassSubject } from '@/types/api-response-types'
 import {
 	ClassAssignmentSearchConditionSchemaType,
 	classAssignmentSearchConditionSchema,
@@ -19,7 +19,6 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ClassSubject } from '@/types/api-response-types'
 import LoadingButton from '@mui/lab/LoadingButton'
 
 interface Props {
@@ -200,7 +199,7 @@ export const ClassManagementContents = ({ teacherClasses }: Props) => {
 								</TableCell>
 								{issueCover?.issues
 									.sort((a, b) => Number(a.task_number) - Number(b.task_number))
-									.map((issue, _) => {
+									.map((issue) => {
 										return (
 											<TableCell
 												key={issue.issue_id}
@@ -224,7 +223,7 @@ export const ClassManagementContents = ({ teacherClasses }: Props) => {
 						>
 							{issueCover?.students
 								.sort((a, b) => Number(a.attendance_number) - Number(b.attendance_number))
-								.map((student, _) => {
+								.map((student) => {
 									return (
 										<TableRow key={student.student_id}>
 											<TableCell
@@ -247,7 +246,7 @@ export const ClassManagementContents = ({ teacherClasses }: Props) => {
 											>
 												{student.name}
 											</TableCell>
-											{issueCover.issues.map((issue, _) => {
+											{issueCover.issues.map((issue) => {
 												const issueCoverData = issueCover.issue_covers.find((issueCover) => {
 													return issueCover
 														.map((cover) => cover.student_id)

@@ -48,6 +48,7 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 			setCurrentTask(getAssignmentByIssueId)
 			setIsOpen(true)
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	const handleRegisterClose = () => {
@@ -123,7 +124,7 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 		try {
 			if (!id) return
 			setIsExemptionLoading(true)
-			const res = await fetch('/api/submit_assignment/exemption', {
+			await fetch('/api/submit_assignment/exemption', {
 				method: 'POST',
 				body: JSON.stringify({
 					issueId: id,

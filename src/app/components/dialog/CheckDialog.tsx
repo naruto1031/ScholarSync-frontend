@@ -10,6 +10,7 @@ import {
 import Image from 'next/image'
 
 export interface ConfirmDialogProps {
+	// eslint-disable-next-line no-unused-vars
 	onClose: (value: string) => void
 	title?: string
 	message?: string

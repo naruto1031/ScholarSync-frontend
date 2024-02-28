@@ -7,9 +7,7 @@ import {
 	Step,
 	StepLabel,
 	Stepper,
-	TextField,
 	Paper,
-	Typography,
 	FormControlLabel,
 	FormGroup,
 	Checkbox,
@@ -19,7 +17,7 @@ import { submissionStatuses } from './SubmissionStatusContents'
 import { useRouter } from 'next/navigation'
 import { numberToBoolean } from '@/utils/numberToBoolean'
 import { LoadingButton } from '@mui/lab'
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
 interface Props {
 	isOpen: boolean
 	isResubmissionLoading: boolean
@@ -108,10 +106,10 @@ export const DetailModal = ({
 				>
 					<Box sx={{ width: '100%' }}>
 						<Stepper activeStep={currentStep(currentSubmissionData?.status)} alternativeLabel>
-							{!exemptionStatuses.includes(currentSubmissionData?.status!)
+							{!exemptionStatuses.includes(currentSubmissionData?.status || '')
 								? steps.map((label, index) => {
 										const labelProps: {
-											optional?: React.ReactNode
+											optional?: ReactNode
 											error?: boolean
 										} = {}
 										if (index === 1 && currentSubmissionData?.status === 'resubmission') {
@@ -135,7 +133,7 @@ export const DetailModal = ({
 											</Step>
 										)
 								  })
-								: exemptionSteps.map((label, index) => (
+								: exemptionSteps.map((label) => (
 										<Step
 											key={label}
 											sx={{
