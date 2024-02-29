@@ -31,7 +31,7 @@ export const ClassManagementContents = ({ teacherClasses }: Props) => {
 	const [subjectLoading, setSubjectLoading] = useState<boolean>(false)
 	const [subjectList, setSubjectList] = useState<ClassSubject[]>([])
 	const [issueCover, setIssueCover] = useState<ClassIssueCover>()
-	const [filterCondition, setFilterCondition] = useState<'all' | 'waring' | 'caution'>('all')
+	const [filterCondition, setFilterCondition] = useState<'all' | 'warning' | 'caution'>('all')
 	const [filteredIssueCover, setFilteredIssueCover] = useState<ClassIssueCover>()
 
 	const findSubjectListByClassId = async (classId: string) => {
@@ -93,7 +93,7 @@ export const ClassManagementContents = ({ teacherClasses }: Props) => {
 
 	const totalIssueCount = issueCover?.issues?.length || 0
 
-	const filterIssueCover = (condition: 'all' | 'waring' | 'caution') => {
+	const filterIssueCover = (condition: 'all' | 'warning' | 'caution') => {
 		if (!issueCover) {
 			return
 		}
@@ -111,7 +111,7 @@ export const ClassManagementContents = ({ teacherClasses }: Props) => {
 				if (condition === 'all') {
 					return true
 				}
-				if (condition === 'waring') {
+				if (condition === 'warning') {
 					return approvedCount / (totalIssueCount - exemptionCount) < 0.5
 				}
 				if (condition === 'caution') {
@@ -237,14 +237,14 @@ export const ClassManagementContents = ({ teacherClasses }: Props) => {
 						label='提出率'
 						error={!!errors.classId}
 						onChange={(e) => {
-							setFilterCondition(e.target.value as 'all' | 'waring' | 'caution')
+							setFilterCondition(e.target.value as 'all' | 'warning' | 'caution')
 						}}
 						defaultValue={filterCondition}
 					>
 						<MenuItem key='0' value='all'>
 							全て
 						</MenuItem>
-						<MenuItem key='1' value='waring'>
+						<MenuItem key='1' value='warning'>
 							50%以下
 						</MenuItem>
 						<MenuItem key='2' value='caution'>
