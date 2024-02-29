@@ -6,7 +6,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const withPWA = require('@ducanh2912/next-pwa').default({
 	dest: 'public',
-	disable: process.env.NODE_ENV === 'development',
 })
 
 /** @type {import('next').NextConfig} */
@@ -16,4 +15,6 @@ const nextConfig = {
 	},
 }
 
-module.exports = withBundleAnalyzer(withPWA(nextConfig))
+module.exports = withBundleAnalyzer(
+	process.env.NODE_ENV === 'development' ? nextConfig : withPWA(nextConfig),
+)
