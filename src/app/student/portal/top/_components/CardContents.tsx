@@ -1,5 +1,5 @@
 'use client'
-import { Box, Paper, SvgIconTypeMap } from '@mui/material'
+import { Badge, Box, Paper, SvgIconTypeMap } from '@mui/material'
 import { OverridableComponent } from '@mui/material/OverridableComponent'
 import Link from 'next/link'
 
@@ -9,6 +9,7 @@ interface Props {
 		muiName: string
 	}
 	url: string
+	notSubmittedCount: number
 }
 
 export const CardContents = (props: Props) => {
@@ -19,37 +20,42 @@ export const CardContents = (props: Props) => {
 				width: 'fit-content',
 				textDecoration: 'none',
 			}}
-			prefetch={true}
+			prefetch={false}
 		>
-			<Paper
-				sx={{
-					width: '100px',
-					padding: '10px',
-				}}
+			<Badge
+				badgeContent={props.url === 'submission_status' ? 0 : props.notSubmittedCount}
+				color='error'
 			>
-				<Box
+				<Paper
 					sx={{
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'center',
+						width: '100px',
+						padding: '10px',
 					}}
 				>
 					<Box
 						sx={{
-							fontSize: '24px',
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
 						}}
 					>
-						<props.icon
+						<Box
 							sx={{
-								fontSize: '50px',
+								fontSize: '24px',
 							}}
-						/>
+						>
+							<props.icon
+								sx={{
+									fontSize: '50px',
+								}}
+							/>
+						</Box>
+						<Box>
+							<Box>{props.title}</Box>
+						</Box>
 					</Box>
-					<Box>
-						<Box>{props.title}</Box>
-					</Box>
-				</Box>
-			</Paper>
+				</Paper>
+			</Badge>
 		</Link>
 	)
 }

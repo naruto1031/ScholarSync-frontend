@@ -51,7 +51,7 @@ export const TopContents = ({ count }: Props) => {
 			<Box
 				sx={{
 					fontSize: '20px',
-					py: '10px',
+					py: '20px',
 					[theme.breakpoints.down('sm')]: {
 						textAlign: 'center',
 					},
@@ -63,20 +63,20 @@ export const TopContents = ({ count }: Props) => {
 				sx={{
 					display: 'flex',
 					flexWrap: 'wrap',
-					gap: '10px',
+					gap: '20px',
 					[theme.breakpoints.down('sm')]: {
 						justifyContent: 'center',
 					},
 				}}
 			>
 				{assignmentCardContents.map((content, index) => (
-					<CardContents key={index} {...content} />
+					<CardContents key={index} {...content} notSubmittedCount={notSubmittedCount} />
 				))}
 			</Box>
 			<Box
 				sx={{
 					fontSize: '20px',
-					py: '10px',
+					py: '20px',
 					[theme.breakpoints.down('sm')]: {
 						textAlign: 'center',
 					},

@@ -456,12 +456,14 @@ export const AssignmentRegisterContents = ({ teacherSubjects }: Props) => {
 						>
 							生徒に課題表紙登録を通知する
 						</Box>
-						<FormControl sx={{ width: 'fit-content', mb: '20px' }}>
-							<FormControlLabel
-								control={<Checkbox {...register('isNotify')} defaultChecked={true} />}
-								label='通知する'
-							/>
-						</FormControl>
+						<Box>
+							<FormControl sx={{ width: 'fit-content', mb: '20px' }}>
+								<FormControlLabel
+									control={<Checkbox {...register('isNotify')} defaultChecked={true} />}
+									label='通知する'
+								/>
+							</FormControl>
+						</Box>
 						<LoadingButton
 							color='primary'
 							variant='contained'

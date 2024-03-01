@@ -1,16 +1,7 @@
 'use client'
 import { Issue, TransformedIssue, UpdateIssue } from '@/types/api-response-types'
 
-import {
-	Box,
-	Button,
-	Modal,
-	TextField,
-	Paper,
-	FormControlLabel,
-	Radio,
-	RadioGroup,
-} from '@mui/material'
+import { Box, Modal, TextField, Paper, FormControlLabel, Switch } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { DateTimePicker } from '@mui/x-date-pickers'
 import dayjs, { Dayjs } from 'dayjs'
@@ -19,6 +10,8 @@ import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import { toMySQLFormat } from '@/utils/toMySQLDateTimeFormatUtil'
 import { numberToBoolean } from '@/utils/numberToBoolean'
+import { DeleteDialogProps } from './ConfirmDialog'
+import { LoadingButton } from '@mui/lab'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -28,6 +21,10 @@ interface Props {
 	currentIssueData: TransformedIssue | null
 	editCurrentIssueData: TransformedIssue | null
 	isAsc: boolean
+	dialogData: DeleteDialogProps | null
+	dialogOpen: boolean
+	setDialogData: Dispatch<SetStateAction<DeleteDialogProps | null>>
+	setDialogOpen: Dispatch<SetStateAction<boolean>>
 	setIssues: Dispatch<SetStateAction<TransformedIssue[]>>
 	setIsSuccess: Dispatch<SetStateAction<boolean>>
 	setIsError: Dispatch<SetStateAction<boolean>>
@@ -41,17 +38,22 @@ export const DetailModal = ({
 	currentIssueData,
 	editCurrentIssueData,
 	isAsc,
+	dialogOpen,
 	setIssues,
 	setIsSuccess,
 	setIsError,
 	setEditCurrentIssueData,
 	setCurrentIssue,
+	setDialogData,
+	setDialogOpen,
 	handleClose,
 }: Props) => {
 	const [isEdit, setIsEdit] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
 	const theme = useTheme()
 
 	const onSubmit = async () => {
+		setIsLoading(true)
 		if (!currentIssueData || !editCurrentIssueData) return
 		const isChanged = Object.keys(currentIssueData).some((key) => {
 			if (key === 'issue_classes') {
@@ -65,7 +67,10 @@ export const DetailModal = ({
 			)
 		})
 
-		if (!isChanged) return
+		if (!isChanged) {
+			setIsLoading(false)
+			return
+		}
 
 		const changedDueDates = editCurrentIssueData.issue_classes
 			.filter((issueClass, i) => issueClass.due_date !== currentIssueData.issue_classes[i].due_date)
@@ -151,10 +156,53 @@ export const DetailModal = ({
 				setIsError(true)
 			}
 		}
+		setIsLoading(false)
+	}
+
+	const handleDelete = async () => {
+		try {
+			setDialogOpen(true)
+			setIsLoading(true)
+			const confirmDialog = await new Promise<string>((resolve) => {
+				setDialogData({
+					open: dialogOpen,
+					handleClose: (value) => {
+						resolve(value)
+						setDialogOpen(false)
+					},
+				})
+			})
+
+			if (confirmDialog === 'close') {
+				setIsLoading(false)
+				return
+			}
+
+			const res = await fetch('/api/assignment/delete', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({ issue_id: currentIssueData?.issue_id }),
+			})
+			if (!res.ok) {
+				throw new Error(res.statusText)
+			}
+			setIssues((prev) => prev.filter((issue) => issue.issue_id !== currentIssueData?.issue_id))
+			setCurrentIssue(null)
+			setIsSuccess(true)
+			handleClose()
+		} catch (error) {
+			if (error instanceof Error) {
+				console.error(error.message)
+				setIsError(true)
+			}
+		}
+		setIsLoading(false)
 	}
 
 	return (
-		<Modal open={isOpen} onClose={() => false}>
+		<Modal open={isOpen} onClose={handleClose}>
 			<Paper
 				sx={{
 					maxWidth: '700px',
@@ -169,7 +217,7 @@ export const DetailModal = ({
 					transform: 'translate(-50%, -50%)',
 					backgroundColor: '#fff',
 					border: 'none',
-					padding: '30px 60px',
+					padding: '20px 60px',
 					'&:focus': {
 						outline: 'none',
 					},
@@ -192,6 +240,53 @@ export const DetailModal = ({
 						fontWeight: 'bold',
 					}}
 				>
+					<Box
+						sx={{
+							display: 'flex',
+							justifyContent: 'space-between',
+							alignItems: 'center',
+						}}
+					>
+						<Box
+							sx={{
+								fontSize: '25px',
+								fontWeight: 'bold',
+							}}
+						>
+							課題表紙編集
+						</Box>
+						<Box>
+							<Box
+								sx={{
+									display: 'flex',
+									mt: '20px',
+									mb: '20px',
+									gap: '10px',
+								}}
+							>
+								<LoadingButton
+									variant='contained'
+									onClick={() => {
+										setIsEdit(!isEdit)
+									}}
+									loading={isLoading}
+								>
+									{isEdit ? 'キャンセルする' : '編集する'}
+								</LoadingButton>
+								<LoadingButton
+									variant='contained'
+									onClick={onSubmit}
+									loading={isLoading}
+									disabled={!isEdit}
+								>
+									保存する
+								</LoadingButton>
+								<LoadingButton onClick={handleClose} loading={isLoading} variant='outlined'>
+									閉じる
+								</LoadingButton>
+							</Box>
+						</Box>
+					</Box>
 					<Box
 						sx={{
 							mb: '20px',
@@ -320,7 +415,6 @@ export const DetailModal = ({
 					}}
 				>
 					<Box>コメント:</Box>
-
 					<TextField
 						label='コメント'
 						variant='outlined'
@@ -346,24 +440,25 @@ export const DetailModal = ({
 					}}
 				>
 					<Box>公開設定:</Box>
-					<RadioGroup
-						value={editCurrentIssueData?.private_flag}
-						onChange={(e) => {
-							if (!editCurrentIssueData) return
-							setEditCurrentIssueData({
-								...editCurrentIssueData,
-								private_flag: e.target.value === 'true',
-							})
+					<FormControlLabel
+						sx={{
+							my: '20px',
 						}}
-					>
-						<FormControlLabel disabled={!isEdit} value={'false'} control={<Radio />} label='公開' />
-						<FormControlLabel
-							disabled={!isEdit}
-							value={'true'}
-							control={<Radio />}
-							label='非公開'
-						/>
-					</RadioGroup>
+						control={
+							<Switch
+								checked={editCurrentIssueData?.private_flag}
+								onChange={(e) => {
+									if (!editCurrentIssueData) return
+									setEditCurrentIssueData({
+										...editCurrentIssueData,
+										private_flag: e.target.checked,
+									})
+								}}
+								disabled={!isEdit}
+							/>
+						}
+						label='公開'
+					/>
 				</Box>
 				<Box
 					sx={{
@@ -371,32 +466,26 @@ export const DetailModal = ({
 						fontWeight: 'bold',
 					}}
 				>
-					<Box
+					<Box>チャレンジ問題</Box>
+					<FormControlLabel
 						sx={{
-							mb: '20px',
+							my: '20px',
 						}}
-					>
-						チャレンジ問題
-					</Box>
-					<RadioGroup
-						value={editCurrentIssueData?.challenge_flag}
-						onChange={(e) => {
-							if (!editCurrentIssueData) return
-
-							setEditCurrentIssueData({
-								...editCurrentIssueData,
-								challenge_flag: e.target.value === 'true' ? true : false,
-							})
-						}}
-					>
-						<FormControlLabel
-							disabled={!isEdit}
-							value={'false'}
-							control={<Radio />}
-							label='未実施'
-						/>
-						<FormControlLabel disabled={!isEdit} value={'true'} control={<Radio />} label='実施' />
-					</RadioGroup>
+						control={
+							<Switch
+								checked={editCurrentIssueData?.challenge_flag}
+								onChange={(e) => {
+									if (!editCurrentIssueData) return
+									setEditCurrentIssueData({
+										...editCurrentIssueData,
+										challenge_flag: e.target.checked,
+									})
+								}}
+								disabled={!isEdit}
+							/>
+						}
+						label='実施'
+					/>
 					<Box
 						sx={{
 							mb: '20px',
@@ -422,29 +511,16 @@ export const DetailModal = ({
 						}}
 					/>
 				</Box>
-				<Box
-					sx={{
-						display: 'flex',
-						mt: '20px',
-						mb: '20px',
-					}}
-				>
-					<Button
+				<Box>
+					<LoadingButton
 						variant='contained'
-						sx={{
-							mr: '20px',
-						}}
-						onClick={() => {
-							setIsEdit(!isEdit)
-						}}
+						onClick={handleDelete}
+						color='error'
+						loading={isLoading}
 					>
-						{isEdit ? 'キャンセルする' : '編集する'}
-					</Button>
-					<Button variant='contained' onClick={onSubmit}>
-						保存する
-					</Button>
+						削除
+					</LoadingButton>
 				</Box>
-				<Button onClick={handleClose}>閉じる</Button>
 			</Paper>
 		</Modal>
 	)

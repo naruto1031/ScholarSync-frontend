@@ -60,6 +60,10 @@ export interface UpdateIssue {
 		| undefined
 }
 
+export interface DeleteIssue {
+	issue_id: string | undefined
+}
+
 export interface IssueCover {
 	issue_cover_id: number
 	issue_id: number
