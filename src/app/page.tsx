@@ -76,18 +76,8 @@ const Page = () => {
 							</Button>
 						</NextLink>
 					</Box>
-					<Box
-						sx={
-							{
-								// width: '500px',
-								// height: '293px',
-								// '@media (max-width: 800px)': {
-								//   width: '100%',
-								// },
-							}
-						}
-					>
-						<Image src='/student.jpg' width={500} height={293} alt='Picture of the author' />
+					<Box>
+						<Image src='/student.jpg' width={430} height={253} alt='Picture of the author' />
 					</Box>
 				</Box>
 				<Container maxWidth='lg'>
