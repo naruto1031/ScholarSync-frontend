@@ -6,7 +6,7 @@ import {
 } from '@/types/form/schema'
 import { convertStatus, convertStatusColor } from '@/utils/statusUtils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { CircularProgress, FormHelperText, InputLabel, Select } from '@mui/material'
+import { CircularProgress, FormHelperText, InputLabel, Select, Tooltip } from '@mui/material'
 import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import MenuItem from '@mui/material/MenuItem'
@@ -300,7 +300,9 @@ export const ClassManagementContents = ({ teacherClasses }: Props) => {
 													fontWeight: 'bold',
 												}}
 											>
-												{issue.task_number}
+												<Tooltip title={issue.name}>
+													<Box>{issue.task_number}</Box>
+												</Tooltip>
 											</TableCell>
 										)
 									})}

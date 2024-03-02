@@ -77,7 +77,7 @@ const Page = () => {
 						</NextLink>
 					</Box>
 					<Box>
-						<Image src='/student.jpg' width={500} height={293} alt='Picture of the author' />
+						<Image src='/student.jpg' width={430} height={253} alt='Picture of the author' />
 					</Box>
 				</Box>
 				<Container maxWidth='lg'>

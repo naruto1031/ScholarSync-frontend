@@ -42,6 +42,13 @@ export const StudentDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 			text: '提出状況',
 			url: 'submission_status',
 		},
+		{
+			text: '設定',
+		},
+		{
+			text: 'アカウント設定',
+			url: 'account_setting',
+		},
 	]
 
 	const drawer = (

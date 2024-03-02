@@ -18,6 +18,12 @@ import { useRouter } from 'next/navigation'
 import { numberToBoolean } from '@/utils/numberToBoolean'
 import { LoadingButton } from '@mui/lab'
 import { ReactNode, useState } from 'react'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 interface Props {
 	isOpen: boolean
 	isResubmissionLoading: boolean
@@ -93,9 +99,21 @@ export const DetailModal = ({
 					}}
 				>
 					{currentSubmissionData?.status === 'resubmission' ? (
-						<Box>再提出期限: {currentSubmissionData?.resubmission_deadline}</Box>
+						<Box>
+							再提出期限:{' '}
+							{dayjs
+								.utc(currentSubmissionData?.resubmission_deadline)
+								.tz('Asia/Tokyo')
+								.format('YYYY-MM-DD HH:mm')}
+						</Box>
 					) : (
-						<Box>提出期限: {currentSubmissionData?.due_date}</Box>
+						<Box>
+							提出期限:{' '}
+							{dayjs
+								.utc(currentSubmissionData?.due_date)
+								.tz('Asia/Tokyo')
+								.format('YYYY-MM-DD HH:mm')}
+						</Box>
 					)}
 				</Box>
 				<Box
@@ -156,13 +174,14 @@ export const DetailModal = ({
 							</Box>
 						</Box>
 					)}
-					{numberToBoolean(currentSubmissionData?.challenge_flag) && (
-						<Box sx={{ display: 'flex', alignItems: 'center', gap: '20px', mt: '20px' }}>
-							<Box sx={{ fontWeight: 'bold', fontSize: '20px' }}>
-								チャレンジ問題スコア: {currentSubmissionData?.current_score}点
+					{numberToBoolean(currentSubmissionData?.challenge_flag) &&
+						currentSubmissionData?.current_score && (
+							<Box sx={{ display: 'flex', alignItems: 'center', gap: '20px', mt: '20px' }}>
+								<Box sx={{ fontWeight: 'bold', fontSize: '20px' }}>
+									チャレンジ問題スコア: {currentSubmissionData?.current_score}点
+								</Box>
 							</Box>
-						</Box>
-					)}
+						)}
 				</Box>
 				<Box sx={{ width: '100%' }}>
 					{currentSubmissionData?.status === 'resubmission' && (
@@ -204,7 +223,11 @@ export const DetailModal = ({
 							<Button
 								variant='contained'
 								size='large'
-								onClick={() => router.push('/student/portal/submit_assignment')}
+								onClick={() =>
+									router.push(
+										`/student/portal/submit_assignment?issue_id=${currentSubmissionData?.issue_id}`,
+									)
+								}
 							>
 								課題表紙の提出画面へ
 							</Button>

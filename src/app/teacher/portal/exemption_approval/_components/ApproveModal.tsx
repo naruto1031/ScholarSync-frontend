@@ -141,6 +141,19 @@ export const ApproveModal = ({
 					<Box>{convertStatus(currentUpdateIssueCover?.status)}</Box>
 				</Box>
 
+				<Box>
+					<Box
+						sx={{
+							fontSize: '20px',
+							fontWeight: 'bold',
+							marginTop: '20px',
+						}}
+					>
+						コメント
+					</Box>
+					<Box>{currentUpdateIssueCover?.comment || '無し'}</Box>
+				</Box>
+
 				<Box
 					sx={{
 						display: 'flex',

@@ -7,8 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import { useState } from 'react'
 import { TeacherDrawer } from '../drawer/TeacherDrawer'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import Box from '@mui/material/Box'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 interface Props {
 	drawerWidth: number
@@ -16,7 +15,6 @@ interface Props {
 
 export const TeacherHeader = ({ drawerWidth }: Props) => {
 	const [isOpen, setIsOpen] = useState(false)
-	const router = useRouter()
 	return (
 		<AppBar
 			position='static'
@@ -42,14 +40,12 @@ export const TeacherHeader = ({ drawerWidth }: Props) => {
 				<Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
 					ScholarSync
 				</Typography>
-				<Box
-					onClick={() => router.push('/teacher/portal/account_setting')}
-					sx={{
-						cursor: 'pointer',
-					}}
+				<Link
+					href={'/teacher/portal/account_setting'}
+					style={{ textDecoration: 'none', color: 'white' }}
 				>
 					<AccountCircleIcon fontSize='large' />
-				</Box>
+				</Link>
 			</Toolbar>
 			<TeacherDrawer isOpen={isOpen} setIsOpen={setIsOpen} drawerWidth={drawerWidth} />
 		</AppBar>

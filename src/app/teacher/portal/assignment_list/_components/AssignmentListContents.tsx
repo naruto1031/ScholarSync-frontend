@@ -9,6 +9,7 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import { Toast } from '@/app/components'
+import { ConfirmDialog, DeleteDialogProps } from './ConfirmDialog'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -26,6 +27,8 @@ export const AssignmentListContents = ({ subjects }: Props) => {
 	const [issues, setIssues] = useState<TransformedIssue[]>([])
 	const [currentIssue, setCurrentIssue] = useState<TransformedIssue | null>(null)
 	const [editCurrentIssueData, setEditCurrentIssueData] = useState<TransformedIssue | null>(null)
+	const [dialogData, setDialogData] = useState<DeleteDialogProps | null>(null)
+	const [dialogOpen, setDialogOpen] = useState(false)
 	const [isAsc] = useState<boolean>(true)
 
 	const handleSubmit = async (teacherSubjectId: string | undefined) => {
@@ -130,6 +133,10 @@ export const AssignmentListContents = ({ subjects }: Props) => {
 			<DetailModal
 				isOpen={isOpen}
 				isAsc={isAsc}
+				dialogData={dialogData}
+				setDialogData={setDialogData}
+				setDialogOpen={setDialogOpen}
+				dialogOpen={dialogOpen}
 				setIssues={setIssues}
 				setIsSuccess={setIsSuccess}
 				setIsError={setIsError}
@@ -139,7 +146,7 @@ export const AssignmentListContents = ({ subjects }: Props) => {
 				setEditCurrentIssueData={setEditCurrentIssueData}
 				setCurrentIssue={setCurrentIssue}
 			/>
-
+			<ConfirmDialog open={dialogOpen} handleClose={dialogData?.handleClose || (() => {})} />
 			<Toast
 				open={isSuccess}
 				handleClose={() => setIsSuccess(false)}

@@ -60,6 +60,10 @@ export interface UpdateIssue {
 		| undefined
 }
 
+export interface DeleteIssue {
+	issue_id: string | undefined
+}
+
 export interface IssueCover {
 	issue_cover_id: number
 	issue_id: number
@@ -116,6 +120,12 @@ export interface TotalIssueCount {
 	count: number
 }
 
+export interface StudentInfo {
+	class_name: string
+	registration_number: string
+	attendance_number: string
+}
+
 // APIレスポンスの型
 export interface PendingIssuesResponse {
 	issues: Issue[]
@@ -147,6 +157,13 @@ export interface Class {
 export interface Subject {
 	id: number
 	name: string
+}
+
+export interface StudentSubject {
+	subject_id: number
+	name: string
+	created_at: string
+	updated_at: string
 }
 
 export interface TeacherExists {

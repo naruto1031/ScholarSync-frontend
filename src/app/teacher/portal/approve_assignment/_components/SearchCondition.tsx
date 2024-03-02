@@ -151,11 +151,13 @@ export const SearchCondition = ({
 							searchLoading
 						}
 					>
-						{issues.map((issue) => (
-							<MenuItem key={issue.issue_id} value={`${issue.issue_id}`}>
-								No.{issue.task_number}: {issue.name}
-							</MenuItem>
-						))}
+						{issues
+							.sort((a, b) => Number(a.task_number) - Number(b.task_number))
+							.map((issue) => (
+								<MenuItem key={issue.issue_id} value={`${issue.issue_id}`}>
+									No.{issue.task_number}: {issue.name}
+								</MenuItem>
+							))}
 					</Select>
 					{errors.issueId?.message && (
 						<FormHelperText error>{errors.issueId?.message}</FormHelperText>
