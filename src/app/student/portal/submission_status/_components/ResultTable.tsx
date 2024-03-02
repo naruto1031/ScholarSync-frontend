@@ -41,7 +41,6 @@ export const ResultTable: FC<Props> = ({
 				sx={{
 					gap: '20px',
 					mt: '20px',
-					mb: '70px',
 					fontSize: '20px',
 					[theme.breakpoints.up('sm')]: {
 						display: 'none',
@@ -176,9 +175,8 @@ export const ResultTable: FC<Props> = ({
 			</Box>
 			<Paper
 				sx={{
-					maxHeight: '400px',
-					overflow: 'hidden auto',
 					mt: '20px',
+					mb: '50px',
 					[theme.breakpoints.down('sm')]: {
 						display: 'none',
 					},
