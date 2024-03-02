@@ -10,6 +10,7 @@ import {
 	Select,
 	TextField,
 	FormHelperText,
+	useTheme,
 } from '@mui/material'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -26,6 +27,7 @@ export const SignUpContents = ({ classList }: Props) => {
 	const [isRegistered, setIsRegistered] = useState<boolean>(false)
 	const [isError, setIsError] = useState<boolean>(false)
 	const router = useRouter()
+	const theme = useTheme()
 
 	const onSubmit = async ({ classId, studentId, studentNumber }: StudentSchemaType) => {
 		try {
@@ -73,11 +75,15 @@ export const SignUpContents = ({ classList }: Props) => {
 		<Box
 			sx={{
 				m: '0px auto',
-				width: '500px',
+				maxWidth: '500px',
 				boxShadow: '0px 0px 15px -5px #777777',
 				borderRadius: '10px',
 				padding: '30px 60px',
 				backgroundColor: '#fff',
+				[theme.breakpoints.down('sm')]: {
+					mx: '10px',
+					padding: '30px 30px',
+				},
 			}}
 		>
 			<Box

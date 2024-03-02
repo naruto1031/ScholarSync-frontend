@@ -150,6 +150,7 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 			maxWidth='lg'
 			sx={{
 				py: '50px',
+				overflow: isOpen ? 'hidden' : 'auto',
 			}}
 		>
 			<Box display={'flex'} width={'100%'} alignItems={'center'}>
@@ -178,6 +179,7 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 							display: 'flex',
 							alignItems: 'center',
 							gap: '10px',
+							justifyContent: 'center',
 						}}
 					>
 						<InfoIcon
@@ -309,6 +311,7 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 											fontWeight: 'bold',
 											color: '#929292',
 											alignItems: 'center',
+											padding: '20px',
 										}}
 									>
 										<span>

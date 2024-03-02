@@ -47,7 +47,11 @@ export const TopContents = ({ count }: Props) => {
 
 	const theme = useTheme()
 	return (
-		<Box>
+		<Box
+			sx={{
+				mb: '50px',
+			}}
+		>
 			<Box
 				sx={{
 					fontSize: '20px',
