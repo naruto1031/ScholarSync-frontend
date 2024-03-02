@@ -282,9 +282,8 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 
 			<Paper
 				sx={{
-					maxHeight: '400px',
-					overflow: 'hidden auto',
 					mt: '20px',
+					mb: '50px',
 					[theme.breakpoints.down('sm')]: {
 						display: 'none',
 					},
