@@ -180,6 +180,7 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 							alignItems: 'center',
 							gap: '10px',
 							justifyContent: 'center',
+							padding: '20px',
 						}}
 					>
 						<InfoIcon
