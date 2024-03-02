@@ -150,6 +150,7 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 			maxWidth='lg'
 			sx={{
 				py: '50px',
+				overflow: isOpen ? 'hidden' : 'auto',
 			}}
 		>
 			<Box display={'flex'} width={'100%'} alignItems={'center'}>

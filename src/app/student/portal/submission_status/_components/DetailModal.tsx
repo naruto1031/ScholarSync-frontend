@@ -229,7 +229,7 @@ export const DetailModal = ({
 									)
 								}
 							>
-								課題表紙の提出画面へ
+								提出画面へ
 							</Button>
 						)}
 						{currentSubmissionData?.status === 'resubmission' && (

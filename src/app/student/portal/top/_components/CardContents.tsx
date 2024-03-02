@@ -20,7 +20,7 @@ export const CardContents = (props: Props) => {
 				width: 'fit-content',
 				textDecoration: 'none',
 			}}
-			prefetch={true}
+			prefetch={false}
 		>
 			<Badge
 				badgeContent={props.url === 'submission_status' ? 0 : props.notSubmittedCount}

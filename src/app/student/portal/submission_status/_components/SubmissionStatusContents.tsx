@@ -158,6 +158,7 @@ export const SubmissionStatusContents: FC<Props> = ({ studentSubjects }) => {
 			maxWidth='lg'
 			sx={{
 				pt: '20px',
+				overflow: isOpen ? 'hidden' : 'auto',
 			}}
 		>
 			<Paper
