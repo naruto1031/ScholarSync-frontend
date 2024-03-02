@@ -167,7 +167,7 @@ export const DetailModal = ({
 					</Box>
 					{currentSubmissionData?.status === 'approved' && currentSubmissionData?.evaluation && (
 						<Box>
-							<Box sx={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+							<Box sx={{ display: 'flex', alignItems: 'center', gap: '20px', mt: '20px' }}>
 								<Box sx={{ fontWeight: 'bold', fontSize: '20px' }}>
 									評価: {currentSubmissionData.evaluation}点
 								</Box>
