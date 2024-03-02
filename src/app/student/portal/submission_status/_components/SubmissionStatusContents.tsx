@@ -157,7 +157,7 @@ export const SubmissionStatusContents: FC<Props> = ({ studentSubjects }) => {
 		<Container
 			maxWidth='lg'
 			sx={{
-				pt: '20px',
+				py: '20px',
 				overflow: isOpen ? 'hidden' : 'auto',
 			}}
 		>
