@@ -14,7 +14,6 @@ export interface DeleteDialogProps {
 }
 
 export const ConfirmDialog = ({ open, handleClose }: DeleteDialogProps) => {
-	console.log('DeleteDialogProps', open, handleClose)
 	return (
 		<Dialog
 			open={open}

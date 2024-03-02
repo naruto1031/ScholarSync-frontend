@@ -113,6 +113,24 @@ export const IndividualDetailModal = ({
 						marginTop: '20px',
 					}}
 				>
+					<Box>生徒からのコメント</Box>
+					<Box
+						sx={{
+							padding: '10px',
+							border: '1px solid #ccc',
+							borderRadius: '10px',
+							marginTop: '10px',
+						}}
+					>
+						{currentUpdateIssueCover?.comment}
+					</Box>
+				</Box>
+
+				<Box
+					sx={{
+						marginTop: '20px',
+					}}
+				>
 					<FormControl sx={{ width: '200px' }} size='small'>
 						<InputLabel id='status'>ステータス</InputLabel>
 						<Select

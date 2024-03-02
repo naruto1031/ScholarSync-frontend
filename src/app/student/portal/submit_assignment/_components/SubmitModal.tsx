@@ -31,6 +31,8 @@ interface Props {
 	isLate: boolean
 	isExemptionLoading: boolean
 	submitStatus: 'normal' | 'exemption'
+	comment: string
+	setComment: Dispatch<SetStateAction<string>>
 	handleClose: () => void
 	handleSubmit: (id: number | undefined) => void
 	handleAbsenceApplication: (id: number | undefined) => void
@@ -47,6 +49,8 @@ export const SubmitModal = ({
 	handleSubmit,
 	setSubmitStatus,
 	isLoading,
+	comment,
+	setComment,
 }: Props) => {
 	const theme = useTheme()
 	const [isChecked, setIsChecked] = useState(false)
@@ -71,7 +75,6 @@ export const SubmitModal = ({
 					'&:active': {
 						outline: 'none',
 					},
-					// レスポンシブスタイル
 					[theme.breakpoints.down('md')]: {
 						maxWidth: '70%',
 						padding: '20px 30px',
@@ -81,10 +84,31 @@ export const SubmitModal = ({
 					},
 				}}
 			>
-				<Box sx={{ display: 'flex', gap: '20px', fontSize: '20px' }}>
+				<Box
+					sx={{
+						display: 'flex',
+						alignItems: 'center',
+						gap: '20px',
+						fontSize: '20px',
+						[theme.breakpoints.down('sm')]: {
+							alignItems: 'start',
+							gap: '0px',
+							flexDirection: 'column',
+						},
+					}}
+				>
 					<Box>{data?.subject_name}</Box>
 					<Box>課題No.{data?.task_number}</Box>
-					<Box sx={{ display: 'flex', gap: '6px', ml: 'auto' }}>
+					<Box
+						sx={{
+							display: 'flex',
+							gap: '6px',
+							ml: 'auto',
+							[theme.breakpoints.down('sm')]: {
+								ml: '0',
+							},
+						}}
+					>
 						<FormControl>
 							<RadioGroup
 								row
@@ -124,6 +148,9 @@ export const SubmitModal = ({
 					sx={{
 						fontSize: '20px',
 						color: '#929292',
+						[theme.breakpoints.down('sm')]: {
+							fontSize: '16px',
+						},
 					}}
 				>
 					{isLate ? (
@@ -133,6 +160,7 @@ export const SubmitModal = ({
 								alignItems: 'center',
 								width: 'fit-content',
 								gap: '5px',
+								my: '10px',
 							}}
 						>
 							<Box
@@ -142,46 +170,88 @@ export const SubmitModal = ({
 							>
 								<ConvertStatusIcon status='overdue' />
 							</Box>
-							<span style={{ color: 'red' }}>
-								期限超過しています:{' '}
+
+							<Box
+								sx={{
+									display: 'flex',
+									alignItems: 'center',
+									color: 'red',
+									[theme.breakpoints.down('sm')]: {
+										flexDirection: 'column',
+										gap: '5px',
+										alignItems: 'start',
+									},
+								}}
+							>
+								<Box>期限超過しています:</Box>
 								{data?.due_date
 									? dayjs.utc(data?.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')
 									: '未設定'}
-							</span>
+							</Box>
 						</Box>
 					) : (
-						<Box>
-							<span>
-								提出期限:{' '}
-								{data?.due_date
-									? dayjs.utc(data?.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')
-									: '未設定'}
-							</span>
+						<Box
+							sx={{
+								display: 'flex',
+								alignItems: 'center',
+								gap: '5px',
+								my: '10px',
+								[theme.breakpoints.down('sm')]: {
+									flexDirection: 'column',
+									gap: '5px',
+									alignItems: 'start',
+								},
+							}}
+						>
+							<Box>提出期限:</Box>
+							{data?.due_date
+								? dayjs.utc(data?.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')
+								: '未設定'}
 						</Box>
 					)}
 				</Box>
+				{submitStatus === 'normal' && (
+					<Box
+						sx={{
+							marginTop: '10px',
+							width: 'fit-content',
+						}}
+					>
+						<FormGroup>
+							<FormControlLabel
+								required={submitStatus === 'normal'}
+								control={<Checkbox onChange={() => setIsChecked((prev) => !prev)} />}
+								label='課題は提出済みです'
+							/>
+						</FormGroup>
+					</Box>
+				)}
 				<Box
 					sx={{
-						marginTop: '10px',
-						width: 'fit-content',
+						mt: submitStatus === 'exemption' ? `20px` : `0px`,
+						mb: '40px',
 					}}
 				>
-					<FormGroup>
-						<FormControlLabel
-							required={submitStatus === 'normal'}
-							disabled={submitStatus === 'exemption'}
-							control={<Checkbox onChange={() => setIsChecked((prev) => !prev)} />}
-							label='課題は提出済みです'
-						/>
-					</FormGroup>
-				</Box>
-				<Box
-					sx={{
-						mt: '20px',
-						marginBottom: '40px',
-					}}
-				>
-					<TextField id='standard-basic' label='一言メッセージ' variant='standard' fullWidth />
+					<Box
+						sx={{
+							color: submitStatus === 'exemption' ? 'red' : 'inherit',
+							fontSize: '16px',
+							fontWeight: 'bold',
+							mb: `10px`,
+						}}
+					>
+						{submitStatus === 'exemption' ? '免除申請の場合、申請理由を必ず記入してください' : ''}
+					</Box>
+					<TextField
+						id='standard-basic'
+						label={submitStatus === 'exemption' ? '申請理由' : '一言メッセージ（任意）'}
+						variant='standard'
+						fullWidth
+						sx={{
+							mt: submitStatus === 'exemption' ? `10px` : `0px`,
+						}}
+						onChange={(e) => setComment(e.target.value)}
+					/>
 				</Box>
 				<Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
 					<Box sx={{ display: 'flex', gap: '20px', ml: 'auto' }}>
@@ -203,7 +273,11 @@ export const SubmitModal = ({
 								if (!isChecked && submitStatus === 'normal') return
 								handleSubmit(data?.issue_id)
 							}}
-							disabled={!isChecked && submitStatus === 'normal'}
+							disabled={
+								(!isChecked && submitStatus === 'normal') ||
+								isLoading ||
+								(submitStatus === 'exemption' && comment.length === 0)
+							}
 							color={submitStatus === 'exemption' ? 'secondary' : isLate ? 'error' : 'primary'}
 						>
 							{submitStatus === 'exemption' ? '免除申請' : '提出'}

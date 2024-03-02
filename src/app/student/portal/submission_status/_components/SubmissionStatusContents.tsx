@@ -5,19 +5,20 @@ import {
 	Box,
 	Checkbox,
 	Container,
+	FormControl,
 	FormControlLabel,
 	FormGroup,
-	Pagination,
+	InputLabel,
+	MenuItem,
 	Paper,
+	Select,
 } from '@mui/material'
 import { SubmissionStatusSchemaType, submissionStatusSchema } from '@/types/form/schema'
-import FilterAltIcon from '@mui/icons-material/FilterAlt'
-import { useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { DetailModal } from './DetailModal'
-import { IssueCover, IssueCoverResponse } from '@/types/api-response-types'
+import { IssueCover, IssueCoverResponse, StudentSubject } from '@/types/api-response-types'
 import { ResultTable } from './ResultTable'
 import { Toast } from '@/app/components'
-
 export interface SubmissionStatusLabel {
 	value: string
 	label: string
@@ -29,7 +30,6 @@ export const submissionStatuses: SubmissionStatusLabel[] = [
 	{ value: 'late_pending', label: '遅れ承認待ち', step: 1 },
 	{ value: 'not_submitted', label: '未提出', step: 0 },
 	{ value: 'approved', label: '承認済み', step: 3 },
-	{ value: 'overdue', label: '期限超過', step: 1 },
 	{ value: 'resubmission', label: '再提出', step: 0 },
 	{ value: 'rejected', label: '提出不可', step: 0 },
 	{ value: 'pending_exemption_approval', label: '免除申請許可待ち', step: 1 },
@@ -37,7 +37,11 @@ export const submissionStatuses: SubmissionStatusLabel[] = [
 	{ value: 'exemption', label: '免除', step: 4 },
 ]
 
-export const SubmissionStatusContents = () => {
+interface Props {
+	studentSubjects: StudentSubject[]
+}
+
+export const SubmissionStatusContents: FC<Props> = ({ studentSubjects }) => {
 	const [isOpen, setIsOpen] = useState(false)
 	const [submissionData, setSubmissionData] = useState<IssueCover[]>([])
 	const [currentSubmissionData, setCurrentSubmissionData] = useState<IssueCover | null>(null)
@@ -45,17 +49,23 @@ export const SubmissionStatusContents = () => {
 	const [isResubmissionLoading, setIsResubmissionLoading] = useState<boolean>(false)
 	const [isError, setIsError] = useState<boolean>(false)
 	const [isSuccess, setIsSuccess] = useState<boolean>(false)
-	const [page, setPage] = useState(1)
 	const currentRequestIdRef = useRef(0)
 
-	const { control, setValue, getValues } = useForm<SubmissionStatusSchemaType>({
+	const { control, setValue, getValues, register, watch } = useForm<SubmissionStatusSchemaType>({
 		resolver: zodResolver(submissionStatusSchema),
 		defaultValues: {
 			statuses: [],
+			subject_id: 'all',
 		},
 	})
 
-	const handleSubmit = async (data: (string | undefined)[]) => {
+	useEffect(() => {
+		// 教科が選択されており、
+		handleSubmit(getValues('statuses'), getValues('subject_id'))
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [watch('subject_id')])
+
+	const handleSubmit = async (data: (string | undefined)[], subject_id?: string | undefined) => {
 		const requestId = ++currentRequestIdRef.current
 		setIsLoading(true)
 		const controller = new AbortController()
@@ -63,7 +73,7 @@ export const SubmissionStatusContents = () => {
 		try {
 			const submitData = data.filter((d) => d !== undefined)
 
-			if (submitData.length === 0) {
+			if (submitData.length === 0 && subject_id === 'all') {
 				setSubmissionData([])
 				return
 			}
@@ -75,7 +85,10 @@ export const SubmissionStatusContents = () => {
 
 			const res = await fetch('/api/submission_status/search', {
 				method: 'POST',
-				body: JSON.stringify({ statuses: submitData }),
+				body: JSON.stringify({
+					statuses: submitData,
+					subject_id: subject_id,
+				}),
 				signal: controller.signal,
 			})
 
@@ -120,7 +133,7 @@ export const SubmissionStatusContents = () => {
 
 			const searchResponse = await fetch('/api/submission_status/search', {
 				method: 'POST',
-				body: JSON.stringify({ statuses: submitData }),
+				body: JSON.stringify({ statuses: submitData, subject_id: getValues('subject_id') }),
 			})
 
 			if (!searchResponse.ok) {
@@ -162,6 +175,29 @@ export const SubmissionStatusContents = () => {
 				>
 					課題表紙検索
 				</Box>
+				<Box>
+					<Box>
+						<FormControl sx={{ width: '150px', my: '10px' }}>
+							<InputLabel id='teacher-subjects' size='small'>
+								教科
+							</InputLabel>
+							<Select
+								labelId='teacher-subjects'
+								label='教科'
+								size='small'
+								{...register('subject_id')}
+								defaultValue={'all'}
+							>
+								<MenuItem value='all'>全て</MenuItem>
+								{studentSubjects.map((subject) => (
+									<MenuItem key={subject.name} value={`${subject.subject_id}`}>
+										{subject.name}
+									</MenuItem>
+								))}
+							</Select>
+						</FormControl>
+					</Box>
+				</Box>
 				<FormGroup sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}>
 					{submissionStatuses
 						.filter(
@@ -185,7 +221,7 @@ export const SubmissionStatusContents = () => {
 													} else {
 														setValue(`statuses.${i}`, undefined)
 													}
-													handleSubmit(getValues('statuses'))
+													handleSubmit(getValues('statuses'), getValues('subject_id'))
 												}}
 											/>
 										}
@@ -208,32 +244,12 @@ export const SubmissionStatusContents = () => {
 			>
 				<Box
 					sx={{
-						display: 'flex',
-						alignItems: 'center',
-						gap: '10px',
-						cursor: 'pointer',
-					}}
-				>
-					<FilterAltIcon />
-					<Box sx={{ fontWeight: 'bold', fontSize: '20px' }}>絞り込み</Box>
-				</Box>
-
-				<Box
-					sx={{
 						fontWeight: 'bold',
 						fontSize: '20px',
 					}}
 				>
 					検索結果{submissionData.length}件
 				</Box>
-				<Pagination
-					page={page}
-					count={Math.ceil(submissionData.length / 10)}
-					onChange={(_, page) => setPage(page)}
-					sx={{
-						ml: 'auto',
-					}}
-				/>
 			</Box>
 			<ResultTable
 				submissionData={submissionData}

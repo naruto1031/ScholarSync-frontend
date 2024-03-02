@@ -1,5 +1,5 @@
 import { z } from 'zod'
-const numericRegex = /^[0-9]+$/
+const numericRegex = /^[1-9][0-9]*$/
 
 // 生徒情報
 export const studentSchema = z.object({
@@ -9,6 +9,7 @@ export const studentSchema = z.object({
 })
 export const submissionStatusSchema = z.object({
 	statuses: z.array(z.string().optional()),
+	subject_id: z.string().optional(),
 })
 
 // 教員情報

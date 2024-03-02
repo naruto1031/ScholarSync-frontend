@@ -3,8 +3,7 @@ import { getServerSession } from 'next-auth'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
-	const { statuses } = await request.json()
-
+	const { statuses, subject_id } = await request.json()
 	const session = await getServerSession(options)
 
 	if (!session) return new NextResponse('Unauthorized', { status: 401 })
@@ -16,6 +15,7 @@ export async function POST(request: NextRequest) {
 		},
 		body: JSON.stringify({
 			statuses: statuses,
+			subject_id: !subject_id || subject_id === 'all' ? undefined : subject_id,
 		}),
 	})
 	const data = await res.json()

@@ -2,7 +2,6 @@
 import {
 	Box,
 	Container,
-	Pagination,
 	Paper,
 	Table,
 	TableBody,
@@ -10,6 +9,7 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
+	useTheme,
 } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { SubmitModal } from './SubmitModal'
@@ -32,13 +32,13 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 	const [assignmentIssueData, setAssignmentIssueData] = useState<Issue[]>(issueData)
 	const [isOpen, setIsOpen] = useState(false)
 	const [currentTask, setCurrentTask] = useState<Issue | null>(null)
-	const [page, setPage] = useState(1)
 	const [isLoading, setIsLoading] = useState(false)
 	const [isAbsenceLoading, setIsAbsenceLoading] = useState(false)
 	const [isExemptionLoading, setIsExemptionLoading] = useState(false)
 	const [isRegistered, setIsRegistered] = useState<boolean>(false)
 	const [isError, setIsError] = useState<boolean>(false)
 	const [submitStatus, setSubmitStatus] = useState<'normal' | 'exemption'>('normal')
+	const [comment, setComment] = useState<string>('')
 
 	useEffect(() => {
 		const getAssignmentByIssueId = assignmentIssueData.find(
@@ -75,8 +75,13 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 				body: JSON.stringify({
 					issueId: id,
 					status: status,
+					comment,
 				}),
 			})
+			if (!res.ok) {
+				setIsError(true)
+				return
+			}
 			if (res.status === 200) {
 				setIsRegistered(true)
 			}
@@ -138,12 +143,13 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 			return
 		}
 	}
+	const theme = useTheme()
 
 	return (
 		<Container
 			maxWidth='lg'
 			sx={{
-				pt: '50px',
+				py: '50px',
 			}}
 		>
 			<Box display={'flex'} width={'100%'} alignItems={'center'}>
@@ -153,22 +159,133 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 						fontSize: '20px',
 					}}
 				>
-					課題総数: {assignmentIssueData.length}件
-				</Box>
-				<Box width={'fit-content'} m={'0 0 20px auto'}>
-					<Pagination
-						count={Math.ceil(assignmentIssueData.length / 10)}
-						color='primary'
-						page={page}
-						onChange={(_, page) => setPage(page)}
-					/>
+					提出可能な課題総数: {assignmentIssueData.length}件
 				</Box>
 			</Box>
+			<Box
+				sx={{
+					gap: '20px',
+					mt: '20px',
+					fontSize: '20px',
+					[theme.breakpoints.up('sm')]: {
+						display: 'none',
+					},
+				}}
+			>
+				{assignmentIssueData.length === 0 ? (
+					<Paper
+						sx={{
+							display: 'flex',
+							alignItems: 'center',
+							gap: '10px',
+						}}
+					>
+						<InfoIcon
+							sx={{
+								color: '#929292',
+							}}
+						/>
+						<span>提出可能な課題はありません</span>
+					</Paper>
+				) : (
+					<Box>
+						{assignmentIssueData.map((row) => (
+							<Paper
+								key={row.issue_id}
+								sx={{
+									padding: '20px',
+									mb: '20px',
+								}}
+								onClick={() => handleOpen(row)}
+							>
+								<Box
+									sx={{
+										display: 'flex',
+										justifyContent: 'space-between',
+										alignItems: 'center',
+									}}
+								>
+									<Box>
+										<Box
+											sx={{
+												fontSize: '16px',
+												fontWeight: 'bold',
+											}}
+										>
+											{row.subject_name}
+										</Box>
+										<Box
+											sx={{
+												fontSize: '14px',
+												color: '#929292',
+											}}
+										>
+											課題No: {row.task_number}
+										</Box>
+									</Box>
+									<Box
+										sx={{
+											fontSize: '14px',
+											color: '#929292',
+										}}
+									>
+										{dayjs.utc(new Date()).tz('Asia/Tokyo') >
+										dayjs.utc(row.due_date).tz('Asia/Tokyo') ? (
+											<Box
+												sx={{
+													display: 'flex',
+													alignItems: 'center',
+													width: 'fit-content',
+													gap: '5px',
+												}}
+											>
+												<Box
+													sx={{
+														mb: '1px',
+													}}
+												>
+													<ConvertStatusIcon status='overdue' />
+												</Box>
+												<span style={{ color: 'red' }}>
+													{row.due_date
+														? dayjs.utc(row.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')
+														: '未設定'}
+												</span>
+											</Box>
+										) : (
+											<span>
+												{row.due_date
+													? dayjs.utc(row.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')
+													: '未設定'}
+											</span>
+										)}
+									</Box>
+								</Box>
+								<Box>
+									<Box
+										sx={{
+											fontSize: '16px',
+											fontWeight: 'bold',
+											mt: '10px',
+										}}
+									>
+										{row.name}
+									</Box>
+								</Box>
+							</Paper>
+						))}
+					</Box>
+				)}
+			</Box>
+
 			<Paper
 				sx={{
 					maxHeight: '400px',
 					overflow: 'hidden auto',
 					mt: '20px',
+					[theme.breakpoints.down('sm')]: {
+						display: 'none',
+					},
 				}}
 			>
 				<TableContainer>
@@ -208,7 +325,7 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 									</TableCell>
 								</TableRow>
 							) : (
-								assignmentIssueData.slice((page - 1) * 10, page * 10).map((row) => (
+								assignmentIssueData.map((row) => (
 									<TableRow
 										key={row.issue_id}
 										sx={{
@@ -249,11 +366,15 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 													</span>
 												</Box>
 											) : (
-												<span>
+												<Box
+													sx={{
+														py: '5px',
+													}}
+												>
 													{row.due_date
 														? dayjs.utc(row.due_date).tz('Asia/Tokyo').format('YYYY-MM-DD HH:mm')
 														: '未設定'}
-												</span>
+												</Box>
 											)}
 										</TableCell>
 									</TableRow>
@@ -268,6 +389,8 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 								dayjs.utc(new Date()).tz('Asia/Tokyo') >
 								dayjs.utc(currentTask?.due_date).tz('Asia/Tokyo')
 							}
+							comment={comment}
+							setComment={setComment}
 							submitStatus={submitStatus}
 							isAbsenceLoading={isAbsenceLoading}
 							isExemptionLoading={isExemptionLoading}

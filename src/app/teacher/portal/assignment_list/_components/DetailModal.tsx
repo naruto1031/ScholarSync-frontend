@@ -518,7 +518,7 @@ export const DetailModal = ({
 						color='error'
 						loading={isLoading}
 					>
-						削除
+						課題を削除する
 					</LoadingButton>
 				</Box>
 			</Paper>

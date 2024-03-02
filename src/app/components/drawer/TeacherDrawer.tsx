@@ -35,7 +35,7 @@ export const TeacherDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 			text: 'クラス',
 		},
 		{
-			text: '担任クラスの管理',
+			text: '課題提出状況',
 			url: 'class_management',
 		},
 		{

@@ -34,7 +34,7 @@ const notifyCardContents = [
 
 const classCardContents = [
 	{
-		title: 'クラス管理',
+		title: '課題提出状況',
 		icon: ManageHistoryIcon,
 		url: 'class_management',
 	},
@@ -92,7 +92,7 @@ export const TopContents = () => {
 					py: '10px',
 				}}
 			>
-				担任クラスの管理
+				提出状況
 			</Box>
 			<Box
 				sx={{
