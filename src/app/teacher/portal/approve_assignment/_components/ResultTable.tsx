@@ -86,53 +86,55 @@ export const ResultTable = ({ isLoading, issueCoverData, onOpenIndividualModal }
 							</TableCell>
 						</TableRow>
 					) : (
-						issueCoverData.map((issueCover) => (
-							<TableRow
-								key={issueCover.issue_id}
-								sx={{
-									'&:last-child td, &:last-child th': { border: 0 },
-									cursor:
-										issueCover.status === 'not_submitted' ||
-										issueCover.status === 'pending_exemption_approval'
-											? 'auto'
-											: 'pointer',
-									'&:hover': {
-										backgroundColor:
+						issueCoverData
+							.sort((a, b) => a.attendance_number - b.attendance_number)
+							.map((issueCover) => (
+								<TableRow
+									key={issueCover.issue_id}
+									sx={{
+										'&:last-child td, &:last-child th': { border: 0 },
+										cursor:
 											issueCover.status === 'not_submitted' ||
 											issueCover.status === 'pending_exemption_approval'
-												? undefined
-												: '#F5F5F5',
-									},
-								}}
-								onClick={() => {
-									if (
-										issueCover.status === 'not_submitted' ||
-										issueCover.status === 'pending_exemption_approval'
-									)
-										return
-									onOpenIndividualModal(issueCover)
-								}}
-							>
-								<TableCell>{issueCover.attendance_number}</TableCell>
-								<TableCell align='right'>{issueCover.registration_number}</TableCell>
-								<TableCell align='right'>{issueCover.student_name}</TableCell>
-								<TableCell align='right'>{issueCover.current_score || 'ー'}</TableCell>
-								<TableCell align='right'>{issueCover.evaluation || 'ー'}</TableCell>
-								<TableCell
-									align='right'
-									sx={{
-										display: 'flex',
-										alignItems: 'center',
-										gap: '5px',
+												? 'auto'
+												: 'pointer',
+										'&:hover': {
+											backgroundColor:
+												issueCover.status === 'not_submitted' ||
+												issueCover.status === 'pending_exemption_approval'
+													? undefined
+													: '#F5F5F5',
+										},
+									}}
+									onClick={() => {
+										if (
+											issueCover.status === 'not_submitted' ||
+											issueCover.status === 'pending_exemption_approval'
+										)
+											return
+										onOpenIndividualModal(issueCover)
 									}}
 								>
-									<Box>{convertStatus(issueCover.status)}</Box>
-									<span>
-										<ConvertStatusIcon status={issueCover.status} />
-									</span>
-								</TableCell>
-							</TableRow>
-						))
+									<TableCell>{issueCover.attendance_number}</TableCell>
+									<TableCell align='right'>{issueCover.registration_number}</TableCell>
+									<TableCell align='right'>{issueCover.student_name}</TableCell>
+									<TableCell align='right'>{issueCover.current_score || 'ー'}</TableCell>
+									<TableCell align='right'>{issueCover.evaluation || 'ー'}</TableCell>
+									<TableCell
+										align='right'
+										sx={{
+											display: 'flex',
+											alignItems: 'center',
+											gap: '5px',
+										}}
+									>
+										<Box>{convertStatus(issueCover.status)}</Box>
+										<span>
+											<ConvertStatusIcon status={issueCover.status} />
+										</span>
+									</TableCell>
+								</TableRow>
+							))
 					)}
 				</TableBody>
 			</Table>

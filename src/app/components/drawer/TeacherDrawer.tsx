@@ -100,7 +100,7 @@ export const TeacherDrawer = ({ isOpen, drawerWidth, setIsOpen }: Props) => {
 									width: '100%',
 									padding: '10px 15px',
 								}}
-								prefetch={true}
+								prefetch={false}
 							>
 								<ListItemText
 									primary={item.text}

@@ -29,8 +29,6 @@ export const ResultTable = ({
 	return (
 		<Paper
 			sx={{
-				maxHeight: '450px',
-				overflow: 'hidden auto',
 				mt: '20px',
 			}}
 		>

@@ -132,8 +132,6 @@ export const ClassManagementContents = ({ teacherClasses }: Props) => {
 		<Box>
 			<Paper
 				sx={{
-					maxHeight: '450px',
-					overflow: 'hidden auto',
 					mt: '20px',
 					padding: '20px',
 				}}

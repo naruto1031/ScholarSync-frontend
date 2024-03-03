@@ -75,7 +75,11 @@ export const AssignmentListContents = ({ subjects }: Props) => {
 	}
 
 	return (
-		<Box>
+		<Box
+			sx={{
+				mb: '50px',
+			}}
+		>
 			<Paper
 				sx={{
 					py: '10px',

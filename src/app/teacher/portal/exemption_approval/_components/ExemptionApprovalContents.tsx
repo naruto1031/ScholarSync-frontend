@@ -115,8 +115,6 @@ export const ExemptionApprovalContents = ({ teacherClasses }: Props) => {
 		<Box>
 			<Paper
 				sx={{
-					maxHeight: '450px',
-					overflow: 'hidden auto',
 					mt: '20px',
 					gap: '20px',
 					padding: '20px',
