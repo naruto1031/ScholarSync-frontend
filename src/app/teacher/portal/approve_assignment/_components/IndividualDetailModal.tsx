@@ -108,23 +108,25 @@ export const IndividualDetailModal = ({
 						出席番号: {currentUpdateIssueCover?.attendance_number}
 					</Box>
 				</Box>
-				<Box
-					sx={{
-						marginTop: '20px',
-					}}
-				>
-					<Box>生徒からのコメント</Box>
+				{currentUpdateIssueCover && currentUpdateIssueCover?.comment.length > 0 && (
 					<Box
 						sx={{
-							padding: '10px',
-							border: '1px solid #ccc',
-							borderRadius: '10px',
-							marginTop: '10px',
+							marginTop: '20px',
 						}}
 					>
-						{currentUpdateIssueCover?.comment}
+						<Box>生徒からのコメント</Box>
+						<Box
+							sx={{
+								padding: '10px',
+								border: '1px solid #ccc',
+								borderRadius: '10px',
+								marginTop: '10px',
+							}}
+						>
+							{currentUpdateIssueCover?.comment}
+						</Box>
 					</Box>
-				</Box>
+				)}
 
 				<Box
 					sx={{
