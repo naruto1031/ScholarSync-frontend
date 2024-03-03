@@ -198,6 +198,7 @@ export const SubmitAssignmentContents = ({ issueData, issue_id }: Props) => {
 								sx={{
 									padding: '20px',
 									mb: '20px',
+									cursor: 'pointer',
 								}}
 								onClick={() => handleOpen(row)}
 							>

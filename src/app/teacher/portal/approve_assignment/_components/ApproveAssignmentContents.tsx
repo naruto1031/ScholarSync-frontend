@@ -159,6 +159,7 @@ export const ApproveAssignmentContents = ({ teacherSubjects }: Props) => {
 		<Box
 			sx={{
 				mt: '20px',
+				mb: '50px',
 				display: 'flex',
 				flexDirection: 'column',
 				gap: '20px',

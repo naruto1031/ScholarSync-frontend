@@ -95,6 +95,7 @@ export const ResultTable: FC<Props> = ({
 								sx={{
 									padding: '20px',
 									mb: '20px',
+									cursor: 'pointer',
 								}}
 								onClick={() => {
 									setCurrentSubmissionData(row)
