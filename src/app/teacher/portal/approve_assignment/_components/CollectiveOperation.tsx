@@ -33,7 +33,8 @@ export const CollectiveOperation = ({
 						(issueCover) =>
 							issueCover.status === 'pending' ||
 							issueCover.status === 'resubmission' ||
-							issueCover.status === 'rejected',
+							issueCover.status === 'rejected' ||
+							issueCover.status === 'late_pending',
 					) ||
 					issueCoverData.some((issueCover) => issueCover.status === 'not_submitted')
 				}
@@ -53,7 +54,8 @@ export const CollectiveOperation = ({
 						(issueCover) =>
 							issueCover.status === 'pending' ||
 							issueCover.status === 'rejected' ||
-							issueCover.status === 'resubmission',
+							issueCover.status === 'resubmission' ||
+							issueCover.status === 'late_pending',
 					) ||
 					issueCoverData.some((issueCover) => issueCover.status === 'not_submitted')
 				}
